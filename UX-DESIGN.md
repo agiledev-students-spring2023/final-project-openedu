@@ -10,7 +10,7 @@
 
 <figure>
 <div style="text-align:center;">
-<img src="./ux-design/app_map.png" alt="app_map" style="width:40%; background: rgba(255, 255, 255, .5)">
+<img src="./ux-design/app_map.png" alt="app_map" style="width:60%; background: rgba(255, 255, 255, .5)">
 <figcaption><b>App Map</b></figcaption>
 </div>
 </figure>
@@ -25,6 +25,7 @@
 </div>
 </figure>
 
+<br><br>
 
 <figure>
 <div style="text-align:center;">

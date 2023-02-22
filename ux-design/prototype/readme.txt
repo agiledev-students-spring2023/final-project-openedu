@@ -1,1 +1,1 @@
-The exported files of the completed prototype should reside in this directory.
+Currently we do not have dynamic components that overlay, so the exported files for prototype would be the same with Wireframes diagrams.

@@ -3,19 +3,25 @@
 
 ## Prototype
     
-Use Figma to play around our prototype: [Link](https://www.figma.com/file/l8W5khUdHWo00v5gr3A4yT/OpenEdu?node-id=0%3A1&t=OTVyWGjR9X4oP9dT-1).
+Use Figma to play around with our prototype: [Link](https://www.figma.com/file/l8W5khUdHWo00v5gr3A4yT/OpenEdu?node-id=0%3A1&t=OTVyWGjR9X4oP9dT-1).
 
 ## App Map & Wireframes
 
 ### App Map:
 
 <figure>
-<figcaption><b>App Map</b></figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/app_map.png" alt="app_map" style="width:60%; background: rgba(255, 255, 255, .5)">
 </div>
 </figure>
 
+<br>
+<br>
+
+---
+
+<br>
+<br>
 
 ### Wireframes:
 

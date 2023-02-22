@@ -19,9 +19,9 @@
 ### Wireframes:
 
 <figure>
+<figcaption><b>Email_login</b></figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/email_login.png" alt="email_login" style="width:40%; background: rgba(255, 255, 255, .5)"/>
-<figcaption><b><br>Email_login</b></figcaption>
 </div>
 </figure>
 

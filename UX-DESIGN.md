@@ -3,6 +3,7 @@
 
 ## Prototype
     
+Use Figma to play around our prototype: [Link](https://www.figma.com/file/l8W5khUdHWo00v5gr3A4yT/OpenEdu?node-id=0%3A1&t=OTVyWGjR9X4oP9dT-1).
 
 ## App Map & Wireframes
 
@@ -21,7 +22,7 @@
 <br>
 
 <figure>
-<figcaption><b>Email_login:</b> Use email to login</figcaption>
+<figcaption><b>Email_login:</b> Use an email to login</figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/email_login.png" alt="email_login" style="width:30%; background: rgba(255, 255, 255, .5)"/>
 </div>
@@ -38,7 +39,7 @@
 
 <br><br>
 <figure>
-<figcaption><b>Password_login_k:</b> If e-mail was registered, use the password to login</figcaption>
+<figcaption><b>Password_login_k:</b> If the e-mail was registered, use the password to login</figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/password_login_k.png" alt="password_login_k" style="width:30%; background: rgba(255, 255, 255, .5)">
 </div>
@@ -47,7 +48,7 @@
 
 <br><br>
 <figure>
-<figcaption><b>Password_singup_k: </b> If e-mail was not registered, use a password to signup</figcaption>
+<figcaption><b>Password_singup_k: </b> If the e-mail was not registered, use a password to signup</figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/password_singup_k.png" alt="password_singup_k" style="width:30%; background: rgba(255, 255, 255, .5)">
 </div>
@@ -92,7 +93,7 @@
 
 <br><br>
 <figure>
-<figcaption><b>Post_details: </b> The content of a post</figcaption>
+<figcaption><b>Post_details: </b> The content of a post/blog</figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/post_details.png" alt="post_details" style="width:30%; background: rgba(255, 255, 255, .5)">
 </div>

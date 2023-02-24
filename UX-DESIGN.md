@@ -45,7 +45,7 @@ Use Figma to play around with our prototype: [Link](https://www.figma.com/file/l
 
 <br><br>
 <figure>
-<figcaption><b>Password_login_k:</b> If the e-mail was registered, use the password to login</figcaption>
+<figcaption><b>Password_login_k:</b> If the e-mail was registered, then use the password to login</figcaption>
 <div style="text-align:center;">
 <img src="./ux-design/password_login_k.png" alt="password_login_k" style="width:30%; background: rgba(255, 255, 255, .5)">
 </div>

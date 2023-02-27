@@ -159,4 +159,3 @@ Use Figma to play around with our prototype: [Link](https://www.figma.com/file/l
 <img src="./ux-design/play_screen.png" alt="play_screen" style="width:30%; background: rgba(255, 255, 255, .5)">
 </div>
 </figure>
-

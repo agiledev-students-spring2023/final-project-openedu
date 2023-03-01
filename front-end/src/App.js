@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import MainRouter from './MainRouter.jsx';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { purple } from '@mui/material/colors';
+
+
+// Global styling
+const theme = createTheme({
+  palette:{
+    primary: purple
+  },
+  components:{
+    MuiButton:{
+      variants:[
+        {
+          props:{variant:"bold"},
+          style:{
+            font:"bold",
+            border:`4px solid white`,
+            color:'white'
+          }
+        }
+      ]
+    }
+  }
+})
+
 
 function App() {
+  // Note: Main router is a wrapper of the main body
   return (
+    <ThemeProvider theme={theme}>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainRouter/>
     </div>
+    </ThemeProvider>
   );
 }
 

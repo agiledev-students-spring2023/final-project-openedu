@@ -4,9 +4,11 @@ const COURSES_MOCK = `courses`
 const POSTS_MOCK = `posts`
 const SUBJECTS_MOCK = `subjects`
 const COMMENTS_MOCK = `comments`
+// Remainder, I only provided mock urls in the data. 
+// in order to use images, please use 
 
 
-let mockApi = (op) => {
+let mockDataApi = (op) => {
     let option = COURSES_MOCK
     switch (op) {
         case 'courses':
@@ -24,4 +26,13 @@ let mockApi = (op) => {
     }
     return `https://my.api.mockaroo.com/${option}?key=${KEY}`
 }
-export default mockApi
+
+// Just add your desired image size (width & height) after our URL, and you'll get a random image.
+// To get a square image, just add the width.
+let mockImageApi=(width, height)=>{
+    return `https://picsum.photos/${width}/${(!height)?width:height}`;
+}
+export default {
+    mockDataApi,
+    mockImageApi
+}

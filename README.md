@@ -16,11 +16,11 @@
 
 ## II. Contributing Members
 
-- Hao, Xiyu ``xh2187`` @Hoooao
-- Jin, Yang(Danica) ``yj2363`` @dj9771
-- Liao, Baiyi ``bl2993`` @LBYPatrick
-- Liu, Xiaoteng(Frank) ``xl3893`` @lapisliu
-- Zhang, Tianyin ``tz1308`` @TY37zhang
+- Hao, Xiyu ``xh2187`` [@Hoooao](https://github.com/Hoooao)
+- Jin, Yang(Danica) ``yj2363`` [@dj9771](https://github.com/dj9771)
+- Liao, Baiyi ``bl2993`` [@LBYPatrick](https://github.com/LBYPatrick)
+- Liu, Xiaoteng(Frank) ``xl3893`` [@lapisliu](https://github.com/lapisliu)
+- Zhang, Tianyin ``tz1308`` [@TY37zhang](https://github.com/ty37zhang)
 
 ## III. What and why?
 

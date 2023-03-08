@@ -1,10 +1,8 @@
 import React from "react";
 
-export default class CourseDetail extends React.Component {
+export const CourseDetail = props => {
 
-    render() {
-        return <>
+    //TODO: Put useState here
 
-        </>;
-    }
-}
+    return <></>;
+};

@@ -1,10 +1,8 @@
 import React from "react";
 
-export default class CourseListCard extends React.Component {
+export const CourseListCard = props => {
 
-    render() {
-        return <>
+    //TODO: Put useState here
 
-        </>;
-    }
-}
+    return <></>;
+};

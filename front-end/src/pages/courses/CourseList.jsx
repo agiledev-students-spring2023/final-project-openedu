@@ -1,10 +1,8 @@
 import React from "react";
 
-export default class CourseList extends React.Component {
+export const CourseList = props => {
 
-    render() {
-        return <>
+    //TODO: Put useState here
 
-        </>;
-    }
-}
+    return <></>;
+};

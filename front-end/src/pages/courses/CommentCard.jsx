@@ -1,10 +1,8 @@
 import React from "react";
 
-export default class CommentCard extends React.Component {
+export const CommentCard = props => {
 
-    render() {
-        return <>
+    //TODO: Put useState here
 
-        </>;
-    }
-}
+    return <></>;
+};

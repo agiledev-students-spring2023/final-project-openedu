@@ -5,6 +5,7 @@ import Courses from './pages/courses';
 import Subjects from './pages/Subjects';
 import Login from './pages/Login';
 import Layout from './containers/Layout';
+import {CourseDetail} from "./pages/courses/CourseDetail";
 
 const MainRouter = () => {
     // Currently, there is only one route to a default page:
@@ -17,6 +18,7 @@ const MainRouter = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/subjects" element={<Subjects />} />
                     <Route path="/courses" element={<Courses />} />
+                    <Route path="/course_detail" element={<CourseDetail/>}/>
                 </Routes>
             </Layout>
         </div>

@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Typography, Box, Container } from '@mui/material';
 
-// This is an example page, called Index 
+// This is an example page, called Index
+
 export default function Index() {
 
   return (

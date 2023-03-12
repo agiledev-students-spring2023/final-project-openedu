@@ -17,14 +17,17 @@ module.exports = {
         'sourceType': 'module'
     },
     'rules': {
+        'react/prop-types' : 'off',
+        'semi':"warn",
 
-        'semi': [
-            'error',
-            'always'
-        ],
+        // 'semi': [
+        //     'error',
+        //     'always'
+        // ],
         'no-var': [
             'error',
         ],
+        'no-unused-vars' : 'off',
         'prefer-const': ['error', {
             'destructuring': 'any',
             'ignoreReadBeforeAssign': false

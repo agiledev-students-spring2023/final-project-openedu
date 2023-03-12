@@ -1,10 +1,10 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Index from './pages/Index'
-import Courses from './pages/Courses'
-import Subjects from './pages/Subjects'
-import Login from './pages/Login'
-import Layout from './containers/Layout'
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Index from './pages/Index';
+import Courses from './pages/courses';
+import Subjects from './pages/Subjects';
+import Login from './pages/Login';
+import Layout from './containers/Layout';
 
 const MainRouter = () => {
     // Currently, there is only one route to a default page:
@@ -20,7 +20,7 @@ const MainRouter = () => {
                 </Routes>
             </Layout>
         </div>
-    )
-}
+    );
+};
 
 export default MainRouter; 

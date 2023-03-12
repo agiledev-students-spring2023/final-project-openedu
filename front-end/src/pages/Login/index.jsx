@@ -1,3 +1,4 @@
+
 import React from "react"
 //import { Navigate, useSearchParams } from "react-router-dom"
 import BeginComponent from "../../containers/BeginComponent"

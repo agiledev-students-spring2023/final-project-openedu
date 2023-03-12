@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { Typography, Box, Container } from '@mui/material'
+import { Typography, Box, Container } from '@mui/material';
 
 // This is an example page, called Index 
 export default function Index() {
@@ -39,5 +39,5 @@ export default function Index() {
       </Container>
 
     </div>
-  )
+  );
 }

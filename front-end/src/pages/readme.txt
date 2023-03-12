@@ -1,1 +1,0 @@
-This folder is for "Page" or "Screen", not individual comtent components.

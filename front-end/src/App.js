@@ -2,6 +2,7 @@ import './App.css';
 import MainRouter from './MainRouter.jsx';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { purple } from '@mui/material/colors';
+import Subjects from './containers/Layout/index'
 
 
 // Global styling

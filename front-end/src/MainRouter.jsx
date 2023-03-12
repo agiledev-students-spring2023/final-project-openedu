@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Index from './pages/Index'
 import Courses from './pages/Courses'
-import Subjects from './pages/Subjects'
+import Subjects from './pages/Subjects/index-Subjects'
 import Login from './pages/Login'
 import Layout from './containers/Layout'
 

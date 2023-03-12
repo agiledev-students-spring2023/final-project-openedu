@@ -11,7 +11,7 @@ const Login = props => {
 
     return (
       <div className="Login">
-        <BeginComponent handleSubmit={handleSubmit}/>
+        {/*<BeginComponent handleSubmit={handleSubmit}/>*/}
       </div>
     )
 }

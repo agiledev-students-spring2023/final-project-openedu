@@ -5,10 +5,13 @@ import Courses from './pages/courses';
 import Subjects from './pages/Subjects';
 import Login from './pages/Login';
 import Layout from './containers/Layout';
+import Password from './pages/Password';
+import Signup from './pages/Signup';
 
 const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here
+    
     return (
         <div>
             <Layout>
@@ -17,6 +20,8 @@ const MainRouter = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/subjects" element={<Subjects />} />
                     <Route path="/courses" element={<Courses />} />
+                    <Route path="/password" element={<Password />} />
+                    <Route path="/signup" element={<Signup />} />
                 </Routes>
             </Layout>
         </div>

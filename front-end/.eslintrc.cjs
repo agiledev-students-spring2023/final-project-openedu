@@ -38,7 +38,7 @@ module.exports = {
         'no-unused-expressions': ['error'],
         'no-useless-call': ['error'],
         'no-use-before-define': ['error'],
-        'no-unused-vars' : 'warn',
+        'no-unused-vars' : 'off',
         'camelcase': ['error', {properties: 'never'}],
         'func-call-spacing': ['error'],
         'no-lonely-if': ['error'],

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Typography, Box, TextField } from '@mui/material'
+import React from 'react';
+import { Typography, Box, TextField } from '@mui/material';
 
 const BeginComponent = props =>{
     return (
@@ -20,7 +20,7 @@ const BeginComponent = props =>{
   
         </Box>
           <p className="feedback">
-            Let's start with your email.
+            Let&apos;s start with your email.
           </p>
           <section className="main-content">
             <form onSubmit={props.handleSubmit}>
@@ -31,7 +31,7 @@ const BeginComponent = props =>{
             </form>
           </section>
         </div>
-    )
-  }
+    );
+  };
 
-export default BeginComponent
+export default BeginComponent;

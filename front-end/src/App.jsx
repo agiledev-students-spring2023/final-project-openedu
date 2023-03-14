@@ -1,8 +1,10 @@
 import './App.css';
+import React from "react";
 import MainRouter from './MainRouter.jsx';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { purple } from '@mui/material/colors';
-import React from "react";
+import Subjects from './containers/Layout/index';
+
 
 // Global styling
 const theme = createTheme({

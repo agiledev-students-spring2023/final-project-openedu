@@ -1,4 +1,5 @@
 import './App.css';
+import React from "react"
 import MainRouter from './MainRouter.jsx';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { purple } from '@mui/material/colors';
@@ -24,8 +25,7 @@ const theme = createTheme({
       ]
     }
   }
-})
-
+});
 
 function App() {
   // Note: Main router is a wrapper of the main body

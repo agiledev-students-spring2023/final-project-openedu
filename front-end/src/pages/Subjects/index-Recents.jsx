@@ -10,6 +10,7 @@ export default function Subjects() {
     const url = ''
 
     const [data, setData] = useState([]);
+    const [isLoaded, setLoaded] = useState(false);
     // const [name, setName] = useState("");
     // const [description, setDescription] = useState("");
     // const [completionRate, setCompletionRate] = useState([]);
@@ -26,17 +27,20 @@ export default function Subjects() {
                 console.log('error fetching subject information')
                 console.log(err)
 
-                const backupData = [
+                //const backupData =
+                setData([
                     {
                         id: 3,
                         name: 'backupSubject',
                         description: 'backupDescription',
                         completionRate: 37,
                     }
-                ]
-                setData(backupData[0])
+                ])
+
+                setLoaded(true);
+                //setData((backupData??[])[0])
             })
-    }, [subjectId])
+    }, [])
 
   return (
     <>

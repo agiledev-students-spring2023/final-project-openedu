@@ -14,13 +14,13 @@ function SubjectCards(props) {
         // </div>
         <Card sx={{minWidth:200}}>
             <CardContent>
-                <Typography variant='h1' component='div'>
-                    {props.name??'a'}
-                </Typography>
                 <Typography variant='h5' component='div'>
-                    {props.description??"a"}
+                    {props.name??'Subject Name'}
                 </Typography>
-                <Typography variant='h6' component='div'>
+                <Typography variant='body' component='div'>
+                    {props.description??"Subject Description"}
+                </Typography>
+                <Typography variant='subtitle' component='div'>
                     CompletionRate: {props.completionRate??0}
                 </Typography>
             </CardContent>

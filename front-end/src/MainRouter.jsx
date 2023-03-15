@@ -2,7 +2,10 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Index from './pages/Index';
 import Courses from './pages/courses';
-import Subjects from './pages/Subjects';
+import Subjects from './pages/Subjects/index-Subjects';
+import SubjectDetails from './pages/Subjects/index-SubjectDetail';
+import SubjectRecent from './pages/Subjects/index-Recents';
+import SubjectYouMayLike from './pages/Subjects/index-YouMayLike';
 import Login from './pages/Login';
 import Layout from './containers/Layout';
 import Password from './pages/Password';
@@ -12,7 +15,7 @@ import Signup from './pages/Signup';
 const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here
-    
+
     return (
         <div>
             <Layout>
@@ -20,6 +23,9 @@ const MainRouter = () => {
                     <Route path="/" element={<Index />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/subjects" element={<Subjects />} />
+                    <Route path="/subjectDetails/:subjectId" element={<SubjectDetails />} />
+                    <Route path="/subjectRecent" element={<SubjectRecent />} />
+                    <Route path="/subjectYouMayLike" element={<SubjectYouMayLike />} />
                     <Route path="/courses" element={<Courses />} />
                     <Route path="/password" element={<Password />} />
                     <Route path="/signup" element={<Signup />} />

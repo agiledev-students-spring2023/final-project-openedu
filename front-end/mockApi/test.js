@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Import this file whenever you need apis
-import {mockDataApi,mockImageApi} from './apis.js'
+import {mockDataApi,mockImageApi} from './apis.js';
 
 
 // This is an exmaple file for how to use axios with mockaroo
@@ -11,5 +11,5 @@ axios({
   url: mockDataApi("courses")
 }).then(res => {
   // Take the data out
-  console.log(res.data)
+  console.log(res.data);
 });

@@ -1,9 +1,8 @@
-
 import React from "react";
 //import { Navigate, useSearchParams } from "react-router-dom"
 import BeginComponent from "../../containers/BeginComponent";
 
-const Login = props => {
+export default function Login() {
  
   const handleSubmit = async e => {
     // prevent the HTML form from actually submitting... we use React's javascript code instead
@@ -12,9 +11,7 @@ const Login = props => {
 
     return (
       <div className="Login">
-        {/*<BeginComponent handleSubmit={handleSubmit}/>*/}
+        {<BeginComponent handleSubmit={handleSubmit}/>}
       </div>
     );
-};
-
-export default Login;
+}

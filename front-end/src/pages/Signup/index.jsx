@@ -2,8 +2,6 @@ import React from "react";
 //import { Navigate, useSearchParams } from "react-router-dom"
 import SignupComponent from "../../containers/SignupComponent";
 
-/*signup page 
-if email doesn't match any account*/
 
 // eslint-disable-next-line
 const Signup = props => {

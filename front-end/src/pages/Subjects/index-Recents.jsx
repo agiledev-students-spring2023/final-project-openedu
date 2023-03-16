@@ -47,9 +47,6 @@ export default function Subjects() {
       <div>Subjects should be implemented here</div>
       <h1>Recent</h1>
       <p>What would you like to learn today?</p>
-      {data.map(entry => (
-        <SubjectCards {'pass data to single card'} />
-      ))}
     </>
   )
 }

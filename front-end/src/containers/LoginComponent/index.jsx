@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, TextField, Button } from '@mui/material';
+import { Typography, Box, TextField, Button} from '@mui/material';
 
 
 
@@ -7,8 +7,7 @@ import { Typography, Box, TextField, Button } from '@mui/material';
 const LoginComponent = props =>{
     return (
       <div className="LoginComponent">
-        
-        <Button
+       <Button
         sx={{
           display: "flex",
           flexDirection: "row",
@@ -28,24 +27,48 @@ const LoginComponent = props =>{
           variant: "text",
           color: "#000000",
         }}
-        >
+      >
         Back
-        </Button>
+      </Button>
 
-        <Box sx={{
+      <Button
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0px",
+          gap: "8px",
+
+          position: "absolute",
+          width: "123px",
+          height: "40px",
+          left: "690px",
+          top: "550px",
+
+          background: "#FFFFFF",
+          border: "2px solid #000000",
+          variant: "text",
+          color: "#000000",
+        }}
+      >
+        Continue
+      </Button>
+
+          <Box sx={{
           height: { xs: 350, md: 200, lg: 450 },
         }}>
   
-        <Typography sx={{
+          <Typography sx={{
             paddingTop: '120px',
             fontSize: { xs: '30px', md: '50px', lg: '80px' },
             fontWeight: 'bold',
             color: 'Black'
           }}>
             Password
-        </Typography>
+          </Typography>
 
-        <Typography sx={{
+          <Typography sx={{
             paddingTop: '60px',
             fontSize: { xs: '30px', md: '50px', lg: '30px' },
             fontWeight: 'bold',
@@ -53,23 +76,20 @@ const LoginComponent = props =>{
           }}>
             Welcome Back, <br />
             Hooao!
-        </Typography>  
+          </Typography>
   
         </Box>
           <section className="main-content">
-            <form onSubmit>
               <TextField 
               id="filled-basic" 
               type="password" 
               label="Password" 
               variant="filled" 
-              placeholder="********" />
-              <br />
-              <br />
-              <input type="submit" value="Continue" />
-            </form>
+              placeholder="********" 
+              sx={{ width: "349px", height: "56px" }}/>
           </section>
         </div>
+       
     );
   };
 

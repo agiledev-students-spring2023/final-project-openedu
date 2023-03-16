@@ -8,7 +8,7 @@ import { Typography, Box, TextField, Button } from '@mui/material';
 const SignupComponent = props =>{
     return (
       <div className="SignupComponent">
-        
+
         <Button
         sx={{
           display: "flex",
@@ -32,6 +32,30 @@ const SignupComponent = props =>{
         >
         Back
         </Button>
+
+        <Button
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0px",
+          gap: "8px",
+
+          position: "absolute",
+          width: "123px",
+          height: "40px",
+          left: "690px",
+          top: "550px",
+
+          background: "#FFFFFF",
+          border: "2px solid #000000",
+          variant: "text",
+          color: "#000000",
+        }}
+      >
+        Continue
+      </Button>
 
          <Box sx={{
           height: { xs: 350, md: 200, lg: 450 },
@@ -66,13 +90,12 @@ const SignupComponent = props =>{
               label="Password" 
               variant="filled" 
               placeholder="********" 
+              sx={{ width: "349px", height: "56px" }}
               />
-              <br />
-              <br />
-              <input type="submit" value="Continue" />
             </form>
           </section>
         </div>
+
     );
   };
 

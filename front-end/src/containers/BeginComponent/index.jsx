@@ -4,6 +4,30 @@ import { Typography, Box, TextField, Button } from "@mui/material";
 const BeginComponent = (props) => {
   return (
     <div className="BeginComponent">
+      <Button
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0px",
+          gap: "8px",
+
+          position: "absolute",
+          width: "83px",
+          height: "40px",
+          left: "360px",
+          top: "29px",
+
+          background: "#FFFFFF",
+          border: "2px solid #000000",
+          variant: "text",
+          color: "#000000",
+        }}
+        >
+        Back
+        </Button>
+        
       <Typography
         sx={{
           position: "absolute",

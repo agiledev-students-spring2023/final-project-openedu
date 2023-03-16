@@ -2,9 +2,6 @@ import React from "react";
 //import { Navigate, useSearchParams } from "react-router-dom"
 import LoginComponent from "../../containers/LoginComponent";
 
-/*password page 
-if email matches an existed account*/
-
 // eslint-disable-next-line
 const Password = props => {
  

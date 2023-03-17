@@ -1,13 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, Box, Button } from "@mui/material";
 import Login from "../Login";
 
 export default function Index() {
   function handleClick() {
-    <Router>
-      <Route path="/login" component={<Login />}/>
-    </Router>;
+    history.push("/login");
   }
   return (
     <div>
@@ -109,9 +107,15 @@ export default function Index() {
           border: "2px solid #000000",
         }}
       >
-        <Button variant="text" onClick={handleClick} sx={{color:'black'}}>
-          Get Started
-        </Button>
+          <Button
+            component={Link}
+            to="/login"
+            variant="text"
+            onClick={handleClick}
+            sx={{ color: "black", textDecoration: "none" }}
+          >
+            Get Started
+          </Button>
       </Box>
     </div>
   );

@@ -1,10 +1,13 @@
 import React from 'react';
 
 import { Typography, Box, Container } from '@mui/material';
+import * as Logger from "../../util/Logger.mjs";
 
-// This is an example page, called Index
+// This is an example page, called Home
 
-export default function Index() {
+export function Home() {
+
+  Logger.info("Home rendered!");
 
   return (
     <div>

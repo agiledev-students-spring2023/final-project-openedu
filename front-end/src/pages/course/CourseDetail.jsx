@@ -56,7 +56,7 @@ export const CourseDetail = props => {
 
             <Divider/>
             {
-                comments.map(element => (<CommentCard key={element.courseId} userName={element.userName} msg={element.msg}/>)
+                comments.map(element => (<CommentCard key={element.userId} userName={element.userName} msg={element.msg}/>)
                 )
             }
 

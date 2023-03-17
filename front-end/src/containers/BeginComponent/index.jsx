@@ -15,7 +15,7 @@ const BeginComponent = props =>{
             fontWeight: 'bold',
             color: 'Black'
           }}>
-            Begin
+            Begin`
           </Typography>
   
         </Box>

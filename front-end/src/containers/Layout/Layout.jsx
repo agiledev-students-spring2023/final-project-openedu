@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import BottomNavBar from '../BottomNavBar';
+import {BottomNavBar} from '../BottomNavBar/BottomNavBar';
 
 
 // eslint-disable-next-line react/prop-types
-const Layout = ({children}) => (
+export const Layout = ({children}) => (
   <>
     <Box>
         {children}
@@ -12,5 +12,3 @@ const Layout = ({children}) => (
     </Box>
   </>
 );
-
-export default Layout;

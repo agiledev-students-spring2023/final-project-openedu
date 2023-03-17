@@ -8,10 +8,10 @@ const COMMENTS_MOCK = `comments`
 // in order to use images, please use 
 
 
-let mockDataApi = (op) => {
+export const mockDataApi = (op) => {
     let option = COURSES_MOCK
     switch (op) {
-        case 'courses':
+        case 'course':
             option = COURSES_MOCK
             break
         case 'posts':
@@ -30,10 +30,6 @@ let mockDataApi = (op) => {
 
 // Just add your desired image size (width & height) after our URL, and you'll get a random image.
 // To get a square image, just add the width.
-let mockImageApi=(width, height)=>{
-    return `https://picsum.photos/${width}/${(!height)?width:height}`;
-}
-export default {
-    mockDataApi,
-    mockImageApi
+export const mockImageApi = (width, height) => {
+    return `https://picsum.photos/${width}/${(!height) ? width : height}`;
 }

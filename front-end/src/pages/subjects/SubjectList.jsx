@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Subjects() {
+export function SubjectList() {
   return (
     <div>Subjects should be implemented here</div>
   );

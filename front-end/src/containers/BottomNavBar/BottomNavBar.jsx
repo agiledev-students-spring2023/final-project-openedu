@@ -8,17 +8,37 @@ import BookIcon from '@mui/icons-material/Book';
 import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from '@mui/icons-material/Person';
 import Paper from '@mui/material/Paper';
+import {useState} from "react";
+import * as Util from "../../util/Util.mjs";
 
 
-export default function BottomNavBar() {
+
+export function BottomNavBar() {
+
+  const [pageIndex, setPageIndex] = useState(0);
 
   return (
     <Box sx={{ pb: 7 }}>
       <CssBaseline />
 
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, paddingBottom: 0.3 }} elevation={3}>
-        <BottomNavigation
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, paddingBottom: 0.5 }} elevation={3}>
+
+       <BottomNavigation
           showLabels
+          value={pageIndex}
+          onChange={async (event, newPageIndex) => {
+
+                //Ignore user spamming
+                if(newPageIndex === pageIndex) {
+                    return;
+                }
+
+                setPageIndex(newPageIndex);
+
+                //TODO: Add listeners in routers that responds to this event
+                await Util.invokeCallback("onPageIndexChanged",newPageIndex);
+            }
+          }
         >
           <BottomNavigationAction label="Home" icon={<HomeIcon />} />
           <BottomNavigationAction label="Subjects" icon={<BookIcon />} />

@@ -1,39 +1,22 @@
 import './App.css';
-import MainRouter from './MainRouter.jsx';
-import { createTheme, ThemeProvider } from '@mui/material';
-import { purple } from '@mui/material/colors';
+import {MainRouter} from './MainRouter.jsx';
+import * as Util from './util/Util.mjs';
 import React from "react";
+import {ThemeProvider} from "@mui/material";
+import * as Logger from "./util/Logger.mjs";
 
-// Global styling
-const theme = createTheme({
-  palette:{
-    primary: purple
-  },
-  components:{
-    MuiButton:{
-      variants:[
-        {
-          props:{variant:"bold"},
-          style:{
-            font:"bold",
-            border:`4px solid white`,
-            color:'white'
-          }
-        }
-      ]
-    }
-  }
-});
+export function App() {
 
-function App() {
+  Util.addCallback("onPageIndexChanged", (newIndex) => {
+    Logger.verbose(`Page index changed! New Index: ${newIndex}`);
+  });
+
   // Note: Main router is a wrapper of the main body
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={Util.getTheme()}>
     <div className="App">
       <MainRouter/>
     </div>
     </ThemeProvider>
   );
 }
-
-export default App;

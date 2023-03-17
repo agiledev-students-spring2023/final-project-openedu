@@ -33,8 +33,8 @@ const BeginComponent = (props) => {
           position: "absolute",
           width: "167px",
           height: "70px",
-          left: "107px",
-          top: "295px",
+          left: "700px",
+          top: "115px",
 
           fontFamily: "Raleway",
           fontStyle: "normal",
@@ -56,8 +56,8 @@ const BeginComponent = (props) => {
           position: "absolute",
           width: "202px",
           height: "21px",
-          left: "96px",
-          top: "373px",
+          left: "670px",
+          top: "253px",
 
           fontFamily: "Inter",
           fontStyle: "normal",

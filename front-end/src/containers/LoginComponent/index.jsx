@@ -43,7 +43,7 @@ const LoginComponent = props =>{
           position: "absolute",
           width: "123px",
           height: "40px",
-          left: "690px",
+          left: "700px",
           top: "550px",
 
           background: "#FFFFFF",
@@ -55,40 +55,69 @@ const LoginComponent = props =>{
         Continue
       </Button>
 
-          <Box sx={{
+      <Box sx={{
           height: { xs: 350, md: 200, lg: 450 },
-        }}>
+      }}>
   
-          <Typography sx={{
-            paddingTop: '120px',
-            fontSize: { xs: '30px', md: '50px', lg: '80px' },
+        <Typography sx={{
+            position: "absolute",
+            width: "167px",
+            height: "70px",
+            left: "580px",
+            top: "115px",
+
+            fontSize: '80px',
             fontWeight: 'bold',
             color: 'Black'
           }}>
             Password
-          </Typography>
+        </Typography>
 
-          <Typography sx={{
-            paddingTop: '60px',
-            fontSize: { xs: '30px', md: '50px', lg: '30px' },
+        <Typography sx={{
+            position: "absolute",
+            width: "367px",
+            height: "50px",
+            left: "580px",
+            top: "255px",
+
+            //paddingTop: '60px',
+            fontSize: '36px',
             fontWeight: 'bold',
             color: 'Black'
           }}>
             Welcome Back, <br />
             Hooao!
-          </Typography>
-  
-        </Box>
-          <section className="main-content">
-              <TextField 
-              id="filled-basic" 
-              type="password" 
-              label="Password" 
-              variant="filled" 
-              placeholder="********" 
-              sx={{ width: "349px", height: "56px" }}/>
-          </section>
-        </div>
+        </Typography>
+        
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          padding: "0px",
+
+          position: "absolute",
+          width: "349px",
+          height: "56px",
+          left: "590px",
+          top: "433px",
+
+          background: "#E7E7E7",
+          borderRadius: "0px",
+        }}
+      >
+        <TextField
+          type="password"
+          label="Password"
+          placeholder="********"
+          variant="outlined"
+          sx={{ width: "349px", height: "56px" }}
+        />
+      </Box>
+       
+      </Box>
+         
+      </div>
        
     );
   };

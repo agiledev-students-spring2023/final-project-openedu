@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-//import { Navigate, useSearchParams } from "react-router-dom"
+import React from "react";
 import BeginComponent from "../../containers/BeginComponent";
 import BackButton from "../../containers/BackButton";
 

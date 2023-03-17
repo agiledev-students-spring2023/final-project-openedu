@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, Box, Button } from "@mui/material";
-import Login from "../Login";
 
 export default function Index() {
   function handleClick() {

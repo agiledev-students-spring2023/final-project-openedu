@@ -3,6 +3,7 @@ import CourseCards from "./subjectDetail";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ClassIcon from "@mui/icons-material/Class";
+import { Typography } from "@mui/material";
 
 export default function Courses(props) {
   const url = ""; //add API URL
@@ -21,7 +22,7 @@ export default function Courses(props) {
         console.log("error fetching subject information");
         console.log(err);
 
-        const backupData = [
+        setData([
           {
             id: 3,
             avatar: ClassIcon,
@@ -29,17 +30,29 @@ export default function Courses(props) {
             description: "backupDescription",
             completionRate: 37,
           },
-        ];
-        setData((backupData ?? [])[0]);
+        ]);
+
+        setLoaded(true);
+        // const backupData = [
+        //   {
+        //     id: 3,
+        //     avatar: ClassIcon,
+        //     name: "backupSubject",
+        //     description: "backupDescription",
+        //     completionRate: 37,
+        //   },
+        // ];
+        // setData((backupData ?? [])[0]);
       });
   }, []);
 
   return (
     <>
-      <div></div>
-      <h1>{subjectId.name}</h1>
-      <p>{subjectId.description}</p>
-      <p>What course would you like to learn today?</p>
+      <Typography variant="h1">{subjectId.name}</Typography>
+      <Typography variant="h6"> {subjectId.description}</Typography>
+      <Typography variant="h6">
+        What course would you like to learn today?
+      </Typography>
       {data.map((entry, index) => (
         <CourseCards key={index} {...entry} />
       ))}

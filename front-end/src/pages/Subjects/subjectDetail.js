@@ -18,13 +18,13 @@ function CourseCards(
       }}
     >
       <CardContent>
-        <Typography variant="h5" component="div">
+        <Typography variant="h4" component="div">
           {entry.name ?? "Course Name"}
         </Typography>
-        <Typography variant="body" component="div">
+        <Typography variant="body1" component="div">
           {entry.description ?? "Course Description"}
         </Typography>
-        <Typography variant="subtitle" component="div">
+        <Typography variant="caption" component="div">
           CompletionRate: {entry.completionRate ?? 0}
         </Typography>
         <Button variant="outlined" onClick={routeChange}>

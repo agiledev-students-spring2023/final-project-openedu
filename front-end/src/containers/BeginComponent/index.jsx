@@ -1,6 +1,78 @@
 import React from "react";
 import { Typography, Box, TextField, Button } from "@mui/material";
 
+function EmailField({email, setEmail, handleSubmit}) {
+  
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  const handleChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  return (
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          padding: "0px",
+
+          position: "absolute",
+          width: "349px",
+          height: "56px",
+          left: "16px",
+          top: "433px",
+
+          background: "#E7E7E7",
+          borderRadius: "0px",
+        }}
+      >
+        <TextField
+          type="email"
+          label="Email"
+          placeholder="abc@nyu.edu"
+          variant="outlined"
+          sx={{ width: "349px", height: "56px" }}
+          value={email}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+      </Box>
+
+      <Button
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0px",
+          gap: "8px",
+
+          position: "absolute",
+          width: "123px",
+          height: "40px",
+          left: "135px",
+          top: "529px",
+
+          background: "#FFFFFF",
+          border: "2px solid #000000",
+          variant: "text",
+          color: "#000000",
+        }}
+        onClick={handleSubmit}
+      >
+        Continue
+      </Button>
+    </>
+  );
+}
+
+
 const BeginComponent = (props) => {
   return (
     <div className="BeginComponent">
@@ -69,55 +141,7 @@ const BeginComponent = (props) => {
       >
         Let&apos;s start with your email
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          padding: "0px",
-
-          position: "absolute",
-          width: "349px",
-          height: "56px",
-          left: "16px",
-          top: "433px",
-
-          background: "#E7E7E7",
-          borderRadius: "0px",
-        }}
-      >
-        <TextField
-          type="email"
-          label="Email"
-          placeholder="abc@nyu.edu"
-          variant="outlined"
-          sx={{ width: "349px", height: "56px" }}
-        />
-      </Box>
-
-      <Button
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0px",
-          gap: "8px",
-
-          position: "absolute",
-          width: "123px",
-          height: "40px",
-          left: "135px",
-          top: "529px",
-
-          background: "#FFFFFF",
-          border: "2px solid #000000",
-          variant: "text",
-          color: "#000000",
-        }}
-      >
-        Continue
-      </Button>
+      <EmailField email={props.email} setEmail={props.setEmail} handleSubmit={props.handleSubmit}/>
     </div>
   );
 };

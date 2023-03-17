@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import SubjectCards from './subject';
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 

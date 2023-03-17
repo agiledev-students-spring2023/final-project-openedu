@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import SubjectCards from './subject';
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 
@@ -42,15 +42,15 @@ export default function SubjectRecent() {
             });
     }, []);
 
-  return (
-    <>
-      <div>Subjects should be implemented here</div>
-      <h1>Recent</h1>
-      <p>What would you like to learn today?</p>
-      {data.map((entry, index) => (
-        <SubjectCards key={index} {...entry} />
-      ))}
-    </>
-  );
+    return (
+        <>
+            <div>Subjects should be implemented here</div>
+            <h1>Recent</h1>
+            <p>What would you like to learn today?</p>
+            {data.map((entry, index) => (
+                <SubjectCards key={index} {...entry} />
+            ))}
+        </>
+    );
 }
 

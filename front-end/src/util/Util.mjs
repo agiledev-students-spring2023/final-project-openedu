@@ -43,19 +43,24 @@ export function getTheme() {
             palette:{
 
                 primary: {
-                    main: '#4659A9'
+                    main: '#4659A9',
+                    dark: '#B8C3FF'
                 },
                 secondary: {
-                    main: '#4A58A9'
+                    main: '#4A58A9',
+                    dark: '#BBC3FF'
                 },
                 error: {
-                    main: '#BA1A1A'
+                    main: '#BA1A1A',
+                    dark: 'FFB4AB'
                 },
                 success: {
-                    main :'rgb(88,229,82)'
+                    main :'rgb(88,229,82)',
+                    dark :'rgb(136,204,134)'
                 },
                 warning: {
-                    main: '#974812'
+                    main: '#974812',
+                    dark: '#FFB68F'
                 }
             },
             components:{

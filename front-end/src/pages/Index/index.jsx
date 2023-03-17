@@ -1,10 +1,10 @@
 import React from "react";
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, Box, Button } from "@mui/material";
 
 export default function Index() {
   function handleClick() {
-    
+    history.push("/login");
   }
   return (
     <div>
@@ -106,9 +106,15 @@ export default function Index() {
           border: "2px solid #000000",
         }}
       >
-        <Button variant="text" onClick={handleClick} sx={{color:'black'}}>
-          Get Started
-        </Button>
+          <Button
+            component={Link}
+            to="/login"
+            variant="text"
+            onClick={handleClick}
+            sx={{ color: "black", textDecoration: "none" }}
+          >
+            Get Started
+          </Button>
       </Box>
     </div>
   );

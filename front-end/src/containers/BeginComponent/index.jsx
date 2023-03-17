@@ -39,7 +39,7 @@ const BeginComponent = (props) => {
           fontFamily: "Raleway",
           fontStyle: "normal",
           fontWeight: "700",
-          fontSize: "60px",
+          fontSize: "100px",
           lineHeight: "70px",
           display: "flex",
           alignItems: "center",
@@ -54,7 +54,7 @@ const BeginComponent = (props) => {
       <Typography
         sx={{
           position: "absolute",
-          width: "202px",
+          width: "302px",
           height: "21px",
           left: "670px",
           top: "253px",
@@ -62,7 +62,7 @@ const BeginComponent = (props) => {
           fontFamily: "Inter",
           fontStyle: "normal",
           fontWeight: "500",
-          fontSize: "16px",
+          fontSize: "26px",
           lineHeight: "19px",
           textShadow: "0px 1px 1px rgba(200, 200, 200)",
         }}
@@ -79,8 +79,8 @@ const BeginComponent = (props) => {
           position: "absolute",
           width: "349px",
           height: "56px",
-          left: "16px",
-          top: "433px",
+          left: "640px",
+          top: "383px",
 
           background: "#E7E7E7",
           borderRadius: "0px",
@@ -107,8 +107,8 @@ const BeginComponent = (props) => {
           position: "absolute",
           width: "123px",
           height: "40px",
-          left: "135px",
-          top: "529px",
+          left: "750px",
+          top: "489px",
 
           background: "#FFFFFF",
           border: "2px solid #000000",

@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 //import { Navigate, useSearchParams } from "react-router-dom"
 import BeginComponent from "../../containers/BeginComponent";
+import BackButton from "../../containers/BackButton";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const handleSubmit = () => {
-    if (email.trim() !== "") {
-      console.log("Submitting email: ", email);
-    }
-  };
-
-    return (
-      <div className="Login">
-        {<BeginComponent email={email} setEmail={setEmail} handleSubmit={handleSubmit} />}
-      </div>
-    );
+  function handleClick(e) {
+    history.push("/");
+  }
+  return (
+    <div className="Login">
+      <BackButton url="/" handleSubmit={handleClick}/>
+      <BeginComponent />
+    </div>
+  );
 }

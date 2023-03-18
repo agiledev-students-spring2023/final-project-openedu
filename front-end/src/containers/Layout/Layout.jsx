@@ -5,7 +5,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { BottomNavBar } from '../BottomNavBar/BottomNavBar';
 
 const Header = () => {
-  // Hereis a place holder for future PubSub
+  // Here is a placeholder for future PubSub
   // Arrow disappears when it's in initial/special pages
   const [backArrow, setBackArrow] = useState(true)
   return (
@@ -13,10 +13,9 @@ const Header = () => {
       marginTop: "5%",
       flexDirection: "row",
     }}>
-      <Button variant="plain" size="small"
+      <Button disableRipple variant="plain" size="small"
         sx={{
           position: "relative",
-          left: "3%",
           display: backArrow ? 'flex' : 'none',
           width: "10px",
           height: "40px"

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, CardContent, Typography } from "@mui/material";
-import Card from "@mui/material/Card";
+import {Button, Card, CardContent, Typography} from "@mui/material";
 
-function CourseCards(
+export function CourseCard(
   /** @type {{ entry: { id: number; name: string; description: string; completionRate: number; } }} */
   { entry }
 ) {
@@ -34,5 +33,3 @@ function CourseCards(
     </Card>
   );
 }
-
-export default CourseCards;

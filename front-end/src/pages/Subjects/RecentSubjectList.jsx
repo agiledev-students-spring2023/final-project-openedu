@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import SubjectCards from './subject';
+import {SubjectCard} from './SubjectCard';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 
-
-export default function SubjectRecent() {
+export function RecentSubjectList() {
 
     const url = '';
 
@@ -48,7 +47,7 @@ export default function SubjectRecent() {
             <h1>Recent</h1>
             <p>What would you like to learn today?</p>
             {data.map((entry, index) => (
-                <SubjectCards key={index} {...entry} />
+                <SubjectCard key={index} {...entry} />
             ))}
         </>
     );

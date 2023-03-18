@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CourseCards from "./subjectDetail";
+import {CourseCard} from "./CourseCard.jsx";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import ClassIcon from "@mui/icons-material/Class";
 import { Typography } from "@mui/material";
 
-export default function Courses(props) {
+export function SubjectDetail(props) {
     const url = ""; //add API URL
 
     const [data, setData] = useState([]);
@@ -54,7 +53,7 @@ export default function Courses(props) {
                 What course would you like to learn today?
             </Typography>
             {data.map((entry, index) => (
-                <CourseCards key={index} {...entry} />
+                <CourseCard key={index} {...entry} />
             ))}
         </>
     );

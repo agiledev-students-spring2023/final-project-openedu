@@ -17,15 +17,12 @@ module.exports = {
         'sourceType': 'module'
     },
     'rules': {
-
         'react/prop-types' : 'off',
-        'semi': [
-            'error',
-            'always'
-        ],
+        'semi':"warn",
         'no-var': [
             'error',
         ],
+        'no-unused-vars' : 'off',
         'prefer-const': ['error', {
             'destructuring': 'any',
             'ignoreReadBeforeAssign': false
@@ -38,12 +35,10 @@ module.exports = {
         'no-unused-expressions': ['error'],
         'no-useless-call': ['error'],
         'no-use-before-define': ['error'],
-        'no-unused-vars' : 'off',
         'camelcase': ['error', {properties: 'never'}],
         'func-call-spacing': ['error'],
         'no-lonely-if': ['error'],
         'array-bracket-spacing': ['error'],
-
         'no-console': ['off'],
     }
 };

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import SubjectCards from './subject';
+import React, {useEffect, useState} from 'react'
+import SubjectCard from './SubjectCard.jsx'
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 
-
-export default function SubjectYouMayLike() {
+export default function SuggestSubjectList(props) {
 
     const url = '';
 

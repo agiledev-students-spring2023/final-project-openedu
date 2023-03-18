@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@mui/material";
 import {Link} from "react-router-dom";
 
-function BackButton({ url, handleClick }) {
+export function BackButton({ url, handleClick }) {
   return (
     <div>
       <Button
@@ -34,5 +34,3 @@ function BackButton({ url, handleClick }) {
     </div>
   );
 }
-
-export default BackButton;

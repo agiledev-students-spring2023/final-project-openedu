@@ -8,6 +8,7 @@ import {Layout} from './containers/Layout/Layout';
 import {CourseDetail} from "./pages/course/CourseDetail";
 import {CourseList} from "./pages/course/CourseList";
 import {SignUp} from './pages/landing/signup/SignUp';
+import {SignIn} from "./pages/landing/signin/SignIn";
 export const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here
@@ -22,8 +23,7 @@ export const MainRouter = () => {
                     <Route path="/courses" element={<CourseList />} />
                     <Route path="/course_detail" element={<CourseDetail/>}/>
                     <Route path="/signup" element={<SignUp />} />
-
-
+                    <Route path="/signin" element={<SignIn/>}/>
                 </Routes>
             </Layout>
         </div>

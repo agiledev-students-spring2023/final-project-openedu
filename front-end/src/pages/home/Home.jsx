@@ -1,6 +1,5 @@
 import React from "react";
-<<<<<<< HEAD:front-end/src/pages/home/Home.jsx
-
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import { Typography, Box,Button } from '@mui/material';
 import * as Logger from "../../util/Logger.mjs";
 
@@ -8,21 +7,12 @@ import * as Logger from "../../util/Logger.mjs";
 
 export function Home(props) {
 
-    function handleClick() {
-
-    }
+  function handleClick() {
+        // history.push("/login");
+  }
 
   Logger.info("Home rendered!");
 
-=======
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Typography, Box, Button } from "@mui/material";
-
-export default function Index() {
-  function handleClick() {
-    history.push("/login");
-  }
->>>>>>> master:front-end/src/pages/Index/index.jsx
   return (
     <div>
       <Box

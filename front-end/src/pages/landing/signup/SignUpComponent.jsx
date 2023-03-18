@@ -1,9 +1,11 @@
 import React from 'react';
-import {Typography, Box, TextField, Button} from '@mui/material';
+import { Typography, Box, TextField, Button } from '@mui/material';
+
+
 
 
 // eslint-disable-next-line
-export const SignUpComponent = props => {
+export const SignUpComponent = props =>{
     return (
         <div className="SignupComponent">
 
@@ -43,7 +45,7 @@ export const SignUpComponent = props => {
                     position: "absolute",
                     width: "123px",
                     height: "40px",
-                    left: "690px",
+                    left: "700px",
                     top: "550px",
 
                     background: "#FFFFFF",
@@ -56,12 +58,17 @@ export const SignUpComponent = props => {
             </Button>
 
             <Box sx={{
-                height: {xs: 350, md: 200, lg: 450},
+                height: { xs: 350, md: 200, lg: 450 },
             }}>
 
                 <Typography sx={{
-                    paddingTop: '120px',
-                    fontSize: {xs: '30px', md: '50px', lg: '80px'},
+                    position: "absolute",
+                    width: "167px",
+                    height: "70px",
+                    left: "580px",
+                    top: "115px",
+
+                    fontSize: '80px',
                     fontWeight: 'bold',
                     color: 'Black'
                 }}>
@@ -69,29 +76,50 @@ export const SignUpComponent = props => {
                 </Typography>
 
                 <Typography sx={{
-                    paddingTop: '50px',
-                    fontSize: {xs: '30px', md: '50px', lg: '20px'},
+                    position: "absolute",
+                    width: "367px",
+                    height: "50px",
+                    left: "580px",
+                    top: "255px",
+
+                    //paddingTop: '60px',
+                    fontSize: '20px',
                     fontWeight: 'bold',
                     color: 'Black'
                 }}>
-                    8 Characters Minimum <br/>
-                    At least one uppercase letter <br/>
+                    8 Characters Minimum <br />
+                    At least one uppercase letter <br />
                     One special character
                 </Typography>
 
-            </Box>
-            <section className="main-content">
-                <form onSubmit>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        padding: "0px",
+
+                        position: "absolute",
+                        width: "349px",
+                        height: "56px",
+                        left: "590px",
+                        top: "433px",
+
+                        background: "#E7E7E7",
+                        borderRadius: "0px",
+                    }}
+                >
                     <TextField
-                        id="filled-basic"
                         type="password"
                         label="Password"
-                        variant="filled"
                         placeholder="********"
-                        sx={{width: "349px", height: "56px"}}
+                        variant="outlined"
+                        sx={{ width: "349px", height: "56px" }}
                     />
-                </form>
-            </section>
+                </Box>
+
+            </Box>
+
         </div>
 
     );

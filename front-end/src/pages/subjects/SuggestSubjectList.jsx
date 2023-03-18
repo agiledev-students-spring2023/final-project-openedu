@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {SubjectCard} from './SubjectCard.jsx';
+import React, {useEffect, useState} from 'react'
+import SubjectCard from './SubjectCard.jsx'
 import axios from "axios";
 import {useParams} from "react-router-dom";
 
 
-export function SubjectList() {
+export default function SuggestSubjectList(props) {
 
-    const url = '';
+    const url = ''
 
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
@@ -14,17 +14,17 @@ export function SubjectList() {
     // const [description, setDescription] = useState("");
     // const [completionRate, setCompletionRate] = useState([]);
 
-    const subjectId = useParams();
+    const subjectId = useParams()
 
     useEffect(() => {
-        console.log('fetching subject information');
+        console.log('fetching subject information')
         axios(url)
             .then(response => {
-                setData(response.data);
+                setData(response.data)
             })
             .catch(err => {
-                console.log('error fetching subject information');
-                console.log(err);
+                console.log('error fetching subject information')
+                console.log(err)
 
                 //const backupData =
                 setData([
@@ -34,23 +34,22 @@ export function SubjectList() {
                         description: 'backupDescription',
                         completionRate: 37,
                     }
-                ]);
+                ])
 
                 setLoaded(true);
                 //setData((backupData??[])[0])
-            });
-    }, []);
+            })
+    }, [])
 
-  return (
-    <>
-      {/*<div>Subjects should be implemented here</div>*/}
-      <h1>Subjects</h1>
-      <p>What would you like to learn today?</p>
-      {isLoaded ?
-          data.map(entry => (
-        <SubjectCard key={Math.random()}/> //add onClink function to pass subjectId to SubjectCard.jsx>
-      )
-      ) : <div/>}
-    </>
-  );
+    return (
+        <>
+            {/*<div>Subjects should be implemented here</div>*/}
+            <h1>Subjects</h1>
+            <p>What would you like to learn today?</p>
+            {data.map(entry => (
+                <SubjectCard key={Math.random()}
+                />
+            ))}
+        </>
+    )
 }

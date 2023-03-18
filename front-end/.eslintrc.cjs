@@ -19,11 +19,6 @@ module.exports = {
     'rules': {
         'react/prop-types' : 'off',
         'semi':"warn",
-
-        // 'semi': [
-        //     'error',
-        //     'always'
-        // ],
         'no-var': [
             'error',
         ],
@@ -44,7 +39,6 @@ module.exports = {
         'func-call-spacing': ['error'],
         'no-lonely-if': ['error'],
         'array-bracket-spacing': ['error'],
-
         'no-console': ['off'],
     }
 };

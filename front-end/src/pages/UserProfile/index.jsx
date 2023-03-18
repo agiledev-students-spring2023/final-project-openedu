@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Box, TextField, Typography, Grid, Button, Container } from '@mui/material'
-import Avatar from '@mui/material/Avatar';
-import '@fontsource/public-sans';
+import {
+    Box, TextField, Typography, Grid, Button, Container,
+} from '@mui/material';
+import StyledAvater from '../../containers/StyledAvatar';
+import { Upload, Event, EventRepeat } from '@mui/icons-material/';
 import axios from 'axios';
+import { mockImageApi } from '../../mockApi/apis.mjs';
 
 
 
@@ -65,27 +68,38 @@ export default function UserProfile(props) {
     }
 
     return (
-        <Container fixed maxWidth='lg'>
+        <Container fixed sx={{marginTop:"10%"}}>
             <Box>
                 <Box sx={{
-                    width: { lg: '15%', sm: '50%' },
-                    left: '13%',
-                    height: '40px',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
+                    display: "flex",
+                    backgroundColor: "red",
+                    flexDirection: "row",
+                    justifyContent: "space-between"
                 }}>
-                    <Avatar
-                        alt="USERNAME HERE!"
-                        sx={{
-                            width:'70px',
-                            height:'70px'
-                        }}
-                    >aa</Avatar>
-                    <Box >
+
+                    <StyledAvater alt="aa" src={mockImageApi(200)} size="90px" />
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: "column",
+                        width: "60%",
+                        justifyContent: "space-evenly"
+                    }}>
+
                         <Button variant='contained' sx={{
-                            
-                        }}>Upload Avatar </Button>
-                        <Button> Recently Used</Button>
+                            display: "flex",
+                            width: "100%",
+                            borderRadius: 2,
+                        }}>
+                            <Upload sx={{ marginRight: "7%" }} />
+                            Upload Avatar </Button>
+
+                        <Button variant='contained'
+                            sx={{
+                                display: "flex",
+                                width: "100%",
+                                borderRadius: 2,
+                            }}>
+                            <EventRepeat sx={{ marginRight: "5%" }} /> Recently Used</Button>
                     </Box>
                 </Box>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { BottomNavBar } from '../BottomNavBar/BottomNavBar';
 
@@ -17,14 +17,14 @@ const Header = () => {
         sx={{
           position: "relative",
           left: "3%",
-          display: backArrow?'flex':'none',
+          display: backArrow ? 'flex' : 'none',
           width: "10px",
           height: "40px"
         }}
-      > <ChevronLeftIcon 
-      sx={{
-        fontSize : "40px"
-      }}/></Button>
+      > <ChevronLeftIcon
+          sx={{
+            fontSize: "40px"
+          }} /></Button>
     </Box>
   )
 }
@@ -33,7 +33,9 @@ export const Layout = ({ children }) => (
   <>
     <Box>
       <Header />
-      {children}
+      <Container sx={{width:"100%"}}>
+        {children}
+      </Container>
       <BottomNavBar />
     </Box>
   </>

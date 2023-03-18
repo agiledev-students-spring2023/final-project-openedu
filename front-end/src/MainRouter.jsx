@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Index from './pages/Index';
-import Courses from './pages/courses';
-import Subjects from './pages/Subjects';
-import Login from './pages/Login';
-import Layout from './containers/Layout';
-import Password from './pages/Password';
-import Signup from './pages/Signup';
-
-
-const MainRouter = () => {
+import {Home} from './pages/home/Home';
+//import Courses from './pages/course';
+import {SubjectList} from './pages/subjects/SubjectList';
+import {Begin} from './pages/landing/begin/Begin';
+import {Layout} from './containers/Layout/Layout';
+import {CourseDetail} from "./pages/course/CourseDetail";
+import {CourseList} from "./pages/course/CourseList";
+import {SignUp} from './pages/landing/signup/SignUp';
+import {SignIn} from "./pages/landing/signin/SignIn";
+export const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here
     
@@ -17,16 +17,15 @@ const MainRouter = () => {
         <div>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/subjects" element={<Subjects />} />
-                    <Route path="/courses" element={<Courses />} />
-                    <Route path="/password" element={<Password />} />
-                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/begin" element={<Begin />} />
+                    <Route path="/subjects" element={<SubjectList />} />
+                    <Route path="/courses" element={<CourseList />} />
+                    <Route path="/course_detail" element={<CourseDetail/>}/>
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/signin" element={<SignIn/>}/>
                 </Routes>
             </Layout>
         </div>
     );
 };
-
-export default MainRouter; 

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 
-export default function Subjects() {
+export function Subjects() {
   const url = "https://my.api.mockaroo.com/${subjects}?key=${33866960}"; //Add API URL
 
   const [data, setData] = useState([]);

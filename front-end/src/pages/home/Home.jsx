@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD:front-end/src/pages/home/Home.jsx
 
 import { Typography, Box,Button } from '@mui/material';
 import * as Logger from "../../util/Logger.mjs";
@@ -13,6 +14,15 @@ export function Home(props) {
 
   Logger.info("Home rendered!");
 
+=======
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Typography, Box, Button } from "@mui/material";
+
+export default function Index() {
+  function handleClick() {
+    history.push("/login");
+  }
+>>>>>>> master:front-end/src/pages/Index/index.jsx
   return (
     <div>
       <Box
@@ -113,9 +123,15 @@ export function Home(props) {
           border: "2px solid #000000",
         }}
       >
-        <Button variant="text" onClick={handleClick} sx={{color:'black'}}>
-          Get Started
-        </Button>
+          <Button
+            component={Link}
+            to="/login"
+            variant="text"
+            onClick={handleClick}
+            sx={{ color: "black", textDecoration: "none" }}
+          >
+            Get Started
+          </Button>
       </Box>
     </div>
   );

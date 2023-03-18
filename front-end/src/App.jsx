@@ -3,8 +3,8 @@ import './App.css';
 import {MainRouter} from './MainRouter.jsx';
 import * as Util from './util/Util.mjs';
 import React from "react";
-import {ThemeProvider} from "@mui/material";
 import * as Logger from "./util/Logger.mjs";
+import { ThemeProvider } from '@mui/material';
 
 export function App() {
 

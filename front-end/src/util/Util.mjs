@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import {colors, createTheme} from '@mui/material';
 
 const callbackMap = new Map();
 
@@ -61,9 +61,20 @@ export function getTheme() {
                 warning: {
                     main: '#974812',
                     dark: '#FFB68F'
+                },
+
+                // shadow: {
+                //     main: colors.grey[10]
+                // },
+
+                background: {
+                    default: colors.grey[100],
+                    paper: colors.common.white
                 }
+
             },
             components:{
+
                 // MuiButton:{
                 //     variants:[
                 //         {

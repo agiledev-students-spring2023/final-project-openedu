@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Import this file whenever you need apis
 import {mockDataApi, mockImageApi} from './apis.mjs';
-import * as Logger from "../src/util/Logger.mjs";
+import * as Logger from "../util/Logger.mjs";
 
 
 // This is an exmaple file for how to use axios with mockaroo

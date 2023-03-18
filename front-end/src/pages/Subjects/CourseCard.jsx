@@ -8,7 +8,7 @@ export function CourseCard(
 ) {
   const navigate = useNavigate();
   const routeChange = () => {
-    navigate("../courses/CourseDetail/${entry.id}");
+    navigate("../course/CourseDetail/${entry.id}");
   };
   return (
     <Card

@@ -38,7 +38,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 export default function StyledAvater(props) {
-    const { size, src, alt } = props
+    const { size, src, alt } = props;
     return (
         <Stack direction="row" spacing={2}>
             <StyledBadge

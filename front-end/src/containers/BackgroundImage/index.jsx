@@ -1,9 +1,9 @@
-import React from 'react'
-import { Box } from '@mui/material'
-import { mockImageApi } from '../../mockApi/apis.mjs'
+import React from 'react';
+import { Box } from '@mui/material';
+import { mockImageApi } from '../../mockApi/apis.mjs';
 // mainly for beginning pages like home/login..
 export default function BackgroundImage() {
-    const imageUrl = mockImageApi(390, 844)
+    const imageUrl = mockImageApi(390, 844);
     return (
         <Box>
             <Box
@@ -20,5 +20,5 @@ export default function BackgroundImage() {
                 }} />
 
         </Box>
-    )
+    );
 }

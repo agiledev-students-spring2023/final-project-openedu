@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react'
-import SubjectCard from './SubjectCard.jsx'
+import React, {useEffect, useState} from 'react';
+import SubjectCard from './SubjectCard.jsx';
 import axios from "axios";
 import {useParams} from "react-router-dom";
 
 
 export default function SuggestSubjectList(props) {
 
-    const url = ''
+    const url = '';
 
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
@@ -14,17 +14,17 @@ export default function SuggestSubjectList(props) {
     // const [description, setDescription] = useState("");
     // const [completionRate, setCompletionRate] = useState([]);
 
-    const subjectId = useParams()
+    const subjectId = useParams();
 
     useEffect(() => {
-        console.log('fetching subject information')
+        console.log('fetching subject information');
         axios(url)
             .then(response => {
-                setData(response.data)
+                setData(response.data);
             })
             .catch(err => {
-                console.log('error fetching subject information')
-                console.log(err)
+                console.log('error fetching subject information');
+                console.log(err);
 
                 //const backupData =
                 setData([
@@ -34,12 +34,12 @@ export default function SuggestSubjectList(props) {
                         description: 'backupDescription',
                         completionRate: 37,
                     }
-                ])
+                ]);
 
                 setLoaded(true);
                 //setData((backupData??[])[0])
-            })
-    }, [])
+            });
+    }, []);
 
     return (
         <>
@@ -51,5 +51,5 @@ export default function SuggestSubjectList(props) {
                 />
             ))}
         </>
-    )
+    );
 }

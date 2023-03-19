@@ -6,9 +6,9 @@ import { SubjectList } from './pages/subjects/SubjectList';
 import { Layout } from './containers/Layout/Layout';
 import { CourseDetail } from "./pages/course/CourseDetail";
 import { CourseList } from "./pages/course/CourseList";
-import EditProfile from "./pages/userProfile/EditProfile";
-import RecentlyUsedAvatars from './pages/userProfile/RecentlyUsedAvatars';
-import LandingPage from './pages/landing/Landing/LandingPage';
+import EditProfile from "./pages/userprofile/editprofile/EditProfile";
+import RecentlyUsedAvatars from './pages/userprofile/recentlyusedavatars/RecentlyUsedAvatars';
+import LandingPage from './pages/landing/LandingPage';
 export const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here

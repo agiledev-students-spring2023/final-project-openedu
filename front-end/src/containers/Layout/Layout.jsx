@@ -8,12 +8,12 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
   // Here is a placeholder for future PubSub
   // Arrow disappears when it's in initial/special pages
-  const [backArrow, setBackArrow] = useState(true)
+  const [backArrow, setBackArrow] = useState(true);
   const naviagte = useNavigate();
 
   const handleGoBack = () => {
     naviagte(-1);
-  }
+  };
 
   return (
     <Box sx={{
@@ -33,8 +33,8 @@ const Header = () => {
             fontSize: "40px"
           }} /></Button>
     </Box>
-  )
-}
+  );
+};
 // eslint-disable-next-line react/prop-types
 export const Layout = ({ children }) => (
   <>

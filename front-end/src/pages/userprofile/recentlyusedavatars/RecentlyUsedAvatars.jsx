@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Avatar, Typography, Box, Button } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import { Avatar, Typography, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
-import axios from 'axios'
-import { mockImageApi } from '../../../mockApi/apis.mjs'
+import axios from 'axios';
+import { mockImageApi } from '../../../mockApi/apis.mjs';
 
 
 // Chosen avatar effect is considered
 export default function RecentlyUsedAvatars() {
-    const [avatars, setAvatars] = useState([])
+    const [avatars, setAvatars] = useState([]);
     const [selectedAvatar, setSelectedAvatar] = useState(null);
     useEffect(() => {
         // axios({
@@ -19,8 +19,8 @@ export default function RecentlyUsedAvatars() {
         // }).catch(err => {
         //     console.log(err)
         // })
-        console.log("RecentlyUsedAvatars Axios TBD")
-    }, [])
+        console.log("RecentlyUsedAvatars Axios TBD");
+    }, []);
 
 
     // Mocking Avatars
@@ -30,7 +30,7 @@ export default function RecentlyUsedAvatars() {
     }
 
     const handleSaveChanges = () => {
-        console.log("RecentlyUsedAvatars/handleSaveChanges Mocked")
+        console.log("RecentlyUsedAvatars/handleSaveChanges Mocked");
         // axios({
         //     method: "POST",
         //     url: `${baseURL}/api/user/update_profile`,
@@ -40,7 +40,7 @@ export default function RecentlyUsedAvatars() {
         // }).then(res => {
         //     navigate(-1)
         // }).catch(err=>{console.log(err)})
-    }
+    };
 
     const handleAvatarClick = (item) => {
         setSelectedAvatar(item);
@@ -73,7 +73,7 @@ export default function RecentlyUsedAvatars() {
                                 marginBottom: '5%'
                             }}
                             onClick={handleAvatarClick} />
-                    )
+                    );
                 })}
             </Box>
             <Button
@@ -89,5 +89,5 @@ export default function RecentlyUsedAvatars() {
                 onClick={handleSaveChanges}>
                 Save Changes </Button>
         </Box>
-    )
+    );
 }

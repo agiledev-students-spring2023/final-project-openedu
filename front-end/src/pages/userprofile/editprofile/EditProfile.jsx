@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import {
     Box, TextField, InputAdornment, Grid, Button, Container,
@@ -26,19 +26,19 @@ export default function EditProfile(props) {
             method: "GET",
             url: mockDataApi("comments")
         }).then(res => {
-            const user = res.data[0]
+            const user = res.data[0];
             setName(user.user_name);
             setDescription(user.comment);
         }).catch(err => {
-            console.log(err)
-        })
+            console.log(err);
+        });
 
-    }, [])
+    }, []);
 
     const handleCleanUsername = (e) => {
         e.preventDefault();
         setName("");
-    }
+    };
 
     const handleSaveChanges = (e) => {
         e.preventDefault();
@@ -52,12 +52,12 @@ export default function EditProfile(props) {
         // }).then(res => {
         //     navigate(-1)
         // })
-    }
+    };
 
     const handleDiscardChanges = (e) => {
         e.preventDefault();
         navigate("/"); // Or to profile
-    }
+    };
 
     const handleSelectAvatar = (e) => {
         e.preventDefault();
@@ -67,7 +67,7 @@ export default function EditProfile(props) {
     const handleAvatarUpload = (e) => {
         e.preventDefault();
         setSelectedAvatar(e.target.files[0]);
-        console.log(selectedAvatar)
+        console.log(selectedAvatar);
         const formData = new FormData();
         // More data can be appended, related to user info/security..
         formData.append('file', selectedAvatar);
@@ -151,7 +151,7 @@ export default function EditProfile(props) {
                                 value={name}
                                 variant="outlined"
                                 sx={{ width: "100%" }}
-                                onChange={(e) => { setName(e.target.value) }}
+                                onChange={(e) => { setName(e.target.value); }}
                                 helperText="Give yourself a shinny callsign!"
                                 InputProps={{
                                     endAdornment: (
@@ -178,7 +178,7 @@ export default function EditProfile(props) {
                                 sx={{
                                     width: "100%"
                                 }}
-                                onChange={(e) => { setDescription(e.target.value) }}
+                                onChange={(e) => { setDescription(e.target.value); }}
                             />
                         </Grid>
                     </Grid>
@@ -224,5 +224,5 @@ export default function EditProfile(props) {
                 </Box>
             </Box>
         </Container>
-    )
+    );
 }

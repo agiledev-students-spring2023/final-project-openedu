@@ -4,8 +4,7 @@ import { Typography, Box, Button, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import BackgroundImage from "../../containers/BackgroundImage";
 import * as Logger from "../../util/Logger.mjs";
-import { mockImageApi } from "../../mockApi/apis.mjs";
-import logo from "../../img/logo.png"
+import logo from "../../img/logo.png";
 
 // This is an example page, called Home
 
@@ -61,7 +60,7 @@ export function Home(props) {
           fontSize: '100%',
           marginTop: '15%'
         }}
-        onClick={() => { navigate('/signin') }}>
+        onClick={() => { navigate('/signin'); }}>
         <AddIcon />
         Get Started </Button>
     </Box >

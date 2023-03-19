@@ -1,14 +1,13 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Home } from './pages/home/Home';
-//import Courses from './pages/course';
-import { SubjectList } from './pages/subjects/SubjectList';
-import { Layout } from './containers/Layout/Layout';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { Home } from "./pages/home/Home";
+import { Begin } from "./pages/landing/begin/Begin";
+import { Layout } from "./containers/Layout/Layout";
+import { SubjectList } from "./pages/subjects/SubjectList.jsx";
+import { SubjectDetail } from "./pages/subjects/SubjectDetail.jsx";
 import { CourseDetail } from "./pages/course/CourseDetail";
-import { CourseList } from "./pages/course/CourseList";
-import EditProfile from "./pages/userprofile/editprofile/EditProfile";
-import RecentlyUsedAvatars from './pages/userprofile/recentlyusedavatars/RecentlyUsedAvatars';
-import LandingPage from './pages/landing/LandingPage';
+import { SignUp } from "./pages/landing/signup/SignUp";
+import { SignIn } from "./pages/landing/signin/SignIn";
 export const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here
@@ -19,11 +18,14 @@ export const MainRouter = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/subjects" element={<SubjectList />} />
-                    <Route path="/courses" element={<CourseList />} />
+                    <Route path="/subjects/subject_detail/:subjectId" element={<SubjectDetail />} />
+                    {/*<Route path="/courses" element={<Courses />} />*/}
                     <Route path="/course_detail" element={<CourseDetail />} />
                     <Route path="/signin" element={<LandingPage />} />
                     <Route path="/edit_profile" element={<EditProfile />} />
                     <Route path="/recently_used_avatars" element={<RecentlyUsedAvatars />} />
+                
+
                 </Routes>
             </Layout>
         </div>

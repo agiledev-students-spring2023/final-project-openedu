@@ -10,7 +10,7 @@ export function SubjectCard(
 ) {
     const navigate = useNavigate();
     const routeChange = () => {
-        navigate(`./SubjectDetail/${entry.id}`);
+        navigate(`./subject_detail/${entry.id}`);
     };
 
     return (

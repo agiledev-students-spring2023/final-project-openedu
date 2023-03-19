@@ -19,7 +19,7 @@ export const MainRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="/begin" element={<Begin />} />
           <Route path="/subjects" element={<SubjectList />} />
-          <Route path="/subject_detail/:subjectId" element={<SubjectDetail />} />
+          <Route path="/subjects/subject_detail/:subjectId" element={<SubjectDetail />} />
           {/*<Route path="/courses" element={<Courses />} />*/}
           <Route path="/course_detail" element={<CourseDetail />} />
           <Route path="/signup" element={<SignUp />} />

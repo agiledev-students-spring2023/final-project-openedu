@@ -55,7 +55,7 @@ const LIGHT_SCHEME = {
     surface_variant: {
 
     },
-}
+};
 
 const DARK_SCHEME = {
     primary: {
@@ -76,7 +76,7 @@ const DARK_SCHEME = {
     surface_variant: {
 
     },
-}
+};
 
 export function getTheme() {
     // Reminder: in newer versions of MUI, the color dose not seem to be calculated

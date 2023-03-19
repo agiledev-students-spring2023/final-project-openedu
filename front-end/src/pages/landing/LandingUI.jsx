@@ -12,7 +12,7 @@ function InputField(props) {
     return (
         <Box>
             <Box sx={{
-                marginTop: '11%'
+                marginTop: '11%',
             }}>
                 <TextField
                     label={props.label}

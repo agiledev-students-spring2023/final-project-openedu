@@ -4,6 +4,9 @@ import { Home } from './pages/home/Home';
 import { SubjectList } from "./pages/subjects/SubjectList.jsx";
 import { Layout } from './containers/Layout/Layout';
 import { CourseDetail } from "./pages/course/CourseDetail";
+import LandingPage from './pages/landing/LandingPage';
+import EditProfile from './pages/userprofile/EditProfile'
+import RecentlyUsedAvatars from './pages/userprofile/RecentlyUsedAvatars'
 export const MainRouter = () => {
     // Currently, there is only one route to a default page:
     //      Level one routes should be included here
@@ -13,7 +16,6 @@ export const MainRouter = () => {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
-
                     <Route path="/subjects" element={<SubjectList />} />
                     {/*<Route path="/courses" element={<Courses />} />*/}
                     <Route path="/course_detail" element={<CourseDetail />} />

@@ -3,10 +3,10 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import {
     Box, TextField, InputAdornment, Grid, Button, Container,
 } from '@mui/material';
-import StyledAvater from '../../../containers/StyledAvatar';
+import StyledAvater from '../../containers/StyledAvatar';
 import { Upload, Event, Save, HighlightOff } from '@mui/icons-material/';
 import axios from 'axios';
-import { mockImageApi, mockDataApi } from '../../../mockApi/apis.mjs';
+import { mockImageApi, mockDataApi } from '../../mockApi/apis.mjs';
 
 
 

@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { Box } from '@mui/material';
-import { LandingIU } from '../../containers/LandingUI';
+import { LandingIU } from './LandingUI.jsx';
 import BackgroundImage from "../../containers/BackgroundImage/index.jsx";
 
 // Use Context to make globals,or functions between parent/child

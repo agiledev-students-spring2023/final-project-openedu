@@ -47,7 +47,7 @@ export default function SuggestSubjectList(props) {
             <h1>Subjects</h1>
             <p>What would you like to learn today?</p>
             {data.map((entry, index) => (
-                <SubjectCards key={index} {...entry} />
+                <SubjectCard key={index} {...entry} />
             ))}
         </>
     );

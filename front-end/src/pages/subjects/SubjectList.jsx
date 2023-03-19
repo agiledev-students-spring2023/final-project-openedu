@@ -3,9 +3,10 @@ import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
+import * as Mockaroo from "../../mockApi/apis.mjs";
 
 export function SubjectList() {
-  const url = "https://my.api.mockaroo.com/${subjects}?key=${33866960}"; //Add API URL
+  const url = Mockaroo.mockDataApi("subjects"); //Add API URL
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
@@ -16,9 +17,11 @@ export function SubjectList() {
 
   useEffect(() => {
     console.log("fetching subject information");
-    axios(url)
+    axios.get(url)
       .then((response) => {
         setData(response.data);
+        console.log(response.data);
+        setLoaded(true);
       })
       .catch((err) => {
         console.log("error fetching subject information");
@@ -37,6 +40,9 @@ export function SubjectList() {
         setLoaded(true);
         //setData((backupData??[])[0])
       });
+      // .finally(() => {
+      //   setLoaded(true);
+      // })
   }, []);
 
   return (

@@ -24,7 +24,7 @@ export const mockDataApi = (op) => {
             option = COMMENTS_MOCK;
             break;
     }
-    return `https://my.api.mockaroo.com/${option}?key=${KEY}`;
+    return `https://my.api.mockaroo.com/${option}?key=${KEY}`
 };
 
 

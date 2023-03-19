@@ -1,71 +1,90 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import {
-    Box, TextField, Typography, Grid, Button, Container,
+    Box, TextField, InputAdornment, Grid, Button, Container,
 } from '@mui/material';
 import StyledAvater from '../../../containers/StyledAvatar';
 import { Upload, Event, Save, HighlightOff } from '@mui/icons-material/';
 import axios from 'axios';
-import { mockImageApi } from '../../../mockApi/apis.mjs';
+import { mockImageApi, mockDataApi } from '../../../mockApi/apis.mjs';
 
 
 
-export default function UserProfile(props) {
-    const [name, setname] = useState('');
-    const [email, setemail] = useState('');
-    const [avatar, setavatar] = useState('');
-    const [id, setid] = useState('');
-    const [description, setdescription] = useState('');
-    const [userObj, setUserObj] = useState({})
-    const baseURL = "apiConfig.base";
+export default function EditProfile(props) {
+    const avatarInputRef = useRef(null);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState(''); // Email may required?
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
+    const [description, setDescription] = useState('');
+    const baseURL = "apiConfig.base"; // Backend tbd
     const navigate = useNavigate();
 
-    //   useEffect(() => {
-    //     axios({
-    //       method: "GET",
-    //       url: `${baseURL}/api/user/profile`
-    //     }).then(res => {
-    //       const user = res.data.userObj || JSON.parse(localStorage.getItem('userObj'));
-    //       setUserObj(user)
-    //       if (user.id) {
-    //         setavatar(user.avatar);
-    //         setdescription(user.description);
-    //         setemail(user.email);
-    //         setname(user.name);
-    //         setid(user.id)
-    //       }
-    //       else {
-    //         navigate('/');
-    //       }
-    //     })
-    //   }, [])
-
-    const handleChangeInfo = (e) => {
-        e.preventDefault();
-        axios({
-            method: "POST",
-            url: `${baseURL}/api/user/update_profile`,
-            data: {
-                name,
-                description,
-                avatar,
-                email,
-                id
-            }
-        }).then(res => {
-            navigate("/profile")
-        })
-    }
-
-    const handleLogout = () => {
+    // Mock!
+    // Security needed
+    useEffect(() => {
         axios({
             method: "GET",
-            url: `${baseURL}/api/user/logout`,
+            url: mockDataApi("comments")
         }).then(res => {
-            navigate('/');
-            localStorage.removeItem("userObj")
+            const user = res.data[0]
+            setName(user.user_name);
+            setDescription(user.comment);
+        }).catch(err => {
+            console.log(err)
         })
+
+    }, [])
+
+    const handleCleanUsername = (e) => {
+        e.preventDefault();
+        setName("");
     }
+
+    const handleSaveChanges = (e) => {
+        e.preventDefault();
+        // axios({
+        //     method: "POST",
+        //     url: `${baseURL}/api/user/update_profile`,
+        //     data: {
+        //         name,
+        //         description,
+        //     }
+        // }).then(res => {
+        //     navigate(-1)
+        // })
+    }
+
+    const handleDiscardChanges = (e) => {
+        e.preventDefault();
+        navigate("/"); // Or to profile
+    }
+
+    const handleSelectAvatar = (e) => {
+        e.preventDefault();
+        avatarInputRef.current.click();
+    };
+
+    const handleAvatarUpload = (e) => {
+        e.preventDefault();
+        setSelectedAvatar(e.target.files[0]);
+        console.log(selectedAvatar)
+        const formData = new FormData();
+        // More data can be appended, related to user info/security..
+        formData.append('file', selectedAvatar);
+        // axios.post('/api/upload', formData, {
+        //   headers: {
+        //     'Content-Type': 'multipart/form-data'
+        //   }
+        // }).then(response => {
+        //   console.log(response.data);
+        // }).catch(error => {
+        //   console.log(error);
+        // });
+
+        console.log(formData); // For testing purposes only
+    };
+
+
 
     return (
         <Container fixed sx={{ marginTop: "10%" }}>
@@ -86,21 +105,37 @@ export default function UserProfile(props) {
                         justifyContent: "space-evenly"
                     }}>
 
-                        <Button variant='contained' sx={{
-                            display: "flex",
-                            width: "100%",
-                            borderRadius: 2,
-                        }}>
-                            <Upload sx={{ marginRight: "7%" }} />
-                            Upload Avatar </Button>
+                        <div>
+                            <input
+                                type="file"
+                                onChange={handleAvatarUpload}
+                                ref={avatarInputRef}
+                                style={{ display: 'none' }}
+                            />
+                            <Button
+                                variant='contained'
+                                sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    borderRadius: 2,
+                                }}
+                                onClick={handleSelectAvatar}>
+                                <Upload sx={{ marginRight: "7%" }} />
+                                Upload Avatar </Button>
+                        </div>
 
-                        <Button variant='contained' color='neutral'
+                        <Button
+                            variant='contained'
+                            color='neutral'
                             sx={{
                                 display: "flex",
                                 width: "100%",
                                 borderRadius: 2,
-                            }}>
-                            <Event sx={{ marginRight: "5%" }} /> Recently Used</Button>
+                            }}
+                            onClick={() => navigate("/recently_used_avatars")} >
+                            <Event sx={{ marginRight: "5%" }} />
+                            Recently Used
+                        </Button>
                     </Box>
                 </Box>
 
@@ -118,8 +153,20 @@ export default function UserProfile(props) {
                                 value={name}
                                 variant="outlined"
                                 sx={{ width: "100%" }}
-                                onChange={(e) => { setname(e.target.value) }}
+                                onChange={(e) => { setName(e.target.value) }}
                                 helperText="Give yourself a shinny callsign!"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Button
+                                                variant="plain"
+                                                sx={{ width: '1px' }}
+                                                onClick={handleCleanUsername}>
+                                                <HighlightOff large />
+                                            </Button>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </Grid>
 
@@ -133,31 +180,45 @@ export default function UserProfile(props) {
                                 sx={{
                                     width: "100%"
                                 }}
-                                onChange={(e) => { setdescription(e.target.value) }}
+                                onChange={(e) => { setDescription(e.target.value) }}
                             />
                         </Grid>
                     </Grid>
 
 
-                    <Grid container spacing={2} sx={{ width: "100%", marginTop: '20%' }}>
+                    <Grid
+                        container
+                        spacing={2}
+                        sx={{
+                            width: "100%",
+                            marginTop: '20%',
+                            marginBottom: "50%"
+                        }}>
                         <Grid item sx={{ width: "100%" }}>
-                            <Button variant='contained' sx={{
-                                display: "flex",
-                                width: "100%",
-                                borderRadius: 2,
-                                fontSize: '100%'
-                            }}>
+                            <Button
+                                variant='contained'
+                                sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    borderRadius: 2,
+                                    fontSize: '100%'
+                                }}
+                                onClick={handleSaveChanges}>
                                 <Save sx={{ marginRight: "5%" }} />
                                 Save Changes </Button>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <Button variant='contained' color="error" sx={{
-                                display: "flex",
-                                width: "100%",
-                                borderRadius: 2,
-                                fontSize: '100%'
-                            }}>
+                            <Button
+                                variant='contained'
+                                color="error"
+                                sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    borderRadius: 2,
+                                    fontSize: '100%'
+                                }}
+                                onClick={handleDiscardChanges}>
                                 <HighlightOff sx={{ marginRight: "5%" }} />
                                 Discard Changes </Button>
                         </Grid>

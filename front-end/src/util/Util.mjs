@@ -107,9 +107,9 @@ export function getTheme() {
                     main: '#974812',
                     dark: '#FFB68F'
                 },
-                neutral:{
-                    main:'#303034',
-                    contrastText:"#fff"
+                neutral: {
+                    main: '#303034',
+                    contrastText: "#fff"
                 },
                 background: {
                     default: colors.grey[100],
@@ -117,21 +117,30 @@ export function getTheme() {
                 },
             },
             components: {
-
-                // MuiButton:{
-                //     variants:[
-                //         {
-                //             props:{variant:"bold"},
-                //             style:{
-                //                 font:"bold",
-                //                 border:`4px solid white`,
-                //                 color:'white'
-                //             }
-                //         }
-                //     ]
-                // }
+                MuiTextField: {
+                    styleOverrides: {
+                        root: {
+                            borderRadius: "8px",
+                        }
+                    }
+                },
+                MuiButton: {
+                    styleOverrides: {
+                        root: {
+                            borderRadius: "12px", // specify your desired border radius value here
+                        },
+                    },
+                },
             },
             typography: {
+                fontFamily: [
+                    'Raleway',
+                    '-apple-system',
+                    'Roboto',
+                    '"Helvetica Neue"',
+                    'Arial',
+                    'sans-serif',
+                ].join(','),
                 button: {
                     textTransform: 'none'
                 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, Button, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import BackgroundImage from "../../containers/BackgroundImage";
 import * as Logger from "../../util/Logger.mjs";
 import { mockImageApi } from "../../mockApi/apis.mjs";
 import logo from "../../img/logo.png"
@@ -11,11 +12,6 @@ import logo from "../../img/logo.png"
 export function Home(props) {
   const navigate = useNavigate();
 
-  const imageUrl = mockImageApi(390, 844)
-  function handleClick() {
-    // history.push("/login");
-  }
-
   Logger.info("Home rendered!");
 
   return (
@@ -23,18 +19,7 @@ export function Home(props) {
       flexDirection: 'column',
       marginLeft: '3.5%'
     }}>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '0',
-          left: '0',
-          zIndex: '-1',
-          height: '100%',
-          width: '100%',
-          backgroundImage: `url(${imageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }} />
+      <BackgroundImage />
 
       <Box>
         <Box
@@ -62,7 +47,7 @@ export function Home(props) {
         marginTop: '8%'
       }}>
         <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>The</Typography>
-        <Typography variant="h3" bold sx={{ display: 'flex', fontWeight: 800 }}>All-in-one</Typography>
+        <Typography variant="h3" sx={{ display: 'flex', fontWeight: 800 }}>All-in-one</Typography>
         <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>Computer Science </Typography>
         <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>Learning Platform</Typography>
       </Box>
@@ -76,7 +61,7 @@ export function Home(props) {
           fontSize: '100%',
           marginTop: '15%'
         }}
-        onClick={() => { navigate('/login') }}>
+        onClick={() => { navigate('/signin') }}>
         <AddIcon />
         Get Started </Button>
     </Box >

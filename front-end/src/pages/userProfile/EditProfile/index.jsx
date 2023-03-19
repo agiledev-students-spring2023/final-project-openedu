@@ -117,7 +117,6 @@ export default function EditProfile(props) {
                                 sx={{
                                     display: "flex",
                                     width: "100%",
-                                    borderRadius: 2,
                                 }}
                                 onClick={handleSelectAvatar}>
                                 <Upload sx={{ marginRight: "7%" }} />
@@ -129,8 +128,7 @@ export default function EditProfile(props) {
                             color='neutral'
                             sx={{
                                 display: "flex",
-                                width: "100%",
-                                borderRadius: 2,
+                                width: "100%",  
                             }}
                             onClick={() => navigate("/recently_used_avatars")} >
                             <Event sx={{ marginRight: "5%" }} />
@@ -162,7 +160,7 @@ export default function EditProfile(props) {
                                                 variant="plain"
                                                 sx={{ width: '1px' }}
                                                 onClick={handleCleanUsername}>
-                                                <HighlightOff large />
+                                                <HighlightOff />
                                             </Button>
                                         </InputAdornment>
                                     ),
@@ -200,7 +198,7 @@ export default function EditProfile(props) {
                                 sx={{
                                     display: "flex",
                                     width: "100%",
-                                    borderRadius: 2,
+                                    
                                     fontSize: '100%'
                                 }}
                                 onClick={handleSaveChanges}>
@@ -215,7 +213,7 @@ export default function EditProfile(props) {
                                 sx={{
                                     display: "flex",
                                     width: "100%",
-                                    borderRadius: 2,
+                                    
                                     fontSize: '100%'
                                 }}
                                 onClick={handleDiscardChanges}>

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {CourseCard} from "./CourseCard.jsx";
+import { CourseCard } from "./CourseCard.jsx";
 import axios from "axios";
 import ClassIcon from "@mui/icons-material/Class";
 import { Typography } from "@mui/material";
+import * as Mockaroo from "../../mockApi/apis.mjs";
 
 export function SubjectDetail(props) {
-    const url = ""; //add API URL
+
+    const url = Mockaroo.mockDataApi(`subjects`);
+    // const url = Mockaroo.mockDataApi(`subjects/${subjectId}`); 
+
 
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
+
     const subjectId = props["subjectId"] ?? 0;
 
     useEffect(() => {
@@ -16,6 +21,7 @@ export function SubjectDetail(props) {
         axios(url)
             .then((response) => {
                 setData(response.data);
+                setLoaded(true);
             })
             .catch((err) => {
                 console.log("error fetching subject information");
@@ -31,7 +37,7 @@ export function SubjectDetail(props) {
                     },
                 ]);
 
-                setLoaded(true);
+
                 // const backupData = [
                 //   {
                 //     id: 3,
@@ -47,13 +53,13 @@ export function SubjectDetail(props) {
 
     return (
         <>
-            <Typography variant="h1">{subjectId.name}</Typography>
+            <Typography variant="h2">{subjectId.name}</Typography>
             <Typography variant="h6"> {subjectId.description}</Typography>
-            <Typography variant="h6">
+            <Typography variant="body">
                 What course would you like to learn today?
             </Typography>
             {data.map((entry, index) => (
-                <CourseCard key={index} {...entry} />
+                <CourseCard key={index} entry={entry} />
             ))}
         </>
     );

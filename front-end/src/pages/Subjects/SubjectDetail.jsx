@@ -56,7 +56,7 @@ export function SubjectDetail(props) {
             <Typography variant="h2">{subjectId.name}</Typography>
             <Typography variant="h6"> {subjectId.description}</Typography>
             <Typography variant="body">
-                What course would you like to learn today?
+                Which course would you like to learn today?
             </Typography>
             {data.map((entry, index) => (
                 <CourseCard key={index} entry={entry} />

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import SubjectCard from './SubjectCard.jsx'
+import React, {useEffect, useState} from 'react';
+import SubjectCard from './SubjectCard.jsx';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -47,7 +47,7 @@ export default function SuggestSubjectList(props) {
             <h1>Subjects</h1>
             <p>What would you like to learn today?</p>
             {data.map((entry, index) => (
-                <SubjectCards key={index} {...entry} />
+                <SubjectCard key={index} {...entry} />
             ))}
         </>
     );

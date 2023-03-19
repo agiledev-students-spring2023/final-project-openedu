@@ -8,7 +8,7 @@ import * as Mockaroo from "../../mockApi/apis.mjs";
 export function SubjectDetail(props) {
 
     const url = Mockaroo.mockDataApi(`subjects`);
-    // const url = Mockaroo.mockDataApi(`subjects/${subjectId}`); 
+    // const url = Mockaroo.mockDataApi(`subjects/${subjectId}`);
 
 
     const [data, setData] = useState([]);

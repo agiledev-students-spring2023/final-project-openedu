@@ -1,128 +1,84 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import { Typography, Box,Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { Typography, Box, Button, Divider } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import * as Logger from "../../util/Logger.mjs";
+import { mockImageApi } from "../../mockApi/apis.mjs";
+import logo from "../../img/logo.png"
 
 // This is an example page, called Home
 
 export function Home(props) {
+  const navigate = useNavigate();
 
+  const imageUrl = mockImageApi(390, 844)
   function handleClick() {
-        // history.push("/login");
+    // history.push("/login");
   }
 
   Logger.info("Home rendered!");
 
   return (
-    <div>
+    <Box sx={{
+      flexDirection: 'column',
+      marginLeft: '3.5%'
+    }}>
       <Box
         sx={{
-          position: "absolute",
-          width: "251px",
-          height: "79px",
-          top: "219px",
-          left: "28px",
-          textAlign: "center",
-        }}
-        backgroundColor="#D9D9D9"
-      >
-        <Typography
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          zIndex: '-1',
+          height: '100%',
+          width: '100%',
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }} />
+
+      <Box>
+        <Box
           sx={{
-            margin: "auto",
-            fontFamily: "Raleway",
-            fontStyle: "normal",
-            fontWeight: "800",
-            fontSize: "50px",
-            lineHeight: "59px",
-          }}
-        >
-          LOGO
-        </Typography>
+            marginTop: '56%',
+            height: '52px',
+            backgroundImage: `url(${logo})`,
+            backgroundSize: 'contain',
+
+            backgroundRepeat: 'no-repeat',
+            display: 'flex'
+          }} />
+
+        <Divider color='#D9D9D9'
+          sx={{
+            width: '70%',
+            borderBottomWidth: 5,
+            marginTop: '2%'
+          }} />
       </Box>
-      <Typography
-        sx={{
-          position: "absolute",
-          width: "58px",
-          height: "32px",
-          left: "28px",
-          top: "356px",
 
-          fontFamily: "Arimo",
-          fontStyle: "normal",
-          fontWeight: "400",
-          fontSize: "25px",
-          lineHeight: "29px",
-          textAlign: "left",
-        }}
-      >
-        The
-      </Typography>
+      <Box sx={{
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        marginTop: '8%'
+      }}>
+        <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>The</Typography>
+        <Typography variant="h3" bold sx={{ display: 'flex', fontWeight: 800 }}>All-in-one</Typography>
+        <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>Computer Science </Typography>
+        <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>Learning Platform</Typography>
+      </Box>
 
-      <Typography
-        sx={{
-          position: "absolute",
-          width: "251px",
-          height: "54px",
-          left: "28px",
-          top: "388px",
-
-          fontFamily: "Arimo",
-          fontStyle: "normal",
-          fontWeight: "700",
-          fontSize: "47px",
-          lineHeight: "57px",
-          textAlign: "left",
-        }}
-      >
-        All-in-one
-      </Typography>
-      <Typography
-        sx={{
-          position: "absolute",
-          width: "266px",
-          height: "78px",
-          left: "28px",
-          top: "448px",
-
-          fontFamily: "Arimo",
-          fontStyle: "normal",
-          fontWeight: "400",
-          fontSize: "24px",
-          lineHeight: "28px",
-          textAlign: "left",
-        }}
-      >
-        Computer Science Learning Platform
-      </Typography>
-      <Box
+      <Button
+        variant='contained'
         sx={{
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0px",
-          gap: "8px",
-
-          position: "absolute",
-          width: "143px",
-          height: "48px",
-          left: "28px",
-          top: "532px",
-
-          background: "#FFFFFF",
-          border: "2px solid #000000",
+          width: "42%",
+          borderRadius: 2,
+          fontSize: '100%',
+          marginTop: '15%'
         }}
-      >
-          <Button
-            component={Link}
-            to="/login"
-            variant="text"
-            onClick={handleClick}
-            sx={{ color: "black", textDecoration: "none" }}
-          >
-            Get Started
-          </Button>
-      </Box>
-    </div>
+        onClick={() => { navigate('/login') }}>
+        <AddIcon />
+        Get Started </Button>
+    </Box >
   );
 }

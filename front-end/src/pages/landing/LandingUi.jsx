@@ -156,7 +156,19 @@ export const LandingUi = () => {
                     }}
                     onClick={handleForget}>
                     <Add />
-                    Forget </Button>
+                    Forget Password</Button>
+                
+                <Button
+                    variant='contained'
+                    sx={{
+                        marginTop: '3%',
+                        width: "35%",
+                        fontSize: '100%',
+                        display: page.next === 0 ? "flex" : "none"
+                    }}
+                    onClick={handleForget}>
+                    <Add />
+                    Sign Up </Button>
             </Box >
         </div >
     );

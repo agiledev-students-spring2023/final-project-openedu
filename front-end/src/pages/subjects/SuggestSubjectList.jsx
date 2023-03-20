@@ -13,8 +13,8 @@ export function SuggestSubjectList() {
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
 
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const subjectId = useParams();
 
     useEffect(() => {
@@ -24,6 +24,7 @@ export function SuggestSubjectList() {
                 setData(response.data);
                 console.log(response.data);
                 setLoaded(true);
+
             })
             .catch(err => {
                 console.log('error fetching subject information');

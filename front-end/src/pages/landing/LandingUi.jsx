@@ -75,9 +75,9 @@ export const LandingUi = () => {
         case 2:
             page = {
                 header: 'Password',
-                subheader: ` 8 Characters Minimum \n
-                At least one uppercase letter \n
-                One special character`,
+                subheader: ` At least 8 characters, 
+                one uppercase letter, 
+                one special character`,
                 input: 'Password',
                 next: -1
             };

@@ -17,21 +17,27 @@ const Header = () => {
 
   return (
     <Box sx={{
-      marginTop: "5%",
-      flexDirection: "row",
+      paddingBottom: "14%",
     }}>
-      <Button disableRipple variant="plain" size="small"
+      <Box
         sx={{
-          position: "relative",
-          display: backArrow ? 'flex' : 'none',
-          width: "10px",
-          height: "40px"
-        }}
-        onClick={handleGoBack}
-      > <ChevronLeftIcon
+          position: "fixed",
+          marginTop: "5%",
+          flexDirection: "row",
+          zIndex: '100'
+        }}>
+        <Button disableRipple variant="plain" size="small"
           sx={{
-            fontSize: "40px"
-          }} /></Button>
+            display: backArrow ? 'flex' : 'none',
+            width: "10px",
+            height: "40px",
+          }}
+          onClick={handleGoBack}
+        > <ChevronLeftIcon
+            sx={{
+              fontSize: "40px"
+            }} /></Button>
+      </Box>
     </Box>
   );
 };

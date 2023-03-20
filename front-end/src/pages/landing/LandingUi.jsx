@@ -89,7 +89,7 @@ export const LandingUi = () => {
         if (page.next===1) { setLanding(1); }
         else {
             await Util.invokeCallback("onNavBarShow",true);
-            navigate('/edit_profile');
+            navigate('/user_profile');
         }
     };
 
@@ -100,7 +100,7 @@ export const LandingUi = () => {
     return (
         <div className="LandingIU">
             <Box sx={{
-                marginTop: '65%'
+                marginTop: '27vh'
             }}>
                 <Typography
                     sx={{

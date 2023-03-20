@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import {Button, CardContent, Grid, Typography, useTheme} from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
 
+
 export function SubjectCard(
     /** @type {{ entry: { id: number; name: string; description: string; completionRate: number; } }} */
     { entry }

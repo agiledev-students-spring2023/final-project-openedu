@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {Button, Card, Grid,CardContent, Typography} from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
 
+
 export function CourseCard(
     /** @type {{ entry: { id: number; name: string; description: string; completionRate: number; } }} */
     { entry }

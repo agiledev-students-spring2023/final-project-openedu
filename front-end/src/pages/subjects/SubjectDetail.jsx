@@ -4,6 +4,9 @@ import axios from "axios";
 import ClassIcon from "@mui/icons-material/Class";
 import { Typography } from "@mui/material";
 import * as Mockaroo from "../../mockApi/apis.mjs";
+import {TypeAnimation} from "react-type-animation";
+
+
 
 export function SubjectDetail(props) {
 
@@ -53,11 +56,28 @@ export function SubjectDetail(props) {
 
     return (
         <>
+            <Typography variant="h1">Courses</Typography>
             <Typography variant="h2">{subjectId.name}</Typography>
             <Typography variant="h6"> {subjectId.description}</Typography>
-            <Typography variant="body">
-                Which course would you like to learn today?
-            </Typography>
+            {/*<Typography variant="body">*/}
+            {/*    Which course would you like to learn today?*/}
+            {/*</Typography>*/}
+            <TypeAnimation
+                sequence={[
+                    'Which course would you like to learn today?', // Types 'One'
+                    1000, // Waits 1s
+                    'Pick one that interests you!',
+                    2000,
+
+                    () => {
+                        console.log('Sequence completed'); // Place optional callbacks anywhere in the array
+                    }
+                ]}
+                wrapper="span"
+                cursor={true}
+                repeat={Infinity}
+                style={{ fontSize: '1em', display: 'inline-block' }}
+            />
             {data.map((entry, index) => (
                 <CourseCard key={index} entry={entry} />
             ))}

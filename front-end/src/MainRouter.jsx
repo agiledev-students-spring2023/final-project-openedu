@@ -32,5 +32,7 @@ export const MainRouter = () => {
         </Routes>
       </Layout>
     </div>
+      
   );
+
 };

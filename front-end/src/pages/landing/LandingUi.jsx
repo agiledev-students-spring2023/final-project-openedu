@@ -97,6 +97,12 @@ export const LandingUi = () => {
         e.preventDefault();
         setLanding(2);
     };
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+        setLanding(2);
+    };
+
     return (
         <div className="LandingIU">
             <Box sx={{
@@ -166,7 +172,7 @@ export const LandingUi = () => {
                         fontSize: '100%',
                         display: page.next === 0 ? "flex" : "none"
                     }}
-                    onClick={handleForget}>
+                    onClick={handleSignup}>
                     <Add />
                     Sign Up </Button>
             </Box >

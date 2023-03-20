@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import {SubjectCard} from './SubjectCard';
+import React, { useEffect, useState } from "react";
+import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
+import * as Mockaroo from "../../mockApi/apis.mjs";
 
 
 export function RecentSubjectList() {
 
-    const url = '';
+    const url = Mockaroo.mockDataApi("subjects"); //change api to recent subjects
 
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
-    // const [name, setName] = useState("");
-    // const [description, setDescription] = useState("");
-    // const [completionRate, setCompletionRate] = useState([]);
+
+    const navigate = useNavigate();
 
     const subjectId = useParams();
 
@@ -21,6 +22,7 @@ export function RecentSubjectList() {
         axios(url)
             .then(response => {
                 setData(response.data);
+                setLoaded(true);
             })
             .catch(err => {
                 console.log('error fetching subject information');
@@ -30,8 +32,8 @@ export function RecentSubjectList() {
                 setData([
                     {
                         id: 3,
-                        name: 'backupSubject',
-                        description: 'backupDescription',
+                        name: 'backupRecentSubject',
+                        description: 'backupRecentDescription',
                         completionRate: 37,
                     }
                 ]);
@@ -43,12 +45,13 @@ export function RecentSubjectList() {
 
     return (
         <>
-            <div>Subjects should be implemented here</div>
-            <h1>Recent</h1>
+            <h1>Recent Subjects</h1>
             <p>What would you like to learn today?</p>
-            {data.map((entry, index) => (
-                <SubjectCard key={index} {...entry} />
-            ))}
+            {isLoaded ? (
+                data.map((entry) => <SubjectCard key={entry.id} entry={entry} />)
+            ) : (
+                <div />
+            )}
         </>
     );
 }

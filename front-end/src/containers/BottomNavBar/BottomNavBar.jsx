@@ -8,24 +8,47 @@ import BookIcon from '@mui/icons-material/Book';
 import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from '@mui/icons-material/Person';
 import Paper from '@mui/material/Paper';
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import * as Logger from '../../util/Logger.mjs';
 import * as Util from "../../util/Util.mjs";
 
 
+let visibilityListener;
 
 export function BottomNavBar() {
 
   const [pageIndex, setPageIndex] = useState(0);
+  const [isVisible, setVisibility] = useState(true);
+
+
+
+  useEffect(() => {
+
+      //This is in place because of ReactJS's debugging mechanism (shadow-dom?)
+      visibilityListener ??= (isVisible) => {
+          Logger.verbose(`New nav bar visibility: ${isVisible}`);
+          setVisibility(isVisible);
+      };
+
+      Util.addCallback("onNavBarShow",visibilityListener);
+
+  },[]);
+
 
   return (
     <Box sx={{ pb: 7 }}>
       <CssBaseline />
 
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, paddingBottom: 0.5 }} elevation={3}>
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0}} elevation={3}>
 
        <BottomNavigation
           showLabels
           value={pageIndex}
+          sx={{
+              display: isVisible ? 'block' : 'none',
+              marginY: 1
+            }
+          }
           onChange={async (event, newPageIndex) => {
 
                 //Ignore user spamming

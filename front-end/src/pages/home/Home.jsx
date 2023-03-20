@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, Button, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import BackgroundImage from "../../containers/BackgroundImage";
 import * as Logger from "../../util/Logger.mjs";
 import logo from "../../img/logo.png";
+import * as Util from "../../util/Util.mjs";
 
 // This is an example page, called Home
 
@@ -12,6 +13,11 @@ export function Home(props) {
   const navigate = useNavigate();
 
   Logger.info("Home rendered!");
+
+  useEffect(() => {
+      Logger.verbose("Hide nav bar!");
+      Util.invokeCallback("onNavBarShow",false);
+  },[]);
 
   return (
     <Box>

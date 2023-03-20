@@ -3,6 +3,7 @@ import { Typography, Box, TextField, Button, InputAdornment } from "@mui/materia
 import { HighlightOff, Add } from "@mui/icons-material";
 import { LandingContext } from "./LandingPage";
 import { useNavigate } from "react-router-dom";
+import * as Util from '../../util/Util.mjs';
 function InputField(props) {
     const [input, setInput] = useState("");
     const handleCleanInput = (e) => {
@@ -44,7 +45,7 @@ function InputField(props) {
 }
 
 // LandingUI is used for three pages: Begin, Signin, Signup
-export const LandingIU = () => {
+export const LandingUi = () => {
     const { landing, setLanding } = useContext(LandingContext);
     const navigate = useNavigate();
     let page = {
@@ -82,10 +83,14 @@ export const LandingIU = () => {
             };
             break;
     }
-    const handleContinue = (e) => {
+    const handleContinue = async (e) => {
         e.preventDefault();
+
         if (page.next===1) { setLanding(1); }
-        else { navigate('/edit_profile'); }
+        else {
+            await Util.invokeCallback("onNavBarShow",true);
+            navigate('/edit_profile');
+        }
     };
 
     const handleForget = (e) => {

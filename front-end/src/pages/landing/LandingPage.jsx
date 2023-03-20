@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { Box } from '@mui/material';
-import { LandingIU } from './LandingUI.jsx';
+import { LandingUi } from './LandingUi.jsx';
 import BackgroundImage from "../../containers/BackgroundImage/index.jsx";
 
 // Use Context to make globals,or functions between parent/child
@@ -15,7 +15,7 @@ export default function LandingPage() {
         <LandingContext.Provider value={{ landing, setLanding }}>
             <Box>
                 <BackgroundImage />
-                <LandingIU />
+                <LandingUi />
             </Box>
         </LandingContext.Provider>
 

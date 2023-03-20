@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Typography, Box, TextField, Button, InputAdornment } from "@mui/material";
 import { HighlightOff, Add } from "@mui/icons-material";
-import { LandingContext } from "../../pages/landing/LandingPage";
+import { LandingContext } from "./LandingPage";
 import { useNavigate } from "react-router-dom";
 function InputField(props) {
     const [input, setInput] = useState("");

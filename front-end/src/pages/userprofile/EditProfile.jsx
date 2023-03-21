@@ -42,6 +42,7 @@ export default function EditProfile(props) {
 
     const handleSaveChanges = (e) => {
         e.preventDefault();
+        navigate(-1);
         // axios({
         //     method: "POST",
         //     url: `${baseURL}/api/user/update_profile`,
@@ -56,7 +57,7 @@ export default function EditProfile(props) {
 
     const handleDiscardChanges = (e) => {
         e.preventDefault();
-        navigate("/"); // Or to profile
+        navigate(-1); // Or to profile
     };
 
     const handleSelectAvatar = (e) => {
@@ -128,7 +129,7 @@ export default function EditProfile(props) {
                             color='neutral'
                             sx={{
                                 display: "flex",
-                                width: "100%",  
+                                width: "100%",
                             }}
                             onClick={() => navigate("/recently_used_avatars")} >
                             <Event sx={{ marginRight: "5%" }} />
@@ -198,7 +199,7 @@ export default function EditProfile(props) {
                                 sx={{
                                     display: "flex",
                                     width: "100%",
-                                    
+
                                     fontSize: '100%'
                                 }}
                                 onClick={handleSaveChanges}>
@@ -213,7 +214,7 @@ export default function EditProfile(props) {
                                 sx={{
                                     display: "flex",
                                     width: "100%",
-                                    
+
                                     fontSize: '100%'
                                 }}
                                 onClick={handleDiscardChanges}>

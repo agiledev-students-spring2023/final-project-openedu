@@ -4,12 +4,14 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import axios from 'axios';
 import { mockImageApi } from '../../mockApi/apis.mjs';
+import { useNavigate } from 'react-router-dom';
 
 
 // Chosen avatar effect is considered
 export default function RecentlyUsedAvatars() {
     const [avatars, setAvatars] = useState([]);
     const [selectedAvatar, setSelectedAvatar] = useState(null);
+    const navigate = useNavigate();
     useEffect(() => {
         // axios({
         //     method: "GET",
@@ -31,6 +33,7 @@ export default function RecentlyUsedAvatars() {
 
     const handleSaveChanges = () => {
         console.log("RecentlyUsedAvatars/handleSaveChanges Mocked");
+        navigate(-1);
         // axios({
         //     method: "POST",
         //     url: `${baseURL}/api/user/update_profile`,

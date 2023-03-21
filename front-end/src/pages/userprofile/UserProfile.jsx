@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
-import { Add, Logout, Create, Remove } from '@mui/icons-material'
-import StyledAvater from '../../containers/StyledAvatar'
-import { mockImageApi } from '../../mockApi/apis.mjs'
-import { useNavigate } from 'react-router-dom'
-import PostCard from '../../containers/PostCard/PostCard'
-import ComposePost from '../posts/ComposePost'
-import { compose } from '@mui/system'
-import MDEditor from '@uiw/react-md-editor'
+import React, { useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { Add, Logout, Create, Remove } from '@mui/icons-material';
+import StyledAvater from '../../containers/StyledAvatar';
+import { mockImageApi } from '../../mockApi/apis.mjs';
+import { useNavigate } from 'react-router-dom';
+import PostCard from '../../containers/PostCard/PostCard';
+import ComposePost from '../posts/ComposePost';
+import { compose } from '@mui/system';
+import MDEditor from '@uiw/react-md-editor';
 export default function UserProfile() {
-    const navigate = useNavigate()
-    const [composeMode, setComposeMode] = useState(false)
+    const navigate = useNavigate();
+    const [composeMode, setComposeMode] = useState(false);
     return (
         <Box>
             <Box sx={{
@@ -25,7 +25,7 @@ export default function UserProfile() {
                         width: "35%",
                         display: 'flex'
                     }}
-                    onClick={() => { setComposeMode(1) }}>
+                    onClick={() => { setComposeMode(1); }}>
                     <Add />
                     Compose </Button>
                 <Button
@@ -69,7 +69,7 @@ export default function UserProfile() {
                         display: 'flex',
                         marginTop: '1vh'
                     }}
-                    onClick={() => { navigate('/edit_profile') }}>
+                    onClick={() => { navigate('/edit_profile'); }}>
                     <Create sx={{ marginRight: '10px' }} />
                     Edit Profile </Button>
             </Box>
@@ -81,7 +81,7 @@ export default function UserProfile() {
                     flexDirection: 'column',
                 }}>
                 {[1, 2, 3].map((e, i) => {
-                    return (<PostCard sx={{ display: 'flex', width: '100%' }} key={i} />)
+                    return (<PostCard sx={{ display: 'flex', width: '100%' }} key={i} />);
                 })}
 
                 <Typography sx={{ marginTop: '9%' }}>4 {`Post(s)`} in Total</Typography>
@@ -99,7 +99,7 @@ export default function UserProfile() {
                         width: "35%",
                         marginTop: '2vh'
                     }}
-                    onClick={() => { setComposeMode(0) }}>
+                    onClick={() => { setComposeMode(0); }}>
                     <Add />
                     Submit </Button>
                 <Button
@@ -110,10 +110,10 @@ export default function UserProfile() {
                         marginTop: '2vh',
                         marginLeft: '2%'
                     }}
-                    onClick={() => { setComposeMode(0) }}>
+                    onClick={() => { setComposeMode(0); }}>
                     <Remove />
                     Discard </Button>
             </Box>
         </Box>
-    )
+    );
 }

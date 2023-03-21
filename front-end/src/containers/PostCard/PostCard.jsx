@@ -83,7 +83,7 @@ export default function PostCard(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={() => { navigate(`/subjects/${id}`) }}>Read</Button>
+                    <Button size="small" onClick={() => { navigate(`/subjects/${id}`); }}>Read</Button>
                     <Button size="small" >Edit</Button>
                 </CardActions>
             </Card>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Box } from '@mui/material';
 import MDEditor from '@uiw/react-md-editor';
 
@@ -11,5 +11,5 @@ export default function ComposePost() {
                 onChange={setValue}
             />
         </Box>
-    )
+    );
 }

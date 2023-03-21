@@ -13,7 +13,7 @@ export default function PostCard(props) {
         <Grid item xs={12} md={6} lg={4} sx={{
             paddingTop: '20px',
         }}>
-            <Card sx={{ maxWidth: 345, borderRadius: '15px' }}>
+            <Card sx={{ borderRadius: '15px' }}>
                 <CardContent sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -44,7 +44,6 @@ export default function PostCard(props) {
                         </Box>
 
                         <Box
-                            variant='contained'
                             sx={{
                                 display: 'flex',
                                 bgcolor: '#ab2d25',
@@ -54,7 +53,8 @@ export default function PostCard(props) {
                                 height: '40px',
                                 flexDirection: 'row',
                                 justifyContent: 'space-around',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                maxWidth: 100
                             }}>
                             <Box sx={{
                                 display: 'flex',
@@ -72,12 +72,12 @@ export default function PostCard(props) {
                     <Divider color='#D9D9D9'
                         sx={{
                             borderBottomWidth: 2,
-                            marginTop:'4px'
+                            marginTop: '4px'
                         }} />
                     <Typography variant="body2" color="text.secondary"
                         sx={{
                             display: 'flex',
-                            marginTop:'4px'
+                            marginTop: '4px'
                         }}>
                         {`Content...`}
                     </Typography>

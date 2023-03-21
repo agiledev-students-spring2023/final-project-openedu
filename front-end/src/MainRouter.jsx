@@ -11,6 +11,7 @@ import LandingPage from "./pages/landing/LandingPage";
 import EditProfile from "./pages/userprofile/EditProfile";
 import RecentlyUsedAvatars from "./pages/userprofile/RecentlyUsedAvatars";
 import UserProfile from "./pages/userprofile/UserProfile";
+import PlayScreen from "./pages/video/PlayScreen";
 export const MainRouter = () => {
   // Currently, there is only one route to a default page:
   //      Level one routes should be included here
@@ -31,6 +32,7 @@ export const MainRouter = () => {
           <Route path="/edit_profile" element={<EditProfile />} />
           <Route path="/user_profile" element={<UserProfile />} />
           <Route path="/recently_used_avatars" element={<RecentlyUsedAvatars />} />
+          <Route path="/play_screen" element={<PlayScreen />} />
         </Routes>
       </Layout>
     </div>

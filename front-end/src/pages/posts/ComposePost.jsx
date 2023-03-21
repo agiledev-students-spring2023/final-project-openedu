@@ -10,7 +10,6 @@ export default function ComposePost() {
                 value={value}
                 onChange={setValue}
             />
-            <MDEditor.Markdown source={value} style={{ whiteSpace: 'pre-wrap' }} />
         </Box>
     )
 }

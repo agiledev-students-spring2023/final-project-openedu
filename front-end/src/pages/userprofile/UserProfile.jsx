@@ -77,12 +77,12 @@ export default function UserProfile() {
 
             <Box className="postSection"
                 sx={{
-                    display: composeMode ? "none" : "block",
-                    marginBottom: '20%'
+                    display: composeMode ? "none" : "flex",
+                    flexDirection: 'column',
                 }}>
-                <PostCard />
-                <PostCard />
-                <PostCard />
+                {[1, 2, 3].map((e, i) => {
+                    return (<PostCard sx={{ display: 'flex', width: '100%' }} key={i} />)
+                })}
 
                 <Typography sx={{ marginTop: '9%' }}>4 {`Post(s)`} in Total</Typography>
             </Box>

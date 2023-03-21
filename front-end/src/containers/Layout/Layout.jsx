@@ -49,6 +49,9 @@ export const Layout = ({ children }) => (
       <Container sx={{ width: "100%" }}>
         {children}
       </Container>
+
+      {/* This is for Horizontal screen */}
+      <Box sx={{ marginBottom: '10%' }}></Box>
       <BottomNavBar />
     </Box>
   </>

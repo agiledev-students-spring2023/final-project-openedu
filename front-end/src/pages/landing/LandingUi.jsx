@@ -75,9 +75,9 @@ export const LandingUi = () => {
         case 2:
             page = {
                 header: 'Password',
-                subheader: ` 8 Characters Minimum \n
-                At least one uppercase letter \n
-                One special character`,
+                subheader: ` At least 8 characters, 
+                one uppercase letter, 
+                one special character`,
                 input: 'Password',
                 next: -1
             };
@@ -89,7 +89,7 @@ export const LandingUi = () => {
         if (page.next===1) { setLanding(1); }
         else {
             await Util.invokeCallback("onNavBarShow",true);
-            navigate('/edit_profile');
+            navigate('/user_profile');
         }
     };
 
@@ -97,10 +97,16 @@ export const LandingUi = () => {
         e.preventDefault();
         setLanding(2);
     };
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+        setLanding(2);
+    };
+
     return (
         <div className="LandingIU">
             <Box sx={{
-                marginTop: '65%'
+                marginTop: '27vh'
             }}>
                 <Typography
                     sx={{
@@ -156,7 +162,19 @@ export const LandingUi = () => {
                     }}
                     onClick={handleForget}>
                     <Add />
-                    Forget </Button>
+                    Forget Password</Button>
+                
+                <Button
+                    variant='contained'
+                    sx={{
+                        marginTop: '3%',
+                        width: "35%",
+                        fontSize: '100%',
+                        display: page.next === 0 ? "flex" : "none"
+                    }}
+                    onClick={handleSignup}>
+                    <Add />
+                    Sign Up </Button>
             </Box >
         </div >
     );

@@ -24,7 +24,7 @@ export function Home(props) {
       <Box sx={{
         flexDirection: 'column',
         marginLeft: '3.5%',
-        marginTop: '56%',
+        marginTop: '27vh',
       }}>
         <BackgroundImage />
 

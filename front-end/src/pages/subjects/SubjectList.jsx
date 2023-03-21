@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import * as Mockaroo from "../../mockApi/apis.mjs";
+import {TypeAnimation} from "react-type-animation";
 
 export function SubjectList() {
     const url = Mockaroo.mockDataApi("subjects"); //Add API URL
@@ -48,7 +49,25 @@ export function SubjectList() {
     return (
         <>
             <Typography variant="h1">Subjects</Typography>
-            <Typography variant="h6">What would you like to learn today?</Typography>
+            {/*<Typography variant="h6">What would you like to learn today?</Typography>*/}
+            <TypeAnimation
+                sequence={[
+                    'What would you like to learn today?', // Types 'One'
+                    1000, // Waits 1s
+                    'Pick one that interests you!',
+                    2000,
+                    'Pick a Subject, take a look at it!',
+                    3000,
+
+                    () => {
+                        console.log('Sequence completed'); // Place optional callbacks anywhere in the array
+                    }
+                ]}
+                wrapper="span"
+                cursor={true}
+                repeat={Infinity}
+                style={{ fontSize: '1em', display: 'inline-block' }}
+            />
             {isLoaded ? (
                 data.map((entry) => <SubjectCard key={entry.id} entry={entry} />)
             ) : (

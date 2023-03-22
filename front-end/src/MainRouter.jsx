@@ -12,6 +12,7 @@ import RecentlyUsedAvatars from "./pages/userprofile/RecentlyUsedAvatars";
 import UserProfile from "./pages/userprofile/UserProfile";
 import PlayScreen from "./pages/video/PlayScreen";
 import LoginWizard from "./pages/landing/LoginWizard";
+import { Home } from "./pages/home/Home";
 
 /**
  * @deprecated the old router that we used in Sprint 0 (now deprecated)
@@ -39,6 +40,7 @@ export const MainRouter = () => {
           <Route path="/user_profile" element={<UserProfile />} />
           <Route path="/recently_used_avatars" element={<RecentlyUsedAvatars />} />
           <Route path="/play_screen" element={<PlayScreen />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </Layout>
     </div>

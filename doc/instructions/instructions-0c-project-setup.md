@@ -41,18 +41,18 @@ GitHub repositories have been created for each team and are in the control of th
 
 #### README.md
 
-Every project must have a [README.md](./README.md) that automatically renders on the project's main repository page with basic details of the project, including:
+Every project must have a [README.md](../../README.md) that automatically renders on the project's main repository page with basic details of the project, including:
 
 - a description of project, including the [Product Vision Statement](https://knowledge.kitchen/content/courses/agile-development-and-devops/scrum/product-vision-statement/)
 - the core team members, including links to their GitHub accounts and any other web presence they have
-- a short history of how the project came to be and information about how to contribute to the project (i.e. a link to the [CONTRIBUTING.md](./CONTRIBUTING.md) document)
+- a short history of how the project came to be and information about how to contribute to the project (i.e. a link to the [CONTRIBUTING.md](../../CONTRIBUTING.md) document)
 - instructions for building and testing the project (update with that information once the project reaches that stage)
 - links to any additional Markdown documents or web pages that may be relevant reading about the project
 - anything else you think is important to communicate to people viewing the project
 
 #### CONTRIBUTING.md
 
-Each team must collaboratively draft a [CONTRIBUTING.md](./CONTRIBUTING.md) - a Markdown document exclusively dedicated to how others might contribute to this project. This document is essentially a contract agreed-upon by all developers and contributors, and includes at a minimum:
+Each team must collaboratively draft a [CONTRIBUTING.md](../../CONTRIBUTING.md) - a Markdown document exclusively dedicated to how others might contribute to this project. This document is essentially a contract agreed-upon by all developers and contributors, and includes at a minimum:
 
 Details on the team's values and process:
 
@@ -68,7 +68,7 @@ GitHub provides a link to this document automatically to any user who creates a 
 
 #### .gitignore
 
-Each repository must have a [.gitignore](./.gitignore) file that informs git not to track platform code, 3rd party library code, and other common development artifacts that are not your own code. It is also imperative to not track files that contain sensitive information, such as usernames/passwords to a database, or files containing users' personal information.
+Each repository must have a [.gitignore](../../.gitignore) file that informs git not to track platform code, 3rd party library code, and other common development artifacts that are not your own code. It is also imperative to not track files that contain sensitive information, such as usernames/passwords to a database, or files containing users' personal information.
 
 Use [this example .gitignore file for Node.js-based web apps](https://gist.github.com/bloombar/1bbca4aafb267920ac220864d99d6c8f) as the baseline for your .gitignore file.
 

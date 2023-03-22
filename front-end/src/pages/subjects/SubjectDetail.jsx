@@ -68,6 +68,8 @@ export function SubjectDetail(props) {
                     1000, // Waits 1s
                     'Pick one that interests you!',
                     2000,
+                    'Pick a Course, take a look at it!',
+                    3000,
 
                     () => {
                         console.log('Sequence completed'); // Place optional callbacks anywhere in the array

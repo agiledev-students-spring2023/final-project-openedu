@@ -5,6 +5,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import { Typography } from "@mui/material";
 import * as Mockaroo from "../../mockApi/apis.mjs";
 import {TypeAnimation} from "react-type-animation";
+import * as Logger from "../../util/Logger.mjs";
 
 
 
@@ -71,8 +72,8 @@ export function SubjectDetail(props) {
                     'Pick a Course, take a look at it!',
                     3000,
 
-                    () => {
-                        console.log('Sequence completed'); // Place optional callbacks anywhere in the array
+                    async () => {
+                        Logger.verbose('SubjectDetail: Typewriter Sequence completed'); // Place optional callbacks anywhere in the array
                     }
                 ]}
                 wrapper="span"

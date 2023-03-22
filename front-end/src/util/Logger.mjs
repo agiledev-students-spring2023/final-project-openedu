@@ -15,7 +15,7 @@ function getProperMsg(msg) {
     return isError ? `${msg.message} \n\tStack: ${msg.stack}` : msg.toString();
 }
 
-export function print(msg : any, msgLevel?) {
+export function print(msg, msgLevel) {
     const isError = msg instanceof Error;
 
     if(msgLevel === undefined && isError) {
@@ -29,22 +29,22 @@ export function print(msg : any, msgLevel?) {
 }
 
 
-export function error(msg : any) {
+export function error(msg) {
     print(msg,MsgLevel.error);
 }
 
-export function critical(msg : any) {
+export function critical(msg) {
     print(msg,MsgLevel.critical);
 }
 
-export function warning(msg : any) {
+export function warning(msg) {
     print(msg,MsgLevel.warning);
 }
 
-export function info(msg : any) {
+export function info(msg) {
     print(msg,MsgLevel.info);
 }
 
-export function verbose(msg : any) {
+export function verbose(msg) {
     print(msg,MsgLevel.verbose);
 }

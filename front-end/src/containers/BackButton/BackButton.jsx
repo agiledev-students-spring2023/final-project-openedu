@@ -1,18 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button } from "@mui/material";
 import {Link} from "react-router-dom";
+import * as Util from "../../util/Util.mjs";
 
+let onEnable;
 
 // This button is not incorporated into header, TBD
 export function BackButton({ url, handleClick }) {
+
+  const [isEnabled, setEnabled] = useState(true);
+
+  onEnable ??= async (newState) => {
+      setEnabled(newState);
+  };
+
+  Util.addCallback("onBackEnable",onEnable);
+
   return (
-    <div>
       <Button
         component={Link}
         to={`${url}`}
-        onClick={handleClick}
+        onClick={ isEnabled ? handleClick : undefined}
         sx={{
-          display: "flex",
+          display: isEnabled ? "flex" : "none",
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
@@ -33,6 +43,5 @@ export function BackButton({ url, handleClick }) {
       >
         Back
       </Button>
-    </div>
   );
 }

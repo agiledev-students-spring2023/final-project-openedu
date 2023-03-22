@@ -34,6 +34,7 @@ export default function RecentlyUsedAvatars() {
     const handleSaveChanges = () => {
         console.log("RecentlyUsedAvatars/handleSaveChanges Mocked");
         navigate(-1);
+        //TODO: Enable this in Sprint 2
         // axios({
         //     method: "POST",
         //     url: `${baseURL}/api/user/update_profile`,

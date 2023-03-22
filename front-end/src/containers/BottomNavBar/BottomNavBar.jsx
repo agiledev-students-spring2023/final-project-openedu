@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import {useEffect, useState} from "react";
 import * as Logger from '../../util/Logger.mjs';
 import * as Util from "../../util/Util.mjs";
+import {useNavigate} from "react-router-dom";
 
 
 let visibilityListener;
@@ -19,8 +20,14 @@ export function BottomNavBar() {
 
   const [pageIndex, setPageIndex] = useState(0);
   const [isVisible, setVisibility] = useState(true);
+  const nav = useNavigate();
 
-
+  const tabMapping = [
+      "home",
+      "subjects/list",
+      "courses/detail/0",
+      "profile/self"
+  ];
 
   useEffect(() => {
 
@@ -57,6 +64,8 @@ export function BottomNavBar() {
                 }
 
                 setPageIndex(newPageIndex);
+
+                nav(tabMapping[newPageIndex]);
 
                 //TODO: Add listeners in routers that responds to this event
                 await Util.invokeCallback("onPageIndexChanged",newPageIndex);

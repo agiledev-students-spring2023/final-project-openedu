@@ -10,15 +10,16 @@ export function CourseCard(
 ) {
     const navigate = useNavigate();
     const routeChange = () => {
-        navigate("../course/CourseDetail/${entry.id}");
+        navigate(`/courses/detail/${entry.id}`);
     };
     return (
         <Grid
             sx={{
-                minWidth: 200,
-                margin: Constants.UI_HORIZ_OFFSET,
-                padding: Constants.UI_CORNER_RADIUS/4,
-                borderRadius: Constants.UI_CORNER_RADIUS
+                // minWidth: 200,
+                // margin: Constants.UI_HORIZ_OFFSET,
+                // padding: Constants.UI_CORNER_RADIUS/4,
+                borderRadius: Constants.UI_CORNER_RADIUS,
+                marginBottom: 2
             }}>
             <Card>
                 <CardContent>

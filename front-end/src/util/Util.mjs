@@ -1,4 +1,6 @@
 import { colors, createTheme } from '@mui/material';
+import {Outlet} from "react-router-dom";
+import React from 'react';
 
 const callbackMap = new Map();
 
@@ -79,7 +81,7 @@ const DARK_SCHEME = {
 };
 
 export function getTheme() {
-    // Reminder: in newer versions of MUI, the color dose not seem to be calculated
+    // Reminder: in newer versions of MUI, the color does not seem to be calculated
     return createTheme(
         {
             palette: {
@@ -147,4 +149,12 @@ export function getTheme() {
             }
         }
     );
+}
+
+export function asChildPage(component) {
+
+    return <div>
+        {component}
+        <Outlet/>
+    </div>;
 }

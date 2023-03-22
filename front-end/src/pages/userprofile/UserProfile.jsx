@@ -35,7 +35,7 @@ export default function UserProfile() {
                         width: "35%",
                         display: 'flex'
                     }}
-                    onClick={() => { navigate("/"); }}>
+                    onClick={() => { navigate("/landing/greeting"); }}>
                     <Logout />
                     Logout </Button>
 
@@ -69,7 +69,7 @@ export default function UserProfile() {
                         display: 'flex',
                         marginTop: '1vh'
                     }}
-                    onClick={() => { navigate('/edit_profile'); }}>
+                    onClick={() => { navigate('/profile/edit'); }}>
                     <Create sx={{ marginRight: '10px' }} />
                     Edit Profile </Button>
             </Box>

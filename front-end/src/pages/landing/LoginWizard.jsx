@@ -1,9 +1,13 @@
-import React, { useState, useContext } from "react";
-import { Typography, Box, TextField, Button, InputAdornment } from "@mui/material";
-import { HighlightOff, Add } from "@mui/icons-material";
-import { LandingContext } from "./LandingPage";
-import { useNavigate } from "react-router-dom";
-import * as Util from '../../util/Util.mjs';
+import React, {createContext, useContext, useState} from 'react';
+import {Box, Button, InputAdornment, TextField, Typography} from '@mui/material';
+import BackgroundImage from "../../containers/BackgroundImage/index.jsx";
+import {Add, HighlightOff} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
+import * as Util from "../../util/Util.mjs";
+
+// Use Context to make globals,or functions between parent/child
+export const LandingContext = createContext(null);
+
 function InputField(props) {
     const [input, setInput] = useState("");
     const handleCleanInput = (e) => {
@@ -45,7 +49,7 @@ function InputField(props) {
 }
 
 // LandingUI is used for three pages: Begin, Signin, Signup
-export const LandingUi = () => {
+const LandingUi = () => {
     const { landing, setLanding } = useContext(LandingContext);
     const navigate = useNavigate();
     let page = {
@@ -88,8 +92,9 @@ export const LandingUi = () => {
 
         if (page.next===1) { setLanding(1); }
         else {
-            await Util.invokeCallback("onNavBarShow",true);
-            navigate('/user_profile');
+            Util.invokeCallback("onNavBarShow",true);
+            Util.invokeCallback("onBackEnable",true);
+            navigate('/home');
         }
     };
 
@@ -104,7 +109,7 @@ export const LandingUi = () => {
     };
 
     return (
-        <div className="LandingIU">
+        <>
             <Box sx={{
                 marginTop: '27vh'
             }}>
@@ -163,7 +168,7 @@ export const LandingUi = () => {
                     onClick={handleForget}>
                     <Add />
                     Forget Password</Button>
-                
+
                 <Button
                     variant='contained'
                     sx={{
@@ -176,6 +181,22 @@ export const LandingUi = () => {
                     <Add />
                     Sign Up </Button>
             </Box >
-        </div >
+        </>
     );
 };
+
+
+export default function LoginWizard() {
+    // 0: begin; 1: login; 2: signup
+    const [landing, setLanding] = useState(0);
+
+    return Util.asChildPage(
+        <LandingContext.Provider value={{ landing, setLanding }}>
+            <Box>
+                <BackgroundImage />
+                <LandingUi />
+            </Box>
+        </LandingContext.Provider>
+
+    );
+}

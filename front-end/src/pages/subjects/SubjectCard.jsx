@@ -13,23 +13,13 @@ export function SubjectCard(
     const navigate = useNavigate();
     const theme = useTheme();
     const routeChange = () => {
-        navigate(`./subject_detail/${entry.id}`);
+        navigate(`../detail/${entry.id}`);
     };
 
     return (
-        // <div className='SubjectCards'>
-        //     <h1> {props.name??"a"}</h1>
-        //     <p> {props.description??"a"}</p>
-        //     <p> You have completed {props.completionRate??0} % </p>
-        // </div>
-        <Grid
-            sx={{
-                minWidth: 200,
-                margin: Constants.UI_HORIZ_OFFSET,
-                padding: Constants.UI_CORNER_RADIUS/4,
-                borderRadius: Constants.UI_CORNER_RADIUS
+            <Card sx={{
+                marginBottom: 2
             }}>
-            <Card>
                 <CardContent>
                     <Typography variant='h5' component='div'>
                         {entry.name??'Subject Name'}
@@ -45,6 +35,6 @@ export function SubjectCard(
                     </Button>
                 </CardContent>
             </Card>
-        </Grid>
+        // </Grid>
     );
 }

@@ -43,6 +43,7 @@ export default function EditProfile(props) {
     const handleSaveChanges = (e) => {
         e.preventDefault();
         navigate(-1);
+        //TODO: Enable this in Sprint 2
         // axios({
         //     method: "POST",
         //     url: `${baseURL}/api/user/update_profile`,
@@ -131,7 +132,7 @@ export default function EditProfile(props) {
                                 display: "flex",
                                 width: "100%",
                             }}
-                            onClick={() => navigate("/recently_used_avatars")} >
+                            onClick={() => navigate("/profile/avatars")} >
                             <Event sx={{ marginRight: "5%" }} />
                             Recently Used
                         </Button>

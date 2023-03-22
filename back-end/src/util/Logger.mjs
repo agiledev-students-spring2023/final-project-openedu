@@ -12,7 +12,7 @@ const MsgLevel = {
 function getProperMsg(msg) {
     const isError = msg instanceof Error;
 
-    return isError ? `${msg.message} \n\tStack: ${msg.stack}` : msg.toString();
+    return isError ? `${msg.message} \n\tStack: ${msg.stack}` : msg?.toString();
 }
 
 function print(msg, msgLevel) {

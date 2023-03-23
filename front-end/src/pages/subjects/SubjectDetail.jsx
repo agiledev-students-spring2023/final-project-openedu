@@ -4,7 +4,7 @@ import axios from "axios";
 import ClassIcon from "@mui/icons-material/Class";
 import { Typography } from "@mui/material";
 import * as Mockaroo from "../../mockApi/apis.mjs";
-import {TypeAnimation} from "react-type-animation";
+import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 
 
@@ -78,7 +78,7 @@ export function SubjectDetail(props) {
                 ]}
                 wrapper="span"
                 cursor={true}
-                repeat={Infinity}
+                repeat={1}
                 style={{ fontSize: '1em', display: 'inline-block' }}
             />
             {data.map((entry, index) => (

@@ -4,6 +4,7 @@
     "eslint-plugin-react": "^7.32.2"
   },
   "dependencies": {
+    "@uiw/react-md-editor": "^3.20.5",
     "mdb-react-ui-kit": "^5.1.0",
     "prettier": "^2.8.4",
     "react": "^18.2.0",

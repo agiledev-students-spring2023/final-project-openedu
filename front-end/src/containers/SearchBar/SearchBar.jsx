@@ -39,7 +39,8 @@ export default function SearchBar() {
         value={input}
         sx={{
           width: "70%",
-          marginTop: '8vh',
+          marginTop: '5%',
+          zIndex: '100'
         }}
         InputProps={{
           disableUnderline: true,

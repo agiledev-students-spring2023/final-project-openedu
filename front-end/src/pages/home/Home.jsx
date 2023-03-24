@@ -3,6 +3,26 @@ import { CreateOutlined, Restore, Favorite } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import { useNavigate } from "react-router-dom";
+import CourseCard from "../../containers/CourseCard/CourseCard";
+
+
+const CourseSlide = (props) => {
+    return (
+        <Box sx={{
+            marginTop: '5%',
+            marginLeft: '2.3vh',
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginRight: '2.3vh'
+        }}>
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+        </Box>
+
+    )
+}
+
 
 export function Home(props) {
     const navigate = useNavigate()
@@ -17,6 +37,7 @@ export function Home(props) {
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
+                        width: 1,
                         alignItems: 'center',
                         marginTop: '22vh',
                         marginBottom: '6vh'
@@ -24,19 +45,21 @@ export function Home(props) {
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        marginLeft: '5%'
+                        marginLeft: '5%',
                     }}>
                         <Typography
                             variant='h5'
                             sx={{
                                 fontFamily: 'Raleway',
-                                display: 'flex'
+                                display: 'flex',
+                                fontSize: '30px'
                             }}>
                             Welcome,
                         </Typography>
                         <Typography variant='h3' sx={{
                             fontWeight: "900",
-                            display: 'flex'
+                            display: 'flex',
+                            fontSize: '45px'
                         }}>
                             Hoooao!
                         </Typography>
@@ -56,7 +79,8 @@ export function Home(props) {
                 left: '0',
                 width: '1',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                paddingBottom: '7vh'
             }}>
                 <Box className="recent"
                     sx={{
@@ -64,20 +88,21 @@ export function Home(props) {
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginTop: '3vh',
-                        marginLeft: '4vh'
+                        marginLeft: '2.3vh'
                     }}>
                     <Restore sx={{
                         display: 'flex',
-                        fontSize: "35px",
+                        fontSize: '25px',
                         marginRight: '9px'
                     }} />
                     <Typography
                         variant="h5"
-                        sx={{ display: 'flex' }}>
+                        sx={{ display: 'flex', fontSize: '20px' }}>
                         Recents
                     </Typography>
-
                 </Box>
+
+                <CourseSlide className="courseCards" />
 
                 <Box className="guess_you_like"
                     sx={{
@@ -85,21 +110,23 @@ export function Home(props) {
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginTop: '3vh',
-                        marginLeft: '4vh'
+                        marginLeft: '2.3vh',
                     }}>
                     <Favorite sx={{
                         display: 'flex',
-                        fontSize: "35px",
+                        fontSize: '22px',
                         marginRight: '9px'
                     }} />
                     <Typography
                         variant="h5"
-                        sx={{ display: 'flex' }}>
+                        sx={{ display: 'flex', fontSize: '20px' }}>
                         You May Like
                     </Typography>
 
                 </Box>
+                <CourseSlide className="courseCards" sx={{marginBottom: '30px'}}/>
             </Box>
+
         </Box>
     );
 

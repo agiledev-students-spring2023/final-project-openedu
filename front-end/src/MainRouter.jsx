@@ -10,7 +10,7 @@ import { SuggestSubjectList } from "./pages/subjects/SuggestSubjectList";
 import EditProfile from "./pages/userprofile/EditProfile";
 import RecentlyUsedAvatars from "./pages/userprofile/RecentlyUsedAvatars";
 import UserProfile from "./pages/userprofile/UserProfile";
-import PlayScreen from "./pages/video/PlayScreen";
+import PlayScreen from "./pages/PlayScreen/PlayScreen";
 import LoginWizard from "./pages/landing/LoginWizard";
 import { Home } from "./pages/home/Home";
 

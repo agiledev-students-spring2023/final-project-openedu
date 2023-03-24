@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
-export default function CourseCard(props) {
+export default function CourseCardAtHome(props) {
     const { title, completeness } = props.title ? props : { title: "Java", completeness: 0 };
 
     const cardSize = 106;

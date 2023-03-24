@@ -14,7 +14,7 @@ export default function UserProfile() {
     return (
         <Box>
             <Box sx={{
-                marginTop: '1vh',
+                marginTop: '3vh',
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between'

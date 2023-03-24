@@ -11,7 +11,7 @@ import { CourseList } from "../pages/course/CourseList.jsx";
 import UserProfile from "../pages/userprofile/UserProfile.jsx";
 import EditProfile from "../pages/userprofile/EditProfile.jsx";
 import RecentlyUsedAvatars from "../pages/userprofile/RecentlyUsedAvatars.jsx";
-import PlayScreen from "../pages/video/PlayScreen.jsx";
+import PlayScreen from "../pages/PlayScreen/PlayScreen.jsx";
 import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
 

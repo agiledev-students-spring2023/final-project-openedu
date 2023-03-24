@@ -4,6 +4,7 @@ import { Box, Button, Container } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { BottomNavBar } from '../BottomNavBar/BottomNavBar';
 import { useNavigate } from 'react-router-dom';
+import SearchBar from '../SearchBar/SearchBar';
 import * as Util from "../../util/Util.mjs";
 import * as Logger from "../../util/Logger.mjs";
 
@@ -33,6 +34,7 @@ const Header = () => {
       paddingBottom: "14%",
     }}>
       <Box
+      className="back_arrow"
         sx={{
           position: "fixed",
           marginTop: "5%",
@@ -54,6 +56,8 @@ const Header = () => {
         </Button>
 
       </Box>
+
+      <SearchBar/>
     </Box>
   );
 };

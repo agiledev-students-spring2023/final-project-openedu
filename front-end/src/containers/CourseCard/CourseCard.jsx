@@ -1,9 +1,9 @@
-import React from 'react'
-import { Box, Paper, Typography } from '@mui/material'
+import React from 'react';
+import { Box, Paper, Typography } from '@mui/material';
 export default function CourseCard(props) {
-    const { title, completeness } = props.title ? props : { title: "Java", completeness: 0 }
+    const { title, completeness } = props.title ? props : { title: "Java", completeness: 0 };
 
-    const cardSize = 106
+    const cardSize = 106;
     return (
         <Paper
             variant='outlined'
@@ -39,5 +39,5 @@ export default function CourseCard(props) {
                 </Typography>
             </Box>
         </Paper>
-    )
+    );
 }

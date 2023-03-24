@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Box, TextField, InputAdornment, Button } from '@mui/material'
-import HighlightOff from '@mui/icons-material/HighlightOff'
-import styled from '@emotion/styled'
+import React, { useState } from 'react';
+import { Box, TextField, InputAdornment, Button } from '@mui/material';
+import HighlightOff from '@mui/icons-material/HighlightOff';
+import styled from '@emotion/styled';
 
 // change the style of TextFiled in MUI
 const SearchField = styled(TextField)(({ theme }) => ({
@@ -20,11 +20,11 @@ const SearchField = styled(TextField)(({ theme }) => ({
 
 // A react search bar component
 export default function SearchBar() {
-  const [input, setInput] = useState("")
+  const [input, setInput] = useState("");
   const handleCleanInput = (e) => {
-    e.preventDefault()
-    setInput("")
-  }
+    e.preventDefault();
+    setInput("");
+  };
   return (
     <Box sx={{
       position: 'absolute',
@@ -59,5 +59,5 @@ export default function SearchBar() {
         onChange={(e) => { setInput(e.target.value); }}
       />
     </Box>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, CircularProgress } from '@mui/material'
+import React from 'react';
+import { Box, CircularProgress } from '@mui/material';
 export default function Loading() {
     return (
         <Box sx={{
@@ -23,5 +23,5 @@ export default function Loading() {
                 marginTop: '80%',
             }} />
         </Box>
-    )
+    );
 }

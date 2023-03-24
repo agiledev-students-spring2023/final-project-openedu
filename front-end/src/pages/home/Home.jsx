@@ -20,12 +20,12 @@ const CourseSlide = (props) => {
             <CourseCard />
         </Box>
 
-    )
-}
+    );
+};
 
 
 export function Home(props) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
         <Box>
             {/* <BackgroundImage /> */}
@@ -68,7 +68,7 @@ export function Home(props) {
                         display: 'flex',
                         marginRight: '5%'
                     }}
-                        onClick={() => { navigate("/profile/edit") }} />
+                        onClick={() => { navigate("/profile/edit"); }} />
                 </Box>
             </Box>
 

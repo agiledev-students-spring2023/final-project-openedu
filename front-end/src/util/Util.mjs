@@ -122,14 +122,20 @@ export function getTheme() {
                     styleOverrides: {
                         root: {
                             borderRadius: "8px",
-                        }
+                            backgroundColor: '',                
+                            '& .MuiFilledInput-root': {
+                                borderRadius: '8px', // Set your desired border radius value here
+                                backgroundColor: '#fff',
+                                opacity: '0.8',
+                              },
+                        },
                     }
                 },
                 MuiButton: {
                     styleOverrides: {
                         root: {
                             borderRadius: "12px", // specify your desired border radius value here
-                        },
+                        }
                     },
                 },
             },

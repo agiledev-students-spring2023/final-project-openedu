@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCard";
-
+import Loading from "../../containers/Loading/Loading";
 
 const CourseSlide = (props) => {
     return (
@@ -29,7 +29,7 @@ export function Home(props) {
     return (
         <Box>
             {/* <BackgroundImage /> */}
-
+            <Loading />
             <Box>
                 <Box
                     className="welcome_line"
@@ -124,7 +124,7 @@ export function Home(props) {
                     </Typography>
 
                 </Box>
-                <CourseSlide className="courseCards" sx={{marginBottom: '30px'}}/>
+                <CourseSlide className="courseCards" sx={{ marginBottom: '30px' }} />
             </Box>
 
         </Box>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
   Box, Paper, Typography, Button,
-  Collapse, List, ListItem, ListItemButton, ListItemText
+  Collapse, List, ListItem, ListItemButton, ListItemText,
+  ButtonGroup
 } from '@mui/material'
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
 import { mockImageApi } from '../../mockApi/apis.mjs';
@@ -22,7 +23,7 @@ function FoldableButtonList({ buttonsTmp }) {
   };
 
   return (
-    <>
+    <Box>
       <Button onClick={handleToggle} sx={{ mb: 1 }}>
         {open ? 'Hide' : 'Show more'}
       </Button>
@@ -37,7 +38,7 @@ function FoldableButtonList({ buttonsTmp }) {
           ))}
         </List>
       </Collapse>
-    </>
+    </Box>
   );
 }
 
@@ -122,22 +123,86 @@ const Layer = () => {
 }
 
 
+const VideoInfo = () => {
+  return (
+    <Box
+      className="info">
+      <Box
+        className="info-texts"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '3vh'
+        }}>
+        <Typography
+          variant='h5'
+          sx={{
+            display: 'flex',
+          }}
+        >
+          Course Title
+        </Typography>
+        <Typography
+          variant='h11'
+          sx={{
+            display: 'flex',
+          }}
+        >
+          Introduction, collapse needed
+        </Typography>
+      </Box>
+    </Box>
+  )
+}
+
 const VideoFrame = () => {
   const videoId = "CWglkNBUmD4"
   return (
-    <Box sx={{ position: 'relative', width: '100%', height: '20vh', pb: '56.25%' }}>
-      <iframe
-        src={`https://www.youtube.com/embed/${videoId}`}
-        title="Video"
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-        style={{ position: 'absolute', top: 0, left: 0 }}
-      />
+    <Box >
+      <Box
+        className="player"
+        sx={{ position: 'relative', width: '100%', height: '20vh', pb: '56.25%' }}>
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}`}
+          title="Video"
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          style={{ position: 'absolute', top: 0, left: 0 }}
+        />
+      </Box>
+
+      <Box
+        className="info">
+
+      </Box>
     </Box>
 
+  )
+}
+
+
+const Sections = () => {
+  const [vid, setVid] = useState(true);
+
+  const getSection = () => {
+    return vid ? <FoldableButtonList /> : <Box />
+  }
+
+
+  return (
+    <Box>
+      <ButtonGroup variant='outlined' size='large'
+        sx={{
+          marginTop: '3vh',
+        }}>
+        <Button onClick={() => { setVid(true) }}>Videos</Button>
+        <Button onClick={() => { setVid(false) }}>Comments</Button>
+      </ButtonGroup>
+      {getSection()}
+    </Box>
   )
 }
 
@@ -147,9 +212,9 @@ export default function PlayScreen() {
     <Box sx={{
       marginTop: '5vh'
     }}>
-
       <VideoFrame />
-      <FoldableButtonList />
+      <VideoInfo />
+      <Sections />
     </Box>
   );
 }

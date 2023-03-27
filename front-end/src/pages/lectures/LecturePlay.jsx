@@ -6,12 +6,16 @@ import {
 } from '@mui/material'
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
 import { mockImageApi } from '../../mockApi/apis.mjs';
+import LectureCard from './LectureCardButton.jsx';
 
 function FoldableButtonList({ buttonsTmp }) {
   const [open, setOpen] = useState(false);
   const buttons = [
     { label: 'Button 1' },
     { label: 'Button 2' },
+    { label: 'Button 3' },
+    { label: 'Button 4' },
+    { label: 'Button 5' },
     { label: 'Button 3' },
     { label: 'Button 4' },
     { label: 'Button 5' },
@@ -23,17 +27,24 @@ function FoldableButtonList({ buttonsTmp }) {
   };
 
   return (
-    <Box>
+    <Box >
       <Button onClick={handleToggle} sx={{ mb: 1 }}>
         {open ? 'Hide' : 'Show more'}
       </Button>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="nav">
+        <List
+          sx={{
+            width: '100%',
+            position: 'relative',
+            overflow: 'auto',
+            maxHeight: 300,
+            '& ul': { padding: 0 }
+          }}
+          subheader={<li />}
+        >
           {buttons.map((button, index) => (
             <ListItem disablePadding key={index}>
-              <ListItemButton sx={{ py: 1 }}>
-                <ListItemText primary={button.label} />
-              </ListItemButton>
+              <LectureCard/>
             </ListItem>
           ))}
         </List>
@@ -187,21 +198,20 @@ const VideoFrame = () => {
 const Sections = () => {
   const [vid, setVid] = useState(true);
 
-  const getSection = () => {
-    return vid ? <FoldableButtonList /> : <Box />
-  }
-
-
   return (
-    <Box>
-      <ButtonGroup variant='outlined' size='large'
+    <Box sx={{
+      display:'flex',
+      flexDirection:'column',
+    }}>
+      <ButtonGroup variant='plain' size='large'
         sx={{
           marginTop: '3vh',
+          display: 'flex',
         }}>
         <Button onClick={() => { setVid(true) }}>Videos</Button>
         <Button onClick={() => { setVid(false) }}>Comments</Button>
       </ButtonGroup>
-      {getSection()}
+      {vid ? <FoldableButtonList sx={{display:'flex'}}/> : <Box />}
     </Box>
   )
 }

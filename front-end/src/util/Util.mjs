@@ -1,5 +1,5 @@
 import { colors, createTheme } from '@mui/material';
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import React from 'react';
 
 const callbackMap = new Map();
@@ -86,8 +86,8 @@ export function getTheme() {
         {
             palette: {
                 primary: {
-                    main: '#4659A9',
-                    dark: '#B8C3FF'
+                    main: '#30418b',
+                    contrastText: "#fff"
                 },
                 secondary: {
                     main: '#4A58A9',
@@ -110,11 +110,14 @@ export function getTheme() {
                 },
                 neutral: {
                     main: '#303034',
-                    contrastText: "#fff"
                 },
                 background: {
-                    default: colors.grey[100],
-                    paper: colors.common.white
+                    default: '#1b1b1f',
+                    paper: '#45464e'
+                },
+                text: {
+                    primary: '#fff',
+                    secondary: '#b5b5b9'
                 },
             },
             components: {
@@ -122,12 +125,12 @@ export function getTheme() {
                     styleOverrides: {
                         root: {
                             borderRadius: "8px",
-                            backgroundColor: '',                
+                            backgroundColor: '',
                             '& .MuiFilledInput-root': {
                                 borderRadius: '8px', // Set your desired border radius value here
                                 backgroundColor: '#fff',
                                 opacity: '0.8',
-                              },
+                            },
                         },
                     }
                 },
@@ -135,7 +138,8 @@ export function getTheme() {
                     styleOverrides: {
                         root: {
                             borderRadius: "12px", // specify your desired border radius value here
-                        }
+
+                        },
                     },
                 },
             },
@@ -160,6 +164,6 @@ export function asChildPage(component) {
 
     return <div>
         {component}
-        <Outlet/>
+        <Outlet />
     </div>;
 }

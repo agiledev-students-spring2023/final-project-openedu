@@ -21,9 +21,11 @@ export default function UserProfile() {
             }}>
                 <Button
                     variant='contained'
+                    color="primary"
                     sx={{
                         width: "35%",
-                        display: 'flex'
+                        display: 'flex',
+
                     }}
                     onClick={() => { setComposeMode(1); }}>
                     <Add />
@@ -57,7 +59,7 @@ export default function UserProfile() {
 
                 <Typography
                     variant='h4'
-                    sx={{ fontWeight: "700", }}>Hooao</Typography>
+                    sx={{ fontWeight: "700", }}>Hooao </Typography>
 
                 <Typography
                     variant='h9'

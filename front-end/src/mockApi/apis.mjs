@@ -1,5 +1,5 @@
 // Do not change this file!
-const KEY = 33866960;
+const KEY = '1aa7ed40';
 const COURSES_MOCK = `courses`;
 const POSTS_MOCK = `posts`;
 const SUBJECTS_MOCK = `subjects`;

@@ -61,65 +61,80 @@ const LIGHT_SCHEME = {
 
 const DARK_SCHEME = {
     primary: {
-
+        main: '#30418b',
+        contrastText: "#fff"
     },
     secondary: {
-
+        main: '#4A58A9',
+        dark: '#BBC3FF'
     },
     teriary: {
-
+        main: ''
     },
     error: {
-
+        main: '#BA1A1A',
+        dark: 'FFB4AB'
+    },
+    success: {
+        main: 'rgb(88,229,82)',
+        dark: 'rgb(136,204,134)'
+    },
+    warning: {
+        main: '#974812',
+        dark: '#FFB68F'
+    },
+    neutral: {
+        main: '#303034',
     },
     background: {
-
+        default: '#1b1b1f',
+        paper: '#45464e'
     },
-    surface_variant: {
-
+    text: {
+        primary: '#fff',
+        secondary: '#b5b5b9'
     },
 };
 
+
+const BACK_UP = {
+    primary: {
+        main: '#4659A9',
+        dark: '#B8C3FF'
+    },
+    secondary: {
+        main: '#4A58A9',
+        dark: '#BBC3FF'
+    },
+    teriary: {
+        main: ''
+    },
+    error: {
+        main: '#BA1A1A',
+        dark: 'FFB4AB'
+    },
+    success: {
+        main: 'rgb(88,229,82)',
+        dark: 'rgb(136,204,134)'
+    },
+    warning: {
+        main: '#974812',
+        dark: '#FFB68F'
+    },
+    neutral: {
+        main: '#303034',
+        contrastText: "#fff"
+    },
+    background: {
+        default: colors.grey[100],
+        paper: colors.common.white
+    },
+}
 export function getTheme() {
     // Reminder: in newer versions of MUI, the color does not seem to be calculated
     return createTheme(
         {
-            palette: {
-                primary: {
-                    main: '#30418b',
-                    contrastText: "#fff"
-                },
-                secondary: {
-                    main: '#4A58A9',
-                    dark: '#BBC3FF'
-                },
-                teriary: {
-                    main: ''
-                },
-                error: {
-                    main: '#BA1A1A',
-                    dark: 'FFB4AB'
-                },
-                success: {
-                    main: 'rgb(88,229,82)',
-                    dark: 'rgb(136,204,134)'
-                },
-                warning: {
-                    main: '#974812',
-                    dark: '#FFB68F'
-                },
-                neutral: {
-                    main: '#303034',
-                },
-                background: {
-                    default: '#1b1b1f',
-                    paper: '#45464e'
-                },
-                text: {
-                    primary: '#fff',
-                    secondary: '#b5b5b9'
-                },
-            },
+            palette: BACK_UP,
             components: {
                 MuiTextField: {
                     styleOverrides: {

@@ -3,7 +3,7 @@ import { CreateOutlined, Restore, Favorite } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import { useNavigate } from "react-router-dom";
-import CourseCard from "../../containers/CourseCard/CourseCard";
+import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
 import Loading from "../../containers/Loading/Loading";
 
 const CourseSlide = (props) => {
@@ -29,7 +29,6 @@ export function Home(props) {
     return (
         <Box>
             {/* <BackgroundImage /> */}
-            <Loading />
             <Box>
                 <Box
                     className="welcome_line"

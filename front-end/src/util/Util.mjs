@@ -129,7 +129,7 @@ const BACK_UP = {
         default: colors.grey[100],
         paper: colors.common.white
     },
-}
+};
 export function getTheme() {
     // Reminder: in newer versions of MUI, the color does not seem to be calculated
     return createTheme(

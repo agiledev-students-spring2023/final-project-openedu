@@ -3,7 +3,7 @@ import {
   Box, Paper, Typography, Button,
   Collapse, List, ListItem, ListItemButton, ListItemText,
   ButtonGroup
-} from '@mui/material'
+} from '@mui/material';
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
 import { mockImageApi } from '../../mockApi/apis.mjs';
 import LectureCard from './LectureCardButton.jsx';
@@ -130,8 +130,8 @@ const Layer = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 
 const VideoInfo = () => {
@@ -163,11 +163,11 @@ const VideoInfo = () => {
         </Typography>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 const VideoFrame = () => {
-  const videoId = "CWglkNBUmD4"
+  const videoId = "CWglkNBUmD4";
   return (
     <Box >
       <Box
@@ -191,8 +191,8 @@ const VideoFrame = () => {
       </Box>
     </Box>
 
-  )
-}
+  );
+};
 
 
 const Sections = () => {
@@ -208,13 +208,13 @@ const Sections = () => {
           marginTop: '3vh',
           display: 'flex',
         }}>
-        <Button onClick={() => { setVid(true) }}>Videos</Button>
-        <Button onClick={() => { setVid(false) }}>Comments</Button>
+        <Button onClick={() => { setVid(true); }}>Videos</Button>
+        <Button onClick={() => { setVid(false); }}>Comments</Button>
       </ButtonGroup>
       {vid ? <FoldableButtonList sx={{display:'flex'}}/> : <Box />}
     </Box>
-  )
-}
+  );
+};
 
 export default function PlayScreen() {
   const cardSize = 106;

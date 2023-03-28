@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, ButtonBase, Grid, Typography, CardMedia, CardContent, Box } from '@mui/material'
+import { Card, ButtonBase, Grid, Typography, CardMedia, CardContent, Box } from '@mui/material';
 
 export default function ClassCardButtonGrid(props) {
     const { title, thumbnails, resourceId, courseId, lecNum } =
@@ -64,5 +64,5 @@ export default function ClassCardButtonGrid(props) {
                 </Card>
             </ButtonBase>
         </Box>
-    )
+    );
 }

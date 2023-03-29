@@ -11,7 +11,7 @@ import { CourseList } from "../pages/course/CourseList.jsx";
 import UserProfile from "../pages/userprofile/UserProfile.jsx";
 import EditProfile from "../pages/userprofile/EditProfile.jsx";
 import RecentlyUsedAvatars from "../pages/userprofile/RecentlyUsedAvatars.jsx";
-import PlayScreen from "../pages/video/PlayScreen.jsx";
+import LecturePlay from "../pages/lectures/LecturePlay.jsx";
 import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
 
@@ -43,7 +43,7 @@ export function getRoutes() {
             <Route path="courses">
                 <Route path="list" element={<CourseList />} />
                 <Route path="detail/:courseId" element={<CourseDetail />} />
-                <Route path="play" element={<PlayScreen />} />
+                <Route path="play" element={<LecturePlay />} />
             </Route>
 
             <Route path="profile">

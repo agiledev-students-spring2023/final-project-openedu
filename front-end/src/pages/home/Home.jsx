@@ -28,7 +28,7 @@ export function Home(props) {
     const navigate = useNavigate();
     return (
         <Box>
-            {/* <BackgroundImage /> */}
+            <BackgroundImage />
             <Box>
                 <Box
                     className="welcome_line"
@@ -73,7 +73,7 @@ export function Home(props) {
 
             <Box className="tabs" sx={{
                 borderRadius: '24px',
-                backgroundColor: 'green',
+                backgroundColor: 'background.default',
                 position: 'absolute',
                 left: '0',
                 width: '1',
@@ -82,18 +82,21 @@ export function Home(props) {
                 paddingBottom: '7vh'
             }}>
                 <Box className="recent"
+                    color="primary"
                     sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginTop: '3vh',
-                        marginLeft: '2.3vh'
+                        marginLeft: '2.3vh',
                     }}>
-                    <Restore sx={{
-                        display: 'flex',
-                        fontSize: '25px',
-                        marginRight: '9px'
-                    }} />
+                    <Restore
+                        color="primary"
+                        sx={{
+                            display: 'flex',
+                            fontSize: '25px',
+                            marginRight: '9px'
+                        }} />
                     <Typography
                         variant="h5"
                         sx={{ display: 'flex', fontSize: '20px' }}>
@@ -111,11 +114,13 @@ export function Home(props) {
                         marginTop: '3vh',
                         marginLeft: '2.3vh',
                     }}>
-                    <Favorite sx={{
-                        display: 'flex',
-                        fontSize: '22px',
-                        marginRight: '9px'
-                    }} />
+                    <Favorite
+                        color="primary"
+                        sx={{
+                            display: 'flex',
+                            fontSize: '22px',
+                            marginRight: '9px'
+                        }} />
                     <Typography
                         variant="h5"
                         sx={{ display: 'flex', fontSize: '20px' }}>

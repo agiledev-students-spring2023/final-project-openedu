@@ -134,7 +134,7 @@ export function getTheme() {
     // Reminder: in newer versions of MUI, the color does not seem to be calculated
     return createTheme(
         {
-            palette: BACK_UP,
+            palette: DARK_SCHEME,
             components: {
                 MuiTextField: {
                     styleOverrides: {

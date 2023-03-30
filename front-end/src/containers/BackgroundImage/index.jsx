@@ -17,6 +17,7 @@ export default function BackgroundImage() {
                     backgroundImage: `url(${imageUrl})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
+                    filter: 'blur(5px) brightness(0.5)',
                 }} />
 
         </Box>

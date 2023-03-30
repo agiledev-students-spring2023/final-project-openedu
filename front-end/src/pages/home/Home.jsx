@@ -38,7 +38,7 @@ export function Home(props) {
                         justifyContent: 'space-between',
                         width: 1,
                         alignItems: 'center',
-                        marginTop: '22vh',
+                        marginTop: '20vh',
                         marginBottom: '6vh'
                     }}>
                     <Box sx={{
@@ -79,7 +79,7 @@ export function Home(props) {
                 width: '1',
                 display: 'flex',
                 flexDirection: 'column',
-                paddingBottom: '7vh'
+                paddingBottom: '10vh'
             }}>
                 <Box className="recent"
                     color="primary"

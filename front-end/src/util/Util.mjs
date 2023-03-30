@@ -88,7 +88,7 @@ const DARK_SCHEME = {
     },
     background: {
         default: '#1b1b1f',
-        paper: '#45464e'
+        paper: '#282830'
     },
     text: {
         primary: '#fff',
@@ -157,6 +157,29 @@ export function getTheme() {
                         },
                     },
                 },
+                MuiBottomNavigationAction: {
+                    styleOverrides: {
+                        label: {
+                            color: '#dee0fc',
+                            "&.Mui-selected": {
+                                color: "#dee0fc",
+
+                            }
+                        },
+                        root: {
+                            color: '#dee0fc',
+                            "&.Mui-selected": {
+                                "color": "#dee0fc",
+                                '& .MuiSvgIcon-root': {
+                                    borderRadius: '16px',
+                                    width: '100%',
+                                    backgroundColor: '#33408b',
+                                },
+                            },
+
+                        },
+                    }
+                }
             },
             typography: {
                 fontFamily: [

@@ -72,7 +72,7 @@ const DARK_SCHEME = {
         main: ''
     },
     error: {
-        main: '#BA1A1A',
+        main: '#600f0c',
         dark: 'FFB4AB'
     },
     success: {
@@ -92,7 +92,7 @@ const DARK_SCHEME = {
     },
     text: {
         primary: '#fff',
-        secondary: '#b5b5b9'
+        secondary: '#dde1fc',
     },
 };
 
@@ -140,12 +140,46 @@ export function getTheme() {
                     styleOverrides: {
                         root: {
                             borderRadius: "8px",
-                            backgroundColor: '',
-                            '& .MuiFilledInput-root': {
-                                borderRadius: '8px', // Set your desired border radius value here
-                                backgroundColor: '#fff',
-                                opacity: '0.8',
+                            opacity: '0.8',
+                            color: '#000',
+                            '& .MuiInputBase-input': {
+                                color: '#fff',
                             },
+                            '& 	.MuiFilledInput-underline': {
+                                // TBD for filled background color
+                            },
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '8px',
+                            },
+                        },
+                    }
+                },
+                MuiFilledInput: {
+                    styleOverrides: {
+                        root: {
+                            '& .MuiInputBase-input': {
+                                color: '#000',
+                            },
+                        },
+                        '& MiuInputLabel-root': {
+                            color: '#000',
+                        },
+                    }
+                },
+                MuiOutlinedInput: {
+                    styleOverrides: {
+                        root: {
+                            borderRadius: "8px",
+                        },
+                        input: {
+                            color: '#fff',
+                        },
+                    }
+                },
+                MuiInputLabel: {
+                    styleOverrides: {
+                        root: {
+                            color: '#3d4575',
                         },
                     }
                 },
@@ -163,16 +197,18 @@ export function getTheme() {
                             color: '#dee0fc',
                             "&.Mui-selected": {
                                 color: "#dee0fc",
-
                             }
                         },
                         root: {
                             color: '#dee0fc',
+                            height: '4vh',
                             "&.Mui-selected": {
                                 "color": "#dee0fc",
                                 '& .MuiSvgIcon-root': {
                                     borderRadius: '16px',
                                     width: '100%',
+                                    height: '4vh',
+                                    padding: '0.5vh',
                                     backgroundColor: '#33408b',
                                 },
                             },

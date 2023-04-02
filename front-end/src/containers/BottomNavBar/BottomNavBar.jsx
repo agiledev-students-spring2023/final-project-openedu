@@ -9,7 +9,6 @@ import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from '@mui/icons-material/Person';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from "react";
-import { makeStyles } from '@mui/styles';
 import * as Logger from '../../util/Logger.mjs';
 import * as Util from "../../util/Util.mjs";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +57,7 @@ export function BottomNavBar() {
             display: isVisible ? 'block' : 'none',
             marginY: 1,
             bgcolor: 'background.paper',
+            paddingTop:'1.3vh'
           }
           }
           onChange={async (event, newPageIndex) => {

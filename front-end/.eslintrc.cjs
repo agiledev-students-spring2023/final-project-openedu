@@ -6,6 +6,7 @@ module.exports = {
         'es2022': true,
         'node': true,
         'mocha': true,
+        "browser": true,
     },
     'extends': [
         'eslint:recommended',

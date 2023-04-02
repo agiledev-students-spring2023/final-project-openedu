@@ -69,7 +69,8 @@ export default function UserProfile() {
                     sx={{
                         width: "100%",
                         display: 'flex',
-                        marginTop: '1vh'
+                        marginTop: '1vh',
+                        color: 'text.secondary'
                     }}
                     onClick={() => { navigate('/profile/edit'); }}>
                     <Create sx={{ marginRight: '10px' }} />

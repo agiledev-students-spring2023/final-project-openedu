@@ -146,13 +146,17 @@ export default function EditProfile(props) {
                     width: "100%",
                 }}>
                     <Grid container spacing={3} sx={{ width: "100%" }}>
-                        <Grid item sx={{ width: "100%" }}>
+                        <Grid item sx={{ width: "100%", color: 'red' }}>
                             <TextField
                                 id="filled-multiline-flexible"
                                 label="Username"
                                 value={name}
                                 variant="outlined"
-                                sx={{ width: "100%" }}
+                                sx={{
+                                    width: "100%",
+                                    color: 'red',
+                                    input: { color: 'red' }
+                                }}
                                 onChange={(e) => { setName(e.target.value); }}
                                 helperText="Give yourself a shinny callsign!"
                                 InputProps={{
@@ -160,12 +164,15 @@ export default function EditProfile(props) {
                                         <InputAdornment position="end">
                                             <Button
                                                 variant="plain"
-                                                sx={{ width: '1px' }}
+                                                sx={{ width: '1px', color: 'text.secondary' }}
                                                 onClick={handleCleanUsername}>
                                                 <HighlightOff />
                                             </Button>
                                         </InputAdornment>
                                     ),
+                                }}
+                                InputLabelProps={{
+                                    sx: { color: '#fff' }
                                 }}
                             />
                         </Grid>
@@ -179,6 +186,9 @@ export default function EditProfile(props) {
                                 helperText="Let's have a funny quote!"
                                 sx={{
                                     width: "100%"
+                                }}
+                                InputLabelProps={{
+                                    sx: { color: '#fff' }
                                 }}
                                 onChange={(e) => { setDescription(e.target.value); }}
                             />

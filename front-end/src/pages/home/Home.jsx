@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { CreateOutlined, Restore, Favorite } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
@@ -63,11 +63,14 @@ export function Home(props) {
                             Hoooao!
                         </Typography>
                     </Box>
-                    <CreateOutlined sx={{
-                        display: 'flex',
-                        marginRight: '5%'
-                    }}
-                        onClick={() => { navigate("/profile/edit"); }} />
+                    <Button onClick={() => { navigate("/profile/edit"); }}>
+                        <CreateOutlined sx={{
+                            display: 'flex',
+                            marginRight: '5%',
+                            color: 'text.primary'
+                        }}
+                        />
+                    </Button>
                 </Box>
             </Box>
 

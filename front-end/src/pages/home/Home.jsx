@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
-import Loading from "../../containers/Loading/Loading";
 
 const CourseSlide = (props) => {
     return (

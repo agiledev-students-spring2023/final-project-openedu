@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import * as Mockaroo from "../../mockApi/apis.mjs";
-import {TypeAnimation} from "react-type-animation";
+import { TypeAnimation } from "react-type-animation";
 import * as Constants from "../../util/Constants.mjs";
 import * as Logger from "../../util/Logger.mjs";
 
@@ -80,15 +80,15 @@ export function SubjectList() {
                     ]}
                     wrapper="span"
                     cursor={true}
-                    repeat={Infinity}
-                    sx={{ fontSize: '1em', display: 'inline-block'}}
+                    repeat={1}
+                    sx={{ fontSize: '1em', display: 'inline-block' }}
                 />
             </Box>
 
             {isLoaded ? (
                 data.map((entry) => <SubjectCard key={entry.id} entry={entry} />)
             ) : (
-                <div/>
+                <div />
             )}
         </Box>
     );

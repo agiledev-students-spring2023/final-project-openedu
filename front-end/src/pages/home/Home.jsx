@@ -1,10 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { CreateOutlined, Restore, Favorite } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
-import Loading from "../../containers/Loading/Loading";
 
 const CourseSlide = (props) => {
     return (
@@ -28,7 +27,7 @@ export function Home(props) {
     const navigate = useNavigate();
     return (
         <Box>
-            {/* <BackgroundImage /> */}
+            <BackgroundImage />
             <Box>
                 <Box
                     className="welcome_line"
@@ -38,7 +37,7 @@ export function Home(props) {
                         justifyContent: 'space-between',
                         width: 1,
                         alignItems: 'center',
-                        marginTop: '22vh',
+                        marginTop: '20vh',
                         marginBottom: '6vh'
                     }}>
                     <Box sx={{
@@ -63,37 +62,43 @@ export function Home(props) {
                             Hoooao!
                         </Typography>
                     </Box>
-                    <CreateOutlined sx={{
-                        display: 'flex',
-                        marginRight: '5%'
-                    }}
-                        onClick={() => { navigate("/profile/edit"); }} />
+                    <Button onClick={() => { navigate("/profile/edit"); }}>
+                        <CreateOutlined sx={{
+                            display: 'flex',
+                            marginRight: '5%',
+                            color: 'text.primary'
+                        }}
+                        />
+                    </Button>
                 </Box>
             </Box>
 
             <Box className="tabs" sx={{
                 borderRadius: '24px',
-                backgroundColor: 'green',
+                backgroundColor: 'background.default',
                 position: 'absolute',
                 left: '0',
                 width: '1',
                 display: 'flex',
                 flexDirection: 'column',
-                paddingBottom: '7vh'
+                paddingBottom: '10vh'
             }}>
                 <Box className="recent"
+                    color="primary"
                     sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
                         marginTop: '3vh',
-                        marginLeft: '2.3vh'
+                        marginLeft: '2.3vh',
                     }}>
-                    <Restore sx={{
-                        display: 'flex',
-                        fontSize: '25px',
-                        marginRight: '9px'
-                    }} />
+                    <Restore
+                        color="primary"
+                        sx={{
+                            display: 'flex',
+                            fontSize: '25px',
+                            marginRight: '9px'
+                        }} />
                     <Typography
                         variant="h5"
                         sx={{ display: 'flex', fontSize: '20px' }}>
@@ -111,11 +116,13 @@ export function Home(props) {
                         marginTop: '3vh',
                         marginLeft: '2.3vh',
                     }}>
-                    <Favorite sx={{
-                        display: 'flex',
-                        fontSize: '22px',
-                        marginRight: '9px'
-                    }} />
+                    <Favorite
+                        color="primary"
+                        sx={{
+                            display: 'flex',
+                            fontSize: '22px',
+                            marginRight: '9px'
+                        }} />
                     <Typography
                         variant="h5"
                         sx={{ display: 'flex', fontSize: '20px' }}>

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Typography, Box, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Badge from '@mui/material/Badge';
-import axios from 'axios';
 import { mockImageApi } from '../../mockApi/apis.mjs';
 import { useNavigate } from 'react-router-dom';
 

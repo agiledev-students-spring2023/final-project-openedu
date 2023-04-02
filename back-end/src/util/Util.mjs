@@ -77,6 +77,14 @@ export function isValidPostRequest(obj, ...keys) {
     return isPerfectArray(keys.map(e => obj[e]));
 }
 
+export function cloneObject(obj, ...excludeProps) {
+
+    return Object.fromEntries(
+        Object.entries(obj)
+            .filter(([key]) => !excludeProps.includes(key))
+    );
+}
+
 export function isValidGetRequest(queryObject, ...requiredParams) {
 
     if(queryObject === null)

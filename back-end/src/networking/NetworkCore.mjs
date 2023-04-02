@@ -7,6 +7,7 @@ import url from "url";
 import * as Util from "../util/Util.mjs";
 import * as MockData from "../util/MockData.mjs";
 import {subjects} from "../util/MockData.mjs";
+import {cloneObject} from "../util/Util.mjs";
 
 export const restful = express();
 
@@ -142,8 +143,8 @@ export async function initRestApis() {
 
         //Mask the course lists of subjects out since that should be queried separately via /subject/detail
         const subjects = MockData.subjects().map((element) => {
-            delete element.courses;
-            return element;
+
+            return cloneObject(element,"courses");
         });
 
         Util.onWebResponse(res,subjects);

@@ -4,6 +4,10 @@ import * as SocketIo from 'socket.io';
 import * as Logger from "../util/Logger.mjs";
 import path from "path";
 import url from "url";
+import * as Util from "../util/Util.mjs";
+import * as MockData from "../util/MockData.mjs";
+import {faker} from "@faker-js/faker";
+import {onWebResponse} from "../util/Util.mjs";
 
 export const restful = express();
 
@@ -45,15 +49,35 @@ export async function initMiddleware() {
 export async function initRestApis() {
 
     restful.get('/test', async (req, res) => {
-
         const name = req.query["name"] ?? "human";
 
-        res.json({
-            status: 0,
-            message: `Hello ${name}!`
-        });
-
+        Util.onWebResponse(res,`Hello ${name}!`,1);
     });
+
+    restful.get('/course/recommend', async (req,res) => {
+
+        if(!Util.isValidGetRequest(req.query,"token")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(res);
+            return;
+        }
+
+        const nCourses = Util.randInt() % 200;
+        const courses = MockData.courses();
+
+        const ret = [];
+
+        for(let i = 0; i < nCourses; ++i) {
+            const ind = Util.randInt() % courses.length;
+
+            ret.push(courses[ind]);
+        }
+
+        Util.onWebResponse(res,ret);
+    });
+
 }
 
 /**

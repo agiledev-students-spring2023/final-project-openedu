@@ -1,4 +1,7 @@
+import * as Logger from "../util/Logger.mjs";
+
 const callbackMap = new Map();
+
 
 export function addCallback(name, func) {
 
@@ -12,6 +15,7 @@ export function addCallback(name, func) {
     }
 }
 
+
 export function removeCallback(name, func) {
 
     if (callbackMap.has(name)) {
@@ -23,6 +27,7 @@ export function removeCallback(name, func) {
     }
 }
 
+
 export async function invokeCallback(name, ...args) {
 
     if (!callbackMap.has(name)) {
@@ -32,4 +37,54 @@ export async function invokeCallback(name, ...args) {
     for (const func of (callbackMap.get(name) ?? new Set())) {
         (async () => func(...args))();
     }
+}
+
+
+
+/**
+ * Generates a random integer that ranges from 0 to Number.MAX_SAFE_INTEGER.
+ *
+ * @returns {number}
+ */
+export function randInt() {
+    return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+}
+
+export function onWebResponse(res, content, isGood, statusCode) {
+
+    res.status(statusCode ?? 200);
+
+    //Yeah, I would not rely on HTTP status codes as I don't want any web framework complain
+    res.json({
+        status: (isGood ?? true) ? 0 : 1,
+        content: content
+    });
+
+    return res;
+}
+export function onWebMissingParam(res) {
+    return onWebResponse(res, {msg : "missing_param"}, false, 422); //HTTP 422: Unprocessable Entity
+}
+
+export function isPerfectArray(...arr) {
+    return arr.filter((entry) => entry === undefined || entry === null).length === 0;
+}
+
+export function isValidPostRequest(obj, ...keys) {
+    return isPerfectArray(keys.map(e => obj[e]));
+}
+
+export function isValidGetRequest(queryObject, ...requiredParams) {
+
+    if(queryObject === null)
+        return false;
+
+
+    for(const param of requiredParams) {
+
+        if(queryObject[param] === undefined)
+            return false;
+    }
+
+    return true;
 }

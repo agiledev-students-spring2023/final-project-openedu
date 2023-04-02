@@ -27,7 +27,7 @@ module.exports = {
             'destructuring': 'any',
             'ignoreReadBeforeAssign': false
         }],
-        'curly': ['error'],
+        'curly': 'off',
         'eqeqeq': ['error'],
         'no-multi-spaces': ['error'],
         'no-lone-blocks': ['error'],

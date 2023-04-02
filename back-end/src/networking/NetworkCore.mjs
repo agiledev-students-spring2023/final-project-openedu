@@ -4,6 +4,10 @@ import * as SocketIo from 'socket.io';
 import * as Logger from "../util/Logger.mjs";
 import path from "path";
 import url from "url";
+import * as Util from "../util/Util.mjs";
+import * as MockData from "../util/MockData.mjs";
+import {subjects} from "../util/MockData.mjs";
+import {cloneObject} from "../util/Util.mjs";
 
 export const restful = express();
 
@@ -45,15 +49,124 @@ export async function initMiddleware() {
 export async function initRestApis() {
 
     restful.get('/test', async (req, res) => {
-
         const name = req.query["name"] ?? "human";
+        Util.onWebResponse(res,`Hello ${name}!`,1);
+    });
 
-        res.json({
-            status: 0,
-            message: `Hello ${name}!`
+    restful.get('/course/list', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+        const courses = MockData.courses();
+
+        Util.onWebResponse(res,courses);
+    });
+
+
+    restful.get('/course/recommend', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+
+        const nCourses = Util.randInt() % 200;
+        const courses = MockData.courses();
+
+        const ret = [];
+
+        for(let i = 0; i < nCourses; ++i) {
+            const ind = Util.randInt() % courses.length;
+
+            ret.push(courses[ind]);
+        }
+
+        Util.onWebResponse(res,ret);
+    });
+
+
+    restful.get('/course/previous', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+
+        const nCourses = Util.randInt() % 20;
+        const courses = MockData.courses();
+
+        const ret = [];
+
+        for(let i = 0; i < nCourses; ++i) {
+            const ind = Util.randInt() % courses.length;
+
+            ret.push(courses[ind]);
+        }
+
+        Util.onWebResponse(res,ret);
+    });
+
+
+    restful.get('/course/detail', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token","courseId")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+
+        const courses = MockData.courses();
+        const courseId = req.query["courseId"]??0;
+
+        if(courseId >= courses.length)
+            Util.onWebResponse(res,"invalid_course_id",false);
+        else
+            Util.onWebResponse(res, courses[courseId]);
+    });
+
+
+    restful.get('/subject/list', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token")) {
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+
+        //Mask the course lists of subjects out since that should be queried separately via /subject/detail
+        const subjects = MockData.subjects().map((element) => {
+
+            return cloneObject(element,"courses");
         });
 
+        Util.onWebResponse(res,subjects);
     });
+
+    restful.get('/subject/detail', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token","subjectId")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+
+        const subjectId = req.query["subjectId"]??0;
+
+        if(subjectId >= subjects().length)
+            Util.onWebResponse(res,"invalid_subject_id",false);
+        else
+            Util.onWebResponse(res, subjects()[subjectId]);
+    });
+
 }
 
 /**

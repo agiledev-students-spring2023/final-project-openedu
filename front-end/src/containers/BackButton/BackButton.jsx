@@ -24,7 +24,7 @@ export function BackButton() {
     Util.addCallback("onBackEnable", onEnable);
 
     return (
-        <Box sx={{marginTop: 10}}>
+        <Box sx={{marginY: 2}}>
             <Button disableRipple variant="plain" size="small"
                     sx={{
                         display: isEnabled ? 'flex' : 'none',

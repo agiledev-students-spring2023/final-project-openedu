@@ -3,14 +3,14 @@ import { CourseCard } from "./CourseCard.jsx";
 import axios from "axios";
 import ClassIcon from "@mui/icons-material/Class";
 import { Typography, CardMedia, Box } from "@mui/material";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 import * as Constants from "../../util/Constants.mjs";
 import * as Util from "../../util/Util.mjs";
 import {useParams} from "react-router-dom";
+import {BackButton} from "../../containers/BackButton/BackButton";
 
-export function SubjectDetail(props) {
+export function SubjectDetail() {
 
   // const url = Mockaroo.mockDataApi(`subjects/${subjectId}`);
 
@@ -60,6 +60,8 @@ export function SubjectDetail(props) {
 
   return (
     <>
+
+      <BackButton/>
 
         { isLoaded ? <Box
         sx={{

@@ -7,7 +7,6 @@ import { SuggestSubjectList } from "../pages/subjects/SuggestSubjectList.jsx";
 import { SubjectDetail } from "../pages/subjects/SubjectDetail.jsx";
 import { RecentSubjectList } from "../pages/subjects/RecentSubjectList.jsx";
 import { CourseDetail } from "../pages/course/CourseDetail.jsx";
-import { CourseList } from "../pages/course/CourseList.jsx";
 import UserProfile from "../pages/userprofile/UserProfile.jsx";
 import EditProfile from "../pages/userprofile/EditProfile.jsx";
 import RecentlyUsedAvatars from "../pages/userprofile/RecentlyUsedAvatars.jsx";
@@ -15,7 +14,6 @@ import LecturePlay from "../pages/lectures/LecturePlay.jsx";
 import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
 
-let router;
 let routes;
 
 export function getRoutes() {
@@ -41,7 +39,6 @@ export function getRoutes() {
             </Route>
 
             <Route path="courses">
-                <Route path="list" element={<CourseList />} />
                 <Route path="detail/:courseId" element={<CourseDetail />} />
                 <Route path="play" element={<LecturePlay />} />
             </Route>

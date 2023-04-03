@@ -7,13 +7,14 @@ import * as Logger from "../../util/Logger.mjs";
 import {useParams} from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
+import {BackButton} from "../../containers/BackButton/BackButton";
 
-export const CourseDetail = (props) => {
+export const CourseDetail = () => {
   //TODO: Put useState here
   const [courseInfo, setCourseInfo] = useState(undefined);
   const [comments, setComments] = useState(undefined);
   const [isLoaded, setLoaded] = useState(false);
-  const theme = useTheme();
+  //const theme = useTheme();
 
   const {courseId} = useParams();
 
@@ -87,6 +88,8 @@ export const CourseDetail = (props) => {
 
   return (
     <>
+     <BackButton/>
+
       {isLoaded ? (
         <div>
           <Box

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import {
   Box, Paper, Typography, Button,
-  Collapse, List, ListItem, ListItemButton, ListItemText,
+  Collapse, List, ListItem,
   ButtonGroup
 } from '@mui/material';
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
 import { mockImageApi } from '../../mockApi/apis.mjs';
 import LectureCard from './LectureCardButton.jsx';
+import {BackButton} from "../../containers/BackButton/BackButton";
 
-function FoldableButtonList({ buttonsTmp }) {
+function FoldableButtonList() {
   const [open, setOpen] = useState(false);
   const buttons = [
     { label: 'Button 1' },
@@ -28,6 +29,9 @@ function FoldableButtonList({ buttonsTmp }) {
 
   return (
     <Box >
+
+        <BackButton/>
+
       <Button onClick={handleToggle} sx={{ mb: 1 }}>
         {open ? 'Hide' : 'Show more'}
       </Button>
@@ -178,7 +182,6 @@ const VideoFrame = () => {
           title="Video"
           width="100%"
           height="100%"
-          frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
           style={{ position: 'absolute', top: 0, left: 0 }}
@@ -217,7 +220,7 @@ const Sections = () => {
 };
 
 export default function PlayScreen() {
-  const cardSize = 106;
+  //const cardSize = 106;
   return (
     <Box sx={{
       marginTop: '5vh'

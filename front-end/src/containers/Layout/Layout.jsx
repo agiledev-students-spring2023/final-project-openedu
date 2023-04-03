@@ -5,9 +5,9 @@ import { BottomNavBar } from '../BottomNavBar/BottomNavBar';
 // eslint-disable-next-line react/prop-types
 export const Layout = ({ children }) => (
   <>
-    <Box>
-        {/*<Header />*/}
-      <Container sx={{ width: "100%" }}>
+    <Box sx={{marginTop:'8vh'}}>
+      
+      <Container sx={{ width: "100%", }}>
         {children}
       </Container>
 

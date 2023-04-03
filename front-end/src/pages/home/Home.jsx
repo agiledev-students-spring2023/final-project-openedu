@@ -37,7 +37,7 @@ export function Home(props) {
                         justifyContent: 'space-between',
                         width: 1,
                         alignItems: 'center',
-                        marginTop: '20vh',
+                        marginTop: '24vh',
                         marginBottom: '6vh'
                     }}>
                     <Box sx={{

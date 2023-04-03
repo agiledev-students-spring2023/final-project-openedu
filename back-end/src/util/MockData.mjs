@@ -50,3 +50,14 @@ export function subjects() {
 
     return subjectList;
 }
+
+
+export function user_info() {
+
+    courseList = {
+            name: faker.random.word(),
+            description: faker.random.words(10),
+        };
+
+    return courseList;
+}

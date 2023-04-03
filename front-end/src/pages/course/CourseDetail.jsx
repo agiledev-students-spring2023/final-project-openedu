@@ -1,13 +1,169 @@
-import {React, useEffect, useState} from "react";
-import { Box, CardMedia, Paper, Typography, useTheme } from "@mui/material";
+import { React, useEffect, useState } from "react";
+import { Box, Card, Paper, Typography, Button, Divider, Rating } from "@mui/material";
+import { Favorite, PlayArrowRounded } from "@mui/icons-material";
 import { CommentCard } from "./CommentCard";
 import * as Constants from "../../util/Constants.mjs";
 import * as Mockaroo from "../../mockApi/apis.mjs";
 import * as Logger from "../../util/Logger.mjs";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
-import {BackButton} from "../../containers/BackButton/BackButton";
+import { BackButton } from "../../containers/BackButton/BackButton";
+import Loading from "../../containers/Loading/Loading";
+
+
+const Main = () => {
+  return (
+    <Box>
+      <Box
+        className="prompt"
+        sx={{
+        }}>
+        <Paper
+          variant='outlined'
+          sx={{
+            width: 1,
+            height: '200px',
+            backgroundColor: '#F5F5F5',
+            borderRadius: '20px',
+            barder: '1px solid #E0E0E0',
+            backgroundImage: `url(${Mockaroo.mockImageApi(400, 200)})`,
+          }}
+        >
+        </Paper>
+
+        <Box className="prompt-texts"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '3vh'
+          }}>
+          <Typography
+            variant='h5'
+            sx={{
+              display: 'flex',
+            }}
+          >
+            Course Title
+          </Typography>
+          <Typography
+            variant='h11'
+            sx={{
+              display: 'flex',
+            }}
+          >
+            Introduction, collapse needed
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box
+        className="play-buttons">
+        <Box sx={{
+          marginTop: '3vh',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}>
+          <Button
+            variant='contained'
+            sx={{
+              width: "45%",
+              display: 'flex'
+            }}
+            onClick={() => { }}>
+            <PlayArrowRounded />
+            Play </Button>
+          <Button
+            variant='contained'
+            color="error"
+            sx={{
+              width: "45%",
+              display: 'flex',
+            }}
+            onClick={() => { }}>
+            <Favorite />
+            Favorite </Button>
+
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+const InfoSec = (props) => {
+  const { instructor1, instructor2, instructor3,
+    description, uni, time, preqs, difficulties, language, imgUrl } = props.course;
+  return (
+    <Box>
+      <Box sx={{
+        marginTop: '2vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <Box sx={{
+          position: 'relative',
+          width: '100%',
+        }}>
+          <Box sx={{
+            display: 'flex',
+            width: '100%',
+            overflow: 'hidden'
+          }}>
+            <Box sx={{ marginTop: '10px' }}>
+              <Typography align='left' sx={{}}>
+                Instructor(s):
+              </Typography >
+              <Typography sx={{}}>{`${instructor1 === '' ? 'Unknown' : `${instructor1}`} ${instructor2 === '' ? '' : `, ${instructor2}`} ${instructor3 === '' ? '' : `, ${instructor3}`}`}</Typography>
+
+              <Typography align='left' sx={{}}>
+                Offered By:
+              </Typography >
+              <Typography sx={{}}>{uni}</Typography>
+
+              <Typography align='left' sx={{}}>
+                Difficulty:
+              </Typography >
+              <Rating name="read-only" value={difficulties} readOnly precision={0.5} sx={{
+                float: 'left'
+              }} />
+
+              <Typography align='left' sx={{}}>
+                Prerequisites:
+              </Typography >
+              <Typography sx={{}}>{preqs}</Typography>
+
+              <Typography align='left' sx={{}}>
+                Languages:
+              </Typography >
+              <Typography sx={{}}>{language}</Typography>
+
+              <Typography align='left' sx={{}}>
+                Course Hour:
+              </Typography >
+              <Typography sx={{}}>{time}</Typography>
+
+            </Box>
+          </Box>
+        </Box>
+
+      </Box>
+      <Box sx={{ marginTop: '20px' }}>
+        <Typography sx={{ fontWeight: 'bold', float: 'left', clear: 'both', fontSize: '20px' }}>Introduction:</Typography>
+        <Typography align='left' sx={{
+          maxHeight: { lg: '120px', sm: '100px', xs: '50px' },
+          overflow: 'scroll',
+          clear: 'both'
+        }}>
+          {description}
+        </Typography>
+      </Box>
+    </Box>
+  )
+}
+
+
+
 
 export const CourseDetail = () => {
   //TODO: Put useState here
@@ -16,13 +172,13 @@ export const CourseDetail = () => {
   const [isLoaded, setLoaded] = useState(false);
   //const theme = useTheme();
 
-  const {courseId} = useParams();
+  const { courseId } = useParams();
 
   Logger.verbose(CourseDetail.name + " Loaded!");
 
 
-  Logger.verbose("URL: " + Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId??0}`);
-  
+  Logger.verbose("URL: " + Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
+
   useEffect(() => {
     //TODO: Fetch actual data, use props.courseId
     //
@@ -36,36 +192,36 @@ export const CourseDetail = () => {
     // });
 
     axios
-        .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId??0}`)
-        .then((response) => {
+      .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
+      .then((response) => {
 
-          Logger.info(
-              `CourseDetail's axios got the following data: \n ${response.data["content"]}`
-          );
+        Logger.info(
+          `CourseDetail's axios got the following data: \n ${response.data["content"]}`
+        );
 
-          setCourseInfo(response.data["content"]);
+        setCourseInfo(response.data["content"]);
 
 
 
-          setLoaded(true);
-        })
-        .catch((err) => {
-          Logger.error("error fetching subject information");
-          Logger.error(err);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        Logger.error("error fetching subject information");
+        Logger.error(err);
 
-          //const backupData =
-          setCourseInfo([
-            {
-              courseId: 3,
-              name: "backup_course",
-              description: "backupDescription",
-              imageUrl: Mockaroo.mockImageApi(1920,1080)
-            },
-          ]);
+        //const backupData =
+        setCourseInfo([
+          {
+            courseId: 3,
+            name: "backup_course",
+            description: "backupDescription",
+            imageUrl: Mockaroo.mockImageApi(1920, 1080)
+          },
+        ]);
 
-          setLoaded(true);
-          //setData((backupData??[])[0])
-        });
+        setLoaded(true);
+        //setData((backupData??[])[0])
+      });
 
     setComments([
       {
@@ -88,103 +244,10 @@ export const CourseDetail = () => {
 
   return (
     <>
-     <BackButton/>
-
-      {isLoaded ? (
-        <div>
-          <Box
-            sx={{
-              margin: Constants.UI_HORIZ_OFFSET,
-            }}
-          >
-            {/*Course Image*/}
-            <CardMedia
-              alt="course_image"
-              image={courseInfo.imageUrl ?? Mockaroo.mockImageApi(1920, 1080)}
-              sx={{
-                height: 200,
-                borderRadius: Constants.UI_CORNER_RADIUS,
-              }}
-            />
-
-            {/* Course Title and Description Section */}
-            <Box
-              sx={{
-                marginY: 3,
-              }}
-            >
-              {/*Course Name*/}
-              <Typography
-                variant="h2"
-                sx={{
-                  //margin: Constants.UI_HORIZ_OFFSET,
-                  textAlign: "left",
-                  fontWeight: "bold",
-                  //fontFamily: 'Roboto',
-                  letterSpacing: 2,
-                  //color: "text.primary",
-                }}
-              >
-                {courseInfo.name}
-              </Typography>
-
-              {/*Course Description*/}
-              <Typography
-                variant="h5"
-                sx={{
-                  //fontFamily: 'Roboto',
-                  textAlign: "left",
-                }}
-              >
-                {courseInfo.detail}
-              </Typography>
-            </Box>
-
-            {/* Course Information Section */}
-            <Paper
-              elevation={0}
-              sx={{
-                boxShadow: 1,
-                marginY: 3,
-                borderRadius: Constants.UI_CORNER_RADIUS,
-                padding: Constants.UI_CORNER_RADIUS / 2,
-              }}
-            >
-              <Typography
-                variant="h5"
-                sx={{
-                  textAlign: "left",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                Language: {courseInfo.language}
-              </Typography>
-
-              <Typography
-                variant="h5"
-                sx={{
-                  textAlign: "left",
-                }}
-              >
-                Difficulty: {courseInfo.difficulty}
-              </Typography>
-
-              <a href={courseInfo.url}></a>
-            </Paper>
-
-            {/*//<Divider/>*/}
-            {comments.map((element) => (
-              <CommentCard
-                key={element.userId}
-                userName={element.userName}
-                msg={element.msg}
-              />
-            ))}
-          </Box>
-        </div>
-      ) : (
-        <h1>Fetching data...</h1>
-      )}
+      <BackButton />
+      {isLoaded ? (<>
+        <Main /> <InfoSec course={{}} />
+      </>) : <Loading />}
     </>
   );
 };

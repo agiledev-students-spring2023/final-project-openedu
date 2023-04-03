@@ -48,7 +48,7 @@ export function getRoutes() {
                 <Route path="edit" element={<EditProfile />} />
                 <Route path="avatars" element={<RecentlyUsedAvatars />} />
             </Route>
-            <Route path="error" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage />} />
 
         </Route>
 

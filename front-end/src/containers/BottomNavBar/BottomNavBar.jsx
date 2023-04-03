@@ -26,7 +26,7 @@ export function BottomNavBar() {
   const tabMapping = [
     "home",
     "subjects/list",
-    "courses/detail/0",
+    //"courses/detail/0",
     "profile/self"
   ];
 
@@ -78,7 +78,7 @@ export function BottomNavBar() {
         >
           <BottomNavigationAction disableRipple label="Home" icon={<HomeIcon/>} />
           <BottomNavigationAction disableRipple label="Subjects" icon={<BookIcon />} />
-          <BottomNavigationAction disableRipple label="Social" icon={<ChatIcon />} />
+          {/*<BottomNavigationAction disableRipple label="Social" icon={<ChatIcon />} />*/}
           <BottomNavigationAction disableRipple label="Me" icon={<PersonIcon />} />
         </BottomNavigation>
       </Paper>

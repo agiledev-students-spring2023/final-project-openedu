@@ -7,14 +7,13 @@ import * as Mockaroo from "../../mockApi/apis.mjs";
 import { TypeAnimation } from "react-type-animation";
 import * as Constants from "../../util/Constants.mjs";
 import * as Logger from "../../util/Logger.mjs";
+import * as Util from "../../util/Util.mjs";
 
 export function SubjectList() {
-  const url = Mockaroo.mockDataApi("subjects"); //Add API URL
+  const url = Util.getServerAddr() + "/subject/list?token=1234";
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
-
-  const navigate = useNavigate();
 
   const subjectId = useParams();
 
@@ -26,7 +25,7 @@ export function SubjectList() {
         Logger.info(
           `SubjectList's axios got the following data: \n ${response.data}`
         );
-        setData(response.data);
+        setData(response.data["content"]);
 
         setLoaded(true);
       })
@@ -55,7 +54,7 @@ export function SubjectList() {
   return (
     <Box
       sx={{
-        marginX: Constants.UI_HORIZ_OFFSET,
+        //marginX: Constants.UI_HORIZ_OFFSET,
       }}
     >
       <Typography
@@ -96,7 +95,7 @@ export function SubjectList() {
       </Box>
 
       {isLoaded ? (
-        data.map((entry) => <SubjectCard key={entry.id} entry={entry} />)
+        data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry} />)
       ) : (
         <div />
       )}

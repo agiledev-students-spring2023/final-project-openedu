@@ -1,9 +1,10 @@
 import React, {createContext, useContext, useState} from 'react';
 import {Box, Button, InputAdornment, TextField, Typography} from '@mui/material';
 import BackgroundImage from "../../containers/BackgroundImage/index.jsx";
-import {Add, HighlightOff} from "@mui/icons-material";
+import {Add, ChevronRight, HighlightOff} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
+import {BackButton} from "../../containers/BackButton/BackButton";
 
 // Use Context to make globals,or functions between parent/child
 export const LandingContext = createContext(null);
@@ -93,7 +94,7 @@ const LandingUi = () => {
         if (page.next===1) { setLanding(1); }
         else {
             Util.invokeCallback("onNavBarShow",true);
-            Util.invokeCallback("onBackEnable",true);
+            //Util.invokeCallback("onBackEnable",true);
             navigate('/home');
         }
     };
@@ -110,9 +111,15 @@ const LandingUi = () => {
 
     return (
         <>
+            <BackButton/>
+
             <Box sx={{
-                marginTop: '27vh'
+                marginTop: 10,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
             }}>
+
                 <Typography
                     sx={{
                         fontFamily: "Raleway",
@@ -154,32 +161,32 @@ const LandingUi = () => {
                         display: 'flex'
                     }}
                     onClick={handleContinue}>
-                    <Add />
-                    Continue </Button>
+                    Continue <ChevronRight />
+                     </Button>
 
-                <Button
-                    variant='contained'
-                    sx={{
-                        marginTop: '3%',
-                        width: "35%",
-                        fontSize: '100%',
-                        display: page.next === 0 ? "flex" : "none"
-                    }}
-                    onClick={handleForget}>
-                    <Add />
-                    Forget Password</Button>
+                {/*<Button*/}
+                {/*    variant='contained'*/}
+                {/*    sx={{*/}
+                {/*        marginTop: '3%',*/}
+                {/*        width: "35%",*/}
+                {/*        fontSize: '100%',*/}
+                {/*        display: page.next === 0 ? "flex" : "none"*/}
+                {/*    }}*/}
+                {/*    onClick={handleForget}>*/}
+                {/*    <Add />*/}
+                {/*    Forget Password</Button>*/}
 
-                <Button
-                    variant='contained'
-                    sx={{
-                        marginTop: '3%',
-                        width: "35%",
-                        fontSize: '100%',
-                        display: page.next === 0 ? "flex" : "none"
-                    }}
-                    onClick={handleSignup}>
-                    <Add />
-                    Sign Up </Button>
+                {/*<Button*/}
+                {/*    variant='contained'*/}
+                {/*    sx={{*/}
+                {/*        marginTop: '3%',*/}
+                {/*        width: "35%",*/}
+                {/*        fontSize: '100%',*/}
+                {/*        display: page.next === 0 ? "flex" : "none"*/}
+                {/*    }}*/}
+                {/*    onClick={handleSignup}>*/}
+                {/*    <Add />*/}
+                {/*    Sign Up </Button>*/}
             </Box >
         </>
     );

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import {
   Box,
@@ -45,8 +44,10 @@ export function SubjectCard(
   const navigate = useNavigate();
   const theme = useTheme();
   const routeChange = () => {
-    navigate(`../detail/${entry.id}`);
+    navigate(`../detail/${entry.subjectId}`);
   };
+
+  //Logger.verbose(`Image URL: ${entry.imageUrl}`);
 
   return (
     <Grid
@@ -68,10 +69,11 @@ export function SubjectCard(
             sx={{
               borderRadius: Constants.UI_HORIZ_OFFSET,
             }}
+            id={entry.subjectId ?? 0}
             component="img"
             height="140"
-            image={Mockaroo.mockImageApi(1920, 1080)}
-            alt="green iguana"
+            image={entry.imageUrl ?? Mockaroo.mockImageApi(1920, 1080)}
+            //alt="green iguana"
           />
           <Typography variant="h5" component="div">
             {entry.name ?? "Subject Name"}

@@ -13,7 +13,8 @@ export function courses() {
             difficulty: faker.datatype.number({min: 0,max: 10}),
             language: faker.random.word(),
             url: faker.internet.url(),
-            imageUrl: "https://picsum.photos/1920/1080"
+            imageUrl: "https://picsum.photos/1920/1080",
+            completionRate: Util.randInt() % 101,
         }
     ));
 
@@ -41,7 +42,9 @@ export function subjects() {
             'subjectId' : subjectId,
             'name' : faker.random.word(),
             'description' : faker.random.words(Util.randInt() % 20 + 1),
-            'courses' : courseArr
+            'courses' : courseArr,
+            'imageUrl' : "https://picsum.photos/1920/1080",
+            completionRate: Util.randInt() % 101
         };
     });
 

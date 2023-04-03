@@ -1,6 +1,7 @@
 name: React.js Front-end CI
 
 on: pull_request
+#on: pull_request
 
 jobs:
   build:
@@ -9,7 +10,7 @@ jobs:
     # Configure working directory
     defaults:
       run:
-        working-directory: ./front-end
+        working-directory: ./
 
     steps:
       - uses: actions/checkout@v3
@@ -18,7 +19,7 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm install
-      - run: npm run build
+      - run: cd front-end && npm run build
 
   
 

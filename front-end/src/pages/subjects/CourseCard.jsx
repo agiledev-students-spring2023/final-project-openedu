@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -11,7 +11,6 @@ import {
   LinearProgress,
 } from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
-import CircularProgress from "@mui/material/CircularProgress";
 import * as PropTypes from "prop-types";
 import * as Mockaroo from "../../mockApi/apis.mjs";
 
@@ -45,14 +44,14 @@ export function CourseCard(
 ) {
   const navigate = useNavigate();
   const routeChange = () => {
-    navigate(`/courses/detail/${entry.id}`);
+    navigate(`/courses/detail/${entry.courseId}`);
   };
   return (
     <Grid
       sx={{
         // minWidth: 200,
         // margin: Constants.UI_HORIZ_OFFSET,
-        padding: Constants.UI_CORNER_RADIUS / 4,
+        paddingY: Constants.UI_CORNER_RADIUS / 4,
         borderRadius: Constants.UI_CORNER_RADIUS * 2,
         marginBottom: 2,
       }}

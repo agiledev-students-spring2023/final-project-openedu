@@ -8,6 +8,7 @@ import * as Util from "../util/Util.mjs";
 import * as MockData from "../util/MockData.mjs";
 import {subjects} from "../util/MockData.mjs";
 import {cloneObject} from "../util/Util.mjs";
+import cors from "cors";
 
 export const restful = express();
 
@@ -44,6 +45,10 @@ export async function initMiddleware() {
                 "public")
         )
     );
+
+    const corsOptions = {origin: `http://localhost:${process.env.PORT || 3000}`};
+
+    restful.use(cors(corsOptions));
 }
 
 export async function initRestApis() {

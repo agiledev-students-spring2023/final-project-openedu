@@ -41,7 +41,8 @@ export function subjects() {
             'subjectId' : subjectId,
             'name' : faker.random.word(),
             'description' : faker.random.words(Util.randInt() % 20 + 1),
-            'courses' : courseArr
+            'courses' : courseArr,
+            'imageUrl' : "https://picsum.photos/1920/1080"
         };
     });
 

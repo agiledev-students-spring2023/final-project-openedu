@@ -7,21 +7,27 @@ import * as Mockaroo from "../../mockApi/apis.mjs";
 import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 import * as Constants from "../../util/Constants.mjs";
+import * as Util from "../../util/Util.mjs";
+import {useParams} from "react-router-dom";
 
 export function SubjectDetail(props) {
-  const url = Mockaroo.mockDataApi(`subjects`);
+
   // const url = Mockaroo.mockDataApi(`subjects/${subjectId}`);
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
-  const subjectId = props["subjectId"] ?? 0;
+  const {subjectId} = useParams();
+
+  const url = Util.getServerAddr() + `/subject/detail?subjectId=${subjectId??0}&token=1234`;
+
+  Logger.verbose("URL: " + url);
 
   useEffect(() => {
     console.log("fetching course information");
     axios(url)
       .then((response) => {
-        setData(response.data);
+        setData(response.data["content"]);
         setLoaded(true);
       })
       .catch((err) => {
@@ -30,7 +36,7 @@ export function SubjectDetail(props) {
 
         setData([
           {
-            id: 3,
+            courseId: 3,
             avatar: ClassIcon,
             name: "backupSubject",
             description: "backupDescription",
@@ -54,7 +60,8 @@ export function SubjectDetail(props) {
 
   return (
     <>
-      <Box
+
+        { isLoaded ? <Box
         sx={{
           margin: Constants.UI_HORIZ_OFFSET,
         }}
@@ -62,7 +69,7 @@ export function SubjectDetail(props) {
         {/*Course Image*/}
         <CardMedia
           alt="course_image"
-          image={Mockaroo.mockImageApi(1920, 1080)}
+          image={data.imageUrl}
           sx={{
             height: 300,
             borderRadius: Constants.UI_CORNER_RADIUS,
@@ -92,7 +99,7 @@ export function SubjectDetail(props) {
               textAlign: "left",
             }}
           >
-            {subjectId.name}
+            {data.name}
           </Typography>
           <Typography
             variant="h6"
@@ -100,7 +107,7 @@ export function SubjectDetail(props) {
               textAlign: "left",
             }}
           >
-            {subjectId.description}
+            {data.description}
           </Typography>
           <TypeAnimation
             sequence={[
@@ -122,10 +129,10 @@ export function SubjectDetail(props) {
           />
         </Box>
 
-        {data.map((entry, index) => (
+        {data["courses"].map((entry, index) => (
           <CourseCard key={index} entry={entry} />
         ))}
-      </Box>
+      </Box> : <></>}
     </>
   );
 }

@@ -1,47 +1,43 @@
 import React, {useState} from "react";
-import { Button } from "@mui/material";
-import {Link} from "react-router-dom";
+import {Box, Button} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 let onEnable;
 
 // This button is not incorporated into header, TBD
-export function BackButton({ url, handleClick }) {
+export function BackButton() {
 
-  const [isEnabled, setEnabled] = useState(true);
+    const [isEnabled, setEnabled] = useState(true);
+    const navigate = useNavigate();
 
-  onEnable ??= async (newState) => {
-      setEnabled(newState);
-  };
+    onEnable ??= async (newState) => {
+        setEnabled(newState);
+    };
 
-  Util.addCallback("onBackEnable",onEnable);
+    const handleClick = () => {
+        navigate(-1);
+        //setEnabled(false);
+    };
 
-  return (
-      <Button
-        component={Link}
-        to={`${url}`}
-        onClick={ isEnabled ? handleClick : undefined}
-        sx={{
-          display: isEnabled ? "flex" : "none",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "5px 7px",
-          gap: "10px",
+    Util.addCallback("onBackEnable", onEnable);
 
-          position: "absolute",
-          width: "52",
-          height: "34",
-          left: "14",
-          top: "70px",
+    return (
+        <Box sx={{marginTop: 10}}>
+            <Button disableRipple variant="plain" size="small"
+                    sx={{
+                        display: isEnabled ? 'flex' : 'none',
+                        width: "10px",
+                        height: "40px",
+                    }}
+                    onClick={isEnabled ? handleClick : undefined}
 
-          background: "#FFFFFF",
-          border: "2px solid #000000",
-          variant: "text",
-          color: "#000000",
-        }}
-      >
-        Back
-      </Button>
-  );
+            > <ChevronLeftIcon
+                sx={{
+                    fontSize: "40px"
+                }}/>
+            </Button>
+        </Box>
+    );
 }

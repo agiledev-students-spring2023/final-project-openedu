@@ -3,13 +3,14 @@ import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 import * as Constants from "../../util/Constants.mjs";
 import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
+import * as Util from "../../util/Util.mjs";
 
 export function SuggestSubjectList() {
-  const url = Mockaroo.mockDataApi("subjects"); //Add API URL
+
+    const url = Util.getServerAddr() + "/subject/recommend?token=1234";
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
@@ -88,7 +89,7 @@ export function SuggestSubjectList() {
       </Box>
 
       {isLoaded ? (
-        data.map((entry) => <SubjectCard key={entry.id} entry={entry} />)
+        data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry} />)
       ) : (
         <div />
       )}

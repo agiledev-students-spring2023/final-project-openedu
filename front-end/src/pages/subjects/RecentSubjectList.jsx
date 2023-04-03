@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 import { TypeAnimation } from "react-type-animation";
 import * as Constants from "../../util/Constants.mjs";
 import * as Logger from "../../util/Logger.mjs";
+import * as Util from "../../util/Util.mjs";
 
 export function RecentSubjectList() {
-  const url = Mockaroo.mockDataApi("subjects"); //Add API URL
+
+    const url = Util.getServerAddr() + "/subject/previous?token=1234";
+    //const url = Mockaroo.mockDataApi("subjects"); //Add API URL
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
-  const navigate = useNavigate();
-
-  const subjectId = useParams();
 
   useEffect(() => {
     console.log("fetching subject information");
@@ -26,7 +25,7 @@ export function RecentSubjectList() {
         Logger.info(
           `SubjectList's axios got the following data: \n ${response.data}`
         );
-        setData(response.data);
+        setData(response.data["content"]);
 
         setLoaded(true);
       })
@@ -96,7 +95,7 @@ export function RecentSubjectList() {
       </Box>
 
       {isLoaded ? (
-        data.map((entry) => <SubjectCard key={entry.id} entry={entry} />)
+        data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry} />)
       ) : (
         <div />
       )}

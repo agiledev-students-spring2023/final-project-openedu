@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import React from 'react';
 
 const callbackMap = new Map();
+let loadedConfig;
 
 export function addCallback(name, func) {
 
@@ -232,6 +233,15 @@ export function getTheme() {
             }
         }
     );
+}
+
+
+export function getEnvParam(name) {
+    return process.env.name;
+}
+
+export function getServerAddr() {
+    return getEnvParam("server_addr_debug")??"http://localhost:3001";
 }
 
 export function asChildPage(component) {

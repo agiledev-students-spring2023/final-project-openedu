@@ -83,7 +83,7 @@ export default function UserProfile() {
                     display: composeMode ? "none" : "flex",
                     flexDirection: 'column',
                 }}>
-                {[1, 2, 3].map((e, i) => {
+                {[1, 2, 3].map((e, i) => { //TODO: replace with real data from backend
                     return (<PostCard sx={{ display: 'flex', width: '100%' }} key={i} />);
                 })}
 

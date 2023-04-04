@@ -50,3 +50,10 @@ export function subjects() {
 
     return subjectList;
 }
+
+export function post(){
+    return {
+        title: faker.random.words(5),
+        content: faker.random.words(100),
+    };
+}

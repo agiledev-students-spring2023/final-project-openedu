@@ -10,6 +10,7 @@ import { CourseDetail } from "../pages/course/CourseDetail.jsx";
 import UserProfile from "../pages/userprofile/UserProfile.jsx";
 import EditProfile from "../pages/userprofile/EditProfile.jsx";
 import RecentlyUsedAvatars from "../pages/userprofile/RecentlyUsedAvatars.jsx";
+import {ViewPost} from "../pages/posts/ViewPost.jsx";
 import LecturePlay from "../pages/lectures/LecturePlay.jsx";
 import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
@@ -47,6 +48,9 @@ export function getRoutes() {
                 <Route index={true} path="self" element={<UserProfile />} />
                 <Route path="edit" element={<EditProfile />} />
                 <Route path="avatars" element={<RecentlyUsedAvatars />} />
+            </Route>
+            <Route path="post">
+                <Route path="view/:postId" element={<ViewPost />} />
             </Route>
             <Route path="error" element={<ErrorPage />} />
 

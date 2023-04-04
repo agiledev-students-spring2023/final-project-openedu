@@ -17,14 +17,14 @@ export function ViewPost() {
     //TODO: Fetch actual data, use postID
 
     axios
-      .get(Util.getServerAddr() + `/post/view?token=1234&postId=${postId ?? 0}`)
+      .get(`http://localhost:3001/post/view?token=1234&postId=0`)
       .then((response) => {
         Logger.info(
-          `ViewPost's axios got the following data: \n ${response.data["content"]}`
+          `ViewPost's axios got the following data: \n ${response.data["content"]["title"]}`
         );
 
-        setPostTitle(response.data["title"]);
-        setPostContent(response.data["content"]);
+        setPostTitle(response.data["content"]["title"]);
+        setPostContent(response.data["content"]["content"]);
 
         setLoaded(true);
       })

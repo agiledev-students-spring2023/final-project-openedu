@@ -7,7 +7,7 @@ import {
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
 import { mockImageApi } from '../../mockApi/apis.mjs';
 import LectureCard from './LectureCardButton.jsx';
-import {BackButton} from "../../containers/BackButton/BackButton";
+import { BackButton } from "../../containers/BackButton/BackButton";
 
 function FoldableButtonList() {
   const [open, setOpen] = useState(false);
@@ -29,9 +29,6 @@ function FoldableButtonList() {
 
   return (
     <Box >
-
-        <BackButton/>
-
       <Button onClick={handleToggle} sx={{ mb: 1 }}>
         {open ? 'Hide' : 'Show more'}
       </Button>
@@ -48,7 +45,7 @@ function FoldableButtonList() {
         >
           {buttons.map((button, index) => (
             <ListItem disablePadding key={index}>
-              <LectureCard/>
+              <LectureCard />
             </ListItem>
           ))}
         </List>
@@ -105,6 +102,7 @@ const VideoFrame = () => {
           title="Video"
           width="100%"
           height="100%"
+          frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
           style={{ position: 'absolute', top: 0, left: 0 }}
@@ -126,8 +124,8 @@ const Sections = () => {
 
   return (
     <Box sx={{
-      display:'flex',
-      flexDirection:'column',
+      display: 'flex',
+      flexDirection: 'column',
     }}>
       <ButtonGroup variant='plain' size='large'
         sx={{
@@ -137,7 +135,7 @@ const Sections = () => {
         <Button onClick={() => { setVid(true); }}>Videos</Button>
         <Button onClick={() => { setVid(false); }}>Comments</Button>
       </ButtonGroup>
-      {vid ? <FoldableButtonList sx={{display:'flex'}}/> : <Box />}
+      {vid ? <FoldableButtonList sx={{ display: 'flex' }} /> : <Box />}
     </Box>
   );
 };
@@ -145,12 +143,17 @@ const Sections = () => {
 export default function PlayScreen() {
   //const cardSize = 106;
   return (
-    <Box sx={{
-      marginTop: '5vh'
-    }}>
-      <VideoFrame />
-      <VideoInfo />
-      <Sections />
-    </Box>
+    <>
+      <BackButton />
+
+      <Box sx={{
+        marginTop: '2vh'
+      }}>
+
+        <VideoFrame />
+        <VideoInfo />
+        <Sections />
+      </Box>
+    </>
   );
 }

@@ -7,8 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function PostCard(props) {
-    const { name, description, id, wikiUrl } = props;
+    const { name, description, postId, wikiUrl } = props;
     const navigate = useNavigate();
+
+    const handleReadMore = () => {
+        navigate(`/post/view/${postId??'0'}`); //TODO: replace with error message if postID is not provided
+    };
+
     return (
         <Grid item xs={12} md={6} lg={4} sx={{
             paddingTop: '20px',
@@ -83,7 +88,7 @@ export default function PostCard(props) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={() => { navigate(`/subjects/${id}`); }}>Read</Button>
+                    <Button size="small" onClick={ handleReadMore }>Read</Button>
                     <Button size="small" >Edit</Button>
                 </CardActions>
             </Card>

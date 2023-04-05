@@ -172,6 +172,20 @@ export async function initRestApis() {
             Util.onWebResponse(res, subjects()[subjectId]);
     });
 
+
+    restful.get('/post/view', async (req,res) => {
+        if(!Util.isValidGetRequest(req.query,"token","postId")) {
+
+            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req,res);
+            return;
+        }
+        
+        Util.onWebResponse(res, MockData.post());
+
+    });
+
 }
 
 /**

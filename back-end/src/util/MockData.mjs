@@ -6,16 +6,19 @@ let subjectList;
 let postList;
 
 export function courses() {
-  courseList ??= [...Array(500).keys()].map((index) => ({
-    courseId: index,
-    name: faker.random.word(),
-    description: faker.random.words(10),
-    difficulty: faker.datatype.number({ min: 0, max: 10 }),
-    language: faker.random.word(),
-    url: faker.internet.url(),
-    imageUrl: "https://picsum.photos/1920/1080",
-    completionRate: Util.randInt() % 101,
-  }));
+
+    courseList ??= [...Array(500).keys()].map((index) => ({
+            courseId: index,
+            name: faker.random.word(),
+            description: faker.random.words(10),
+            university: faker.random.words(5),
+            difficulty: faker.datatype.number({min: 0,max: 5}),
+            language: faker.random.word(),
+            url: faker.internet.url(),
+            imageUrl: "https://picsum.photos/1920/1080",
+            completionRate: Util.randInt() % 101,
+        }
+    ));
 
   return courseList;
 }

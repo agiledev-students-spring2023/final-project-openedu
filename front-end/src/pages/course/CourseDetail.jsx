@@ -13,8 +13,9 @@ import { BackButton } from "../../containers/BackButton/BackButton";
 import Loading from "../../containers/Loading/Loading";
 
 
-const Main = () => {
+const Main = (props) => {
   const navigate = useNavigate();
+  const { course } = props;
   return (
     <Box>
       <Box
@@ -46,7 +47,7 @@ const Main = () => {
               display: 'flex',
             }}
           >
-            Course Title
+            {course.name ? course.name : "Unknown Course"}
           </Typography>
           <Typography
             variant='h11'
@@ -54,7 +55,7 @@ const Main = () => {
               display: 'flex',
             }}
           >
-            Schools?
+            {course.university ? course.university : "Unknown university"}
           </Typography>
         </Box>
       </Box>
@@ -89,6 +90,7 @@ const Main = () => {
 
         </Box>
       </Box>
+      <InfoSec course={{}} />
     </Box>
   );
 };
@@ -113,6 +115,9 @@ const InfoSec = (props) => {
         <Typography sx={{ display: 'flex', justifyContent: 'center' }}>
           Difficulty:
           <Rating name="read-only" value="2" readOnly precision={0.5} sx={{
+          '& .MuiRating-iconEmpty': {
+            color: '#fff',
+          }
           }} />
         </Typography >
 
@@ -150,77 +155,90 @@ const InfoSec = (props) => {
 
 
 export const CourseDetail = () => {
-  //TODO: Put useState here
-  const [courseInfo, setCourseInfo] = useState(undefined);
-  const [comments, setComments] = useState(undefined);
-  const [isLoaded, setLoaded] = useState(false);
-  //const theme = useTheme();
 
+  const [comments, setComments] = useState(undefined);
+  const [course, setCourse] = useState({});
+  const [isLoaded, setLoaded] = useState(false);
+  const baseURL = Util.getServerAddr();
   const { courseId } = useParams();
 
   Logger.verbose(CourseDetail.name + " Loaded!");
+  Logger.verbose("URL: " + baseURL + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
+
+  // useEffect(() => {
+  //   //TODO: Fetch actual data, use props.courseId
+  //   //
+  //   // setCourseInfo({
+  //   //   courseId: 0,
+  //   //   name: "foo",
+  //   //   detail: "ipsum_lorem",
+  //   //   language: "Java",
+  //   //   difficulty: "Hard",
+  //   //   url: "https://youtube.com",
+  //   // });
+
+  //   axios
+  //     .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
+  //     .then((response) => {
+
+  //       Logger.info(
+  //         `CourseDetail's axios got the following data: \n ${response.data["content"]}`
+  //       );
+
+  //       setCourseInfo(response.data["content"]);
 
 
-  Logger.verbose("URL: " + Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
+
+  //       setLoaded(true);
+  //     })
+  //     .catch((err) => {
+  //       Logger.error("error fetching subject information");
+  //       Logger.error(err);
+
+  //       //const backupData =
+  //       setCourseInfo([
+  //         {
+  //           courseId: 3,
+  //           name: "backup_course",
+  //           description: "backupDescription",
+  //           imageUrl: Mockaroo.mockImageApi(1920, 1080)
+  //         },
+  //       ]);
+
+  //       setLoaded(true);
+  //       //setData((backupData??[])[0])
+  //     });
+
+  //   setComments([
+  //     {
+  //       userId: 0,
+  //       userName: "abc",
+  //       msg: "haha",
+  //     },
+  //     {
+  //       userId: 1,
+  //       userName: "abcd",
+  //       msg: "hahahahaha",
+  //     },
+  //   ]);
+
+  // }, []);
 
   useEffect(() => {
-    //TODO: Fetch actual data, use props.courseId
-    //
-    // setCourseInfo({
-    //   courseId: 0,
-    //   name: "foo",
-    //   detail: "ipsum_lorem",
-    //   language: "Java",
-    //   difficulty: "Hard",
-    //   url: "https://youtube.com",
-    // });
-
-    axios
-      .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
-      .then((response) => {
-
-        Logger.info(
-          `CourseDetail's axios got the following data: \n ${response.data["content"]}`
-        );
-
-        setCourseInfo(response.data["content"]);
-
-
-
+    axios({
+      method: 'GET',
+      url: `${baseURL}/api/course/get_courses_with_id`,
+      params: { courseId }
+    }).then(res => {
+      if (res.data.ok) {
+        localStorage.setItem("course", JSON.stringify(res.data.course));
+        setCourse(res.data.course);
         setLoaded(true);
-      })
-      .catch((err) => {
-        Logger.error("error fetching subject information");
-        Logger.error(err);
+      }
+      else console.log(res.data.message);
+    })
+  }, [])
 
-        //const backupData =
-        setCourseInfo([
-          {
-            courseId: 3,
-            name: "backup_course",
-            description: "backupDescription",
-            imageUrl: Mockaroo.mockImageApi(1920, 1080)
-          },
-        ]);
-
-        setLoaded(true);
-        //setData((backupData??[])[0])
-      });
-
-    setComments([
-      {
-        userId: 0,
-        userName: "abc",
-        msg: "haha",
-      },
-      {
-        userId: 1,
-        userName: "abcd",
-        msg: "hahahahaha",
-      },
-    ]);
-
-  }, []);
 
   //const imgUrl = Mockaroo.mockImageApi(1920,1080);
 
@@ -229,8 +247,8 @@ export const CourseDetail = () => {
   return (
     <>
       <BackButton />
-      {isLoaded ? (<>
-        <Main /> <InfoSec course={{}} />
+      {!isLoaded ? (<>
+        <Main course />
       </>) : <Loading />}
     </>
   );

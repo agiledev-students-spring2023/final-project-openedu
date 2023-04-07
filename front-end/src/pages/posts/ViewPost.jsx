@@ -16,10 +16,8 @@ export function ViewPost() {
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    //TODO: Fetch actual data, use postID
-
     axios
-      .get(Util.getServerAddr() + `/post/view?token=1234&postId=0`)
+      .get(Util.getServerAddr() + `/post?token=1234&postId=${postId ?? 0}`)
       .then((response) => {
         Logger.info(
           `ViewPost's axios got the following data: \n ${response.data["content"]["title"]}`

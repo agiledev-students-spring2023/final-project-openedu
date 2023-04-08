@@ -6,8 +6,6 @@ import { mockImageApi } from "../../mockApi/apis.mjs";
 import { useNavigate } from "react-router-dom";
 import PostCard from "../../containers/PostCard/PostCard";
 import ComposePost from "../posts/ComposePost";
-import { compose } from "@mui/system";
-import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
 
@@ -149,7 +147,6 @@ function PostSection({ composeMode }) {
       .then((response) => {
         if (Array.isArray(response.data["content"])) {
           setPosts(response.data["content"]);
-          console.log(typeof posts[0]);
         } else {
           console.error(
             "Response data is not an array:",
@@ -159,7 +156,6 @@ function PostSection({ composeMode }) {
             "Response data is of type",
             typeof response.data["content"]
           );
-          console.log(response.data["content"]);
         }
       })
       .catch((error) => console.error(error));

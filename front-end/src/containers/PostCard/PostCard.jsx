@@ -64,7 +64,7 @@ export default function PostCard(props) {
                   display: "flex",
                 }}
               >
-                {post.date}
+                {post.date.slice(0, 10)}
               </Typography>
             </Box>
 

@@ -50,7 +50,7 @@ export default function Suggestion() {
                     }}
                     onClick={() => { setComposeMode(1); }}>
                     <Add />
-                    Add New Suggestion </Button>
+                    Add New Feedback </Button>
                 <Button
                     variant='contained'
                     color="error"
@@ -84,7 +84,7 @@ export default function Suggestion() {
 
                 <Typography
                     variant='h9'
-                    sx={{ fontWeight: "500", }}>Suggestion Page</Typography>
+                    sx={{ fontWeight: "500", }}>Feedback</Typography>
                 
                 <Typography
                     variant='contained'
@@ -97,7 +97,7 @@ export default function Suggestion() {
                 >
                     
                 <Create sx={{ marginRight: '10px' }} />
-                    Your suggestions: </Typography>
+                    Your Feedback: </Typography>
             </Box>
 
             
@@ -113,7 +113,7 @@ export default function Suggestion() {
                     return (<FeedbackCard sx={{ display: 'flex', width: '100%' }} key={i} />);
                 })}
 
-                <Typography sx={{ marginTop: '9%' }}>4 {`Feedback(s)`} in Total</Typography>
+                <Typography sx={{ marginTop: '9%' }}>4 {`Feedback`} in Total</Typography>
             </Box>
 
             <Box sx={{
@@ -128,15 +128,21 @@ export default function Suggestion() {
                 <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
                 </FormGroup>
 
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" multiline maxRows={4}/><br/>
-                <TextField id="filled-basic" label="Filled" variant="filled" /><br/>
-                <TextField id="standard-basic" label="Standard" variant="standard" /><br/>
+                <TextField id="outlined-basic" label="Subject" variant="outlined" /><br/>
+
+                <br/>
+                <TextField id="filled-basic" label="Course" variant="filled" /><br/>
+
+                <br/>
+                <TextField id="standard-basic" label="Feedback" variant="standard" multiline maxRows={4}/><br/>
+
+                <br/>
 
                 <Button
                     variant='contained'
                     sx={{
                         width: "35%",
-                        marginTop: '2vh'
+                        marginTop: '10vh'
                     }}
                     onClick={() => { setComposeMode(0); }}>
                     <Add />
@@ -146,7 +152,7 @@ export default function Suggestion() {
                     color='error'
                     sx={{
                         width: "35%",
-                        marginTop: '2vh',
+                        marginTop: '10vh',
                         marginLeft: '2%'
                     }}
                     onClick={() => { setComposeMode(0); }}>

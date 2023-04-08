@@ -213,9 +213,14 @@ export async function initRestApis() {
 
     const ret = [];
 
-    for (let i = 0; i < nPosts; ++i) {
-      const ind = Util.randInt() % posts.length;
+    const postSet = new Set();
 
+    for (let i = 0; i < nPosts; ++i) {
+      let ind = Util.randInt() % posts.length;
+      while (postSet.has(ind)) {
+        ind = Util.randInt() % posts.length;
+      }
+      postSet.add(ind);
       ret.push(posts[ind]);
     }
 

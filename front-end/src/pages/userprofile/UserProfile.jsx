@@ -175,7 +175,7 @@ function PostSection({ composeMode }) {
         ))}
 
       <Typography sx={{ marginTop: "9%" }}>
-        {posts.length + 1} {`Post(s)`} in Total
+        {posts.length} {`Post(s)`} in Total
       </Typography>
     </Box>
   );

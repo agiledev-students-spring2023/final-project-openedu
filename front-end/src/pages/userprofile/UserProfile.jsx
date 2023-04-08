@@ -91,6 +91,22 @@ export default function UserProfile() {
           <Create sx={{ marginRight: "10px" }} />
           Edit Profile{" "}
         </Button>
+
+        <Button
+          variant="contained"
+          sx={{
+            width: "100%",
+            display: "flex",
+            marginTop: "1vh",
+            color: "text.secondary",
+          }}
+          onClick={() => {
+            navigate("/courses/suggestion");
+          }}
+        >
+          <Create sx={{ marginRight: "10px" }} />
+          Feedback{" "}
+        </Button>
       </Box>
 
       <PostSection composeMode={composeMode} />

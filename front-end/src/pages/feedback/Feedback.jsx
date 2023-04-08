@@ -22,16 +22,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+
 export default function Suggestion() {
     const navigate = useNavigate();
     const [composeMode, setComposeMode] = useState(false);
-    const [input, setInput] = useState("");
-    const handleCleanInput = (e) => {
-        e.preventDefault();
-        setInput("");
+    
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
     };
 
-    
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <Box>
             <Box sx={{
@@ -48,9 +53,51 @@ export default function Suggestion() {
                         display: 'flex',
 
                     }}
-                    onClick={() => { setComposeMode(1); }}>
+                    onClick={handleClickOpen}>
                     <Add />
                     Add New Feedback </Button>
+
+                <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Feedback Form</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                        Please enter your subject, course, and feedback below. We
+                        will read your feedback as soon as possible.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Subject"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Course"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Feedback"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Submit</Button>
+                    </DialogActions>
+                </Dialog>
+
                 <Button
                     variant='contained'
                     color="error"
@@ -116,49 +163,8 @@ export default function Suggestion() {
                 <Typography sx={{ marginTop: '9%' }}>4 {`Feedback`} in Total</Typography>
             </Box>
 
-            <Box sx={{
-                marginTop: '2vh',
-                display: composeMode ? "block" : "none"
-                
-            }}>
-                <FormGroup>
-                 <FormGroup 
-                 sx={{color: 'red'}}
-                 ControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
-                </FormGroup>
+            
 
-                <TextField id="outlined-basic" label="Subject" variant="outlined" /><br/>
-
-                <br/>
-                <TextField id="filled-basic" label="Course" variant="filled" /><br/>
-
-                <br/>
-                <TextField id="standard-basic" label="Feedback" variant="standard" multiline maxRows={4}/><br/>
-
-                <br/>
-
-                <Button
-                    variant='contained'
-                    sx={{
-                        width: "35%",
-                        marginTop: '10vh'
-                    }}
-                    onClick={() => { setComposeMode(0); }}>
-                    <Add />
-                    Submit </Button>
-                <Button
-                    variant='contained'
-                    color='error'
-                    sx={{
-                        width: "35%",
-                        marginTop: '10vh',
-                        marginLeft: '2%'
-                    }}
-                    onClick={() => { setComposeMode(0); }}>
-                    <Remove />
-                    Discard </Button>
-            </Box>
         </Box>
     );
 }

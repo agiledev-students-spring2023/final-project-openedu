@@ -8,6 +8,7 @@ import PostCard from "../../containers/PostCard/PostCard";
 import ComposePost from "../posts/ComposePost";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
+import FeedIcon from '@mui/icons-material/Feed';
 
 export default function UserProfile() {
   const navigate = useNavigate();
@@ -104,7 +105,7 @@ export default function UserProfile() {
             navigate("/profile/feedback");
           }}
         >
-          <Create sx={{ marginRight: "10px" }} />
+          <FeedIcon sx={{ marginRight: "10px" }} />
           Feedback{" "}
         </Button>
       </Box>

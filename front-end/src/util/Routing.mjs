@@ -16,6 +16,8 @@ import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
 import Feedback from "../pages/feedback/Feedback.jsx";
 
+
+
 let routes;
 
 export function getRoutes() {

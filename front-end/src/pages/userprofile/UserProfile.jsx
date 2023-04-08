@@ -101,7 +101,7 @@ export default function UserProfile() {
             color: "text.secondary",
           }}
           onClick={() => {
-            navigate("/courses/suggestion");
+            navigate("/profile/feedback");
           }}
         >
           <Create sx={{ marginRight: "10px" }} />

@@ -14,7 +14,7 @@ import { ViewPost } from "../pages/posts/ViewPost.jsx";
 import LecturePlay from "../pages/lectures/LecturePlay.jsx";
 import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
-import Suggestion from "../pages/suggestion/Suggestion.jsx";
+import Feedback from "../pages/feedback/Feedback.jsx";
 
 let routes;
 
@@ -42,13 +42,14 @@ export function getRoutes() {
         <Route path="courses">
           <Route path="detail/:courseId" element={<CourseDetail />} />
           <Route path="play" element={<LecturePlay />} />
-          <Route path="suggestion" element={<Suggestion />} />
+          
         </Route>
 
         <Route path="profile">
           <Route index={true} path="self" element={<UserProfile />} />
           <Route path="edit" element={<EditProfile />} />
           <Route path="avatars" element={<RecentlyUsedAvatars />} />
+          <Route path="feedback" element={<Feedback />} />
         </Route>
         <Route path="post">
           <Route path="view/:postId" element={<ViewPost />} />

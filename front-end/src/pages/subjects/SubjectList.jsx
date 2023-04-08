@@ -3,7 +3,6 @@ import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 import { TypeAnimation } from "react-type-animation";
 import * as Constants from "../../util/Constants.mjs";
 import * as Logger from "../../util/Logger.mjs";
@@ -46,16 +45,15 @@ export function SubjectList() {
         setLoaded(true);
         //setData((backupData??[])[0])
       });
-    // .finally(() => {
-    //   setLoaded(true);
-    // })
   }, []);
 
   return (
     <Box
-      sx={{
-        //marginX: Constants.UI_HORIZ_OFFSET,
-      }}
+      sx={
+        {
+          //marginX: Constants.UI_HORIZ_OFFSET,
+        }
+      }
     >
       <Typography
         variant="h4"
@@ -67,7 +65,6 @@ export function SubjectList() {
       >
         Subjects
       </Typography>
-      {/*<Typography variant="h6">What would you like to learn today?</Typography>*/}
 
       <Box
         sx={{

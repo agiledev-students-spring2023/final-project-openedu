@@ -192,6 +192,18 @@ export function getTheme() {
                         },
                     },
                 },
+                MuiToggleButton: {
+                    styleOverrides: {
+                        root: {
+                            color: '#fff',
+                            border: '1px solid #fff', // ?
+                        },
+                        selected: {
+                            background: '#33408b',
+                            // https://mui.com/material-ui/api/toggle-button/#css
+                        }
+                    },
+                },
                 MuiBottomNavigationAction: {
                     styleOverrides: {
                         label: {
@@ -218,6 +230,7 @@ export function getTheme() {
                     }
                 }
             },
+
             typography: {
                 fontFamily: [
                     'Raleway',
@@ -241,7 +254,7 @@ export function getEnvParam(name) {
 }
 
 export function getServerAddr() {
-    return getEnvParam("server_addr_debug")??"http://localhost:3001";
+    return getEnvParam("server_addr_debug") ?? "http://localhost:3001";
 }
 
 export function asChildPage(component) {

@@ -15,7 +15,7 @@ import LecturePlay from "../pages/lectures/LecturePlay.jsx";
 import LoginWizard from "../pages/landing/LoginWizard.jsx";
 import ErrorPage from "../pages/errors/ErrorPage.jsx";
 import Feedback from "../pages/feedback/Feedback.jsx";
-import Form from "../pages/feedback/Form.jsx";
+
 
 
 let routes;
@@ -52,7 +52,6 @@ export function getRoutes() {
           <Route path="edit" element={<EditProfile />} />
           <Route path="avatars" element={<RecentlyUsedAvatars />} />
           <Route path="feedback" element={<Feedback />} />
-          <Route path="form" element={<Form />} />
         </Route>
         <Route path="post">
           <Route path="view/:postId" element={<ViewPost />} />

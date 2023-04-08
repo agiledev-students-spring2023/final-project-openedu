@@ -164,7 +164,7 @@ export default function Suggestion() {
             </Box>
 
             
-            
+
         </Box>
     );
 }

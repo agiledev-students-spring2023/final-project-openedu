@@ -89,7 +89,6 @@ export default function FeedbackCard(props) {
                 </CardContent>
                 <CardActions>
                     <Button size="small" onClick={ handleReadMore }>Check</Button>
-                    <Button size="small" >Update</Button>
                 </CardActions>
             </Card>
         </Grid >

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {
   Card,
   Divider,
@@ -6,11 +6,52 @@ import {
   CardContent,
   Box,
   Button,
+  Typography,
+  Grid,
+  IconButton,
+  Badge,
 } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+
+const StyledCard = styled(Card)({
+  borderRadius: "15px",
+});
+
+const StyledPostTitle = styled(Typography)({
+  display: "flex",
+  fontWeight: "bold",
+});
+
+const StyledPostDate = styled(Typography)({
+  display: "flex",
+  color: "text.secondary",
+});
+
+const StyledLikesContainer = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  bgcolor: "#ab2d25",
+  borderRadius: "8px",
+  color: "#fff",
+  width: "fit-content",
+  height: "40px",
+  padding: "0px 12px",
+});
+
+const StyledLikesCount = styled(Typography)({
+  display: "flex",
+  marginLeft: "5px",
+  marginRight: "12px",
+});
+
+const StyledLikeIcon = styled(FavoriteBorderIcon)({
+  color: "#f44336",
+  fontSize: "20px",
+});
 
 export default function PostCard(props) {
   const { postId, post } = props;
@@ -21,85 +62,38 @@ export default function PostCard(props) {
   };
 
   return (
-    <Grid
-      item
-      xs={12}
-      md={6}
-      lg={4}
-      sx={{
-        paddingTop: "20px",
-      }}
-    >
-      <Card sx={{ borderRadius: "15px" }}>
-        <CardContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+    <Grid item xs={12} md={6} lg={4} sx={{ paddingTop: "20px" }}>
+      <StyledCard>
+        <CardContent>
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
               justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Typography
-                variant="h11"
-                sx={{
-                  display: "flex",
-                }}
-              >
-                {post.title}
-              </Typography>
-              <Typography
-                variant="caption"
-                sx={{
-                  display: "flex",
-                }}
-              >
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <StyledPostTitle variant="h6">{post.title}</StyledPostTitle>
+              <StyledPostDate variant="caption">
                 {post.date.slice(0, 10)}
-              </Typography>
+              </StyledPostDate>
             </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                bgcolor: "#ab2d25",
-                borderRadius: "8px",
-                color: "#fff",
-                width: "27%",
-                height: "40px",
-                flexDirection: "row",
-                justifyContent: "space-around",
-                alignItems: "center",
-                maxWidth: 100,
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <FavoriteBorderIcon
-                  sx={{ display: "flex", marginLeft: "12%" }}
-                />
-                <Typography sx={{ display: "flex", marginRight: "12%" }}>
-                  {post.likes}
-                </Typography>
+            <Box sx={{ display: "flex" }}>
+              <StyledLikesContainer>
+                <IconButton size="small">
+                  <StyledLikeIcon />
+                </IconButton>
+                <StyledLikesCount>{post.likes}</StyledLikesCount>
+              </StyledLikesContainer>
+              <Box sx={{ display: "flex", marginLeft: "10px" }}>
+                <Badge badgeContent={post.comments} color="primary">
+                  <IconButton size="small">
+                    <ModeCommentOutlinedIcon color="inherit" fontSize="small" />
+                  </IconButton>
+                </Badge>
               </Box>
             </Box>
           </Box>
-
           <Divider
             color="#D9D9D9"
             sx={{
@@ -118,13 +112,32 @@ export default function PostCard(props) {
             {post.overview}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small" onClick={handleReadMore}>
+        <CardActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            size="large"
+            onClick={handleReadMore}
+            sx={{
+              backgroundColor: "primary.main",
+              color: "#fff",
+              width: "60%",
+              padding: "12px 24px",
+              borderRadius: "8px",
+              transition: "background-color 0.3s ease-in-out",
+              "&:hover": {
+                backgroundColor: "#0066cc",
+              },
+            }}
+          >
             Read
           </Button>
-          <Button size="small">Edit</Button>
         </CardActions>
-      </Card>
+      </StyledCard>
     </Grid>
   );
 }

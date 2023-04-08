@@ -6,29 +6,15 @@ import {
   ToggleButton,
   createTheme,
   Grid,
+  ThemeProvider,
 } from "@mui/material";
 import { CreateOutlined, Restore, Favorite } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
+import { getTheme } from "../../util/Util.mjs";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#757ce8",
-      main: "#3f50b5",
-      dark: "#002884",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ff7961",
-      main: "#f44336",
-      dark: "#ba000d",
-      contrastText: "#000",
-    },
-  },
-});
 function CourseTypeToggleButton() {
   const [alignment, setAlignment] = React.useState("Recent");
 
@@ -38,7 +24,7 @@ function CourseTypeToggleButton() {
 
   return (
     <ToggleButtonGroup
-      color="secondary"
+      color="primary"
       value={alignment}
       exclusive
       onChange={handleChange}
@@ -64,7 +50,7 @@ const CourseSlide = (props) => {
         marginTop: "5%",
         marginLeft: "2.3vh",
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "center",
         marginRight: "2.3vh",
       }}
     >
@@ -155,7 +141,8 @@ export function Home(props) {
           width: "1",
           display: "flex",
           flexDirection: "column",
-          paddingBottom: "10vh",
+          paddingBottom: "5vh",
+          //todo: change container position here
         }}
       >
         <Box
@@ -165,11 +152,17 @@ export function Home(props) {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginTop: "3vh",
+            marginTop: "5%",
             marginLeft: "2.3vh",
           }}
         >
-          <CourseTypeToggleButton />
+          <Box
+            sx={{
+              margin: "auto",
+            }}
+          >
+            <CourseTypeToggleButton />
+          </Box>
         </Box>
 
         <CourseSlide className="courseCards" />

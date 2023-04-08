@@ -226,6 +226,23 @@ export async function initRestApis() {
 
     Util.onWebResponse(res, ret);
   });
+
+  //this api currently response with an image url
+  restful.get("/background-image", async (req, res) => {
+    if (!Util.isValidGetRequest(req.query, "token")) {
+      Logger.info(
+        `Request ${
+          req.path
+        } with params ${req.query.toLocaleString()} is invalid!`
+      );
+      //Logger.info(`${req.params} does not have enough parameter!`);
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+    const { width, height } = req.query;
+    const image = `https://picsum.photos/${width}/${height}`;
+    Util.onWebResponse(res, image);
+  });
 }
 
 /**

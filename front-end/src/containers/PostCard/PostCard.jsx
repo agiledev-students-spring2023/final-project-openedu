@@ -120,13 +120,13 @@ export default function PostCard(props) {
           }}
         >
           <Button
-            size="large"
+            size="small"
             onClick={handleReadMore}
             sx={{
               backgroundColor: "primary.main",
               color: "#fff",
-              width: "60%",
-              padding: "12px 24px",
+              width: "50%",
+              padding: "6px 12px",
               borderRadius: "8px",
               transition: "background-color 0.3s ease-in-out",
               "&:hover": {

@@ -64,7 +64,7 @@ export function CourseCard(
             }}
             component="img"
             height="140"
-            image={Mockaroo.mockImageApi(1920, 1080)}
+            image={entry.imageUrl ?? "Course Image"}
             alt="green iguana"
           />
           <Typography variant="h5" component="div">

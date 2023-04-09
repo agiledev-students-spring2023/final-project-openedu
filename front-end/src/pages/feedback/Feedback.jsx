@@ -64,6 +64,12 @@ export default function Suggestion() {
                         Please enter your subject, course, and feedback below. We
                         will read your feedback as soon as possible.
                         </DialogContentText>
+                        <br/>
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox />} label="feedback to site" />
+                            <FormControlLabel control={<Checkbox />} label="feedback to course" />
+                            <FormControlLabel control={<Checkbox />} label="feedback to others" />
+                        </FormGroup>
                         <TextField
                             autoFocus
                             margin="dense"

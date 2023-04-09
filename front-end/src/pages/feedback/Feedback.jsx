@@ -15,7 +15,6 @@ import { Add, Logout, Create, Remove } from '@mui/icons-material';
 import StyledAvater from '../../containers/StyledAvatar';
 import { mockImageApi } from '../../mockApi/apis.mjs';
 import FeedbackCard from '../../containers/FeedbackCard/FeedbackCard';
-import ComposePost from '../posts/ComposePost';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -74,27 +73,19 @@ export default function Suggestion() {
                             autoFocus
                             margin="dense"
                             id="name"
-                            label="Subject"
-                            type="email"
+                            label="Title (Subject/Course/Site)"
                             fullWidth
                             variant="standard"
                         />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Course"
-                            type="email"
-                            fullWidth
-                            variant="standard"
-                        />
+                        <br/>
+                        
                         <TextField
                             autoFocus
                             margin="dense"
                             id="name"
                             label="Feedback"
-                            type="email"
                             fullWidth
+                            multiline
                             variant="standard"
                         />
                     </DialogContent>
@@ -152,25 +143,56 @@ export default function Suggestion() {
                 <Create sx={{ marginRight: '10px' }} />
                     Your Feedback: </Typography>
             </Box>
-
-            
-
-
-            <Box className="postSection"
-                
-                sx={{
-                    display: composeMode ? "none" : "flex",
-                    flexDirection: 'column',
-                }}>
-                {[1, 2, 3, 4].map((e, i) => { //TODO: replace with real data from backend
-                    return (<FeedbackCard sx={{ display: 'flex', width: '100%' }} key={i} />);
-                })}
-
-                <Typography sx={{ marginTop: '9%' }}>4 {`Feedback`} in Total</Typography>
-            </Box>
-
-            
-
+        
+            <FeedSection composeMode={composeMode} />
         </Box>
+
     );
+
+    function FeedSection({ composeMode }) {
+        //this section is not rendered when composeMode is true
+        if (composeMode) return <div></div>;
+        const [feed, setFeed] = useState([]);
+      
+        useEffect(() => {
+          axios
+            .get(Util.getServerAddr() + `/post/list?token=123`)
+            .then((response) => {
+              if (Array.isArray(response.data["content"])) {
+                setFeed(response.data["content"]);
+              } else {
+                console.error(
+                  "Response data is not an array:",
+                  response.data["content"]
+                );
+                console.error(
+                  "Response data is of type",
+                  typeof response.data["content"]
+                );
+              }
+            })
+            .catch((error) => console.error(error));
+        }, []);
+      
+        return (
+          <Box
+            className="feedSection"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {Array.isArray(feed) &&
+              feed.map((feed) => (
+                <FeedbackCard key={feed.feedId} feedId={feed.feedId} feed={feed} />
+              ))}
+      
+            <Typography sx={{ marginTop: "9%" }}>
+              {feed.length} {`Feedback`} in Total
+            </Typography>
+          </Box>
+        );
+      }
+      
+      
 }

@@ -9,11 +9,15 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { CreateOutlined, Restore, Favorite } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
 import { getTheme } from "../../util/Util.mjs";
+import axios from "axios";
+import ClassIcon from "@mui/icons-material/Class";
+import * as Util from "../../util/Util.mjs";
+import * as Logger from "../../util/Logger.mjs";
 
 function CourseTypeToggleButton() {
   const [alignment, setAlignment] = React.useState("Recent");
@@ -70,6 +74,7 @@ const CourseSlide = (props) => {
 };
 export function Home(props) {
   const navigate = useNavigate();
+
   return (
     <Box>
       <BackgroundImage />

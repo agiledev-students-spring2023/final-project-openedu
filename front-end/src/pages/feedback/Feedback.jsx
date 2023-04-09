@@ -60,7 +60,7 @@ export default function Suggestion() {
                     <DialogTitle>Feedback Form</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                        Please enter your subject, course, and feedback below. We
+                        Please enter your title and content of feedback below. We
                         will read your feedback as soon as possible.
                         </DialogContentText>
                         <br/>

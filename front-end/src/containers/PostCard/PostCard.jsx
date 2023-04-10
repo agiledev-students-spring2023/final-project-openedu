@@ -22,7 +22,7 @@ const StyledCard = styled(Card)({
 
 const StyledPostTitle = styled(Typography)({
   display: "flex",
-  fontWeight: "bold",
+  fontWeight: "bold"
 });
 
 const StyledPostDate = styled(Typography)({
@@ -68,31 +68,17 @@ export default function PostCard(props) {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              flexDirection: "column",
               alignItems: "center",
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <StyledPostTitle variant="h6">{post.title}</StyledPostTitle>
+              <StyledPostTitle variant="h6" align="left">{post.title}</StyledPostTitle>
               <StyledPostDate variant="caption">
                 {post.date.slice(0, 10)}
               </StyledPostDate>
             </Box>
-            <Box sx={{ display: "flex" }}>
-              <StyledLikesContainer>
-                <IconButton size="small">
-                  <StyledLikeIcon />
-                </IconButton>
-                <StyledLikesCount>{post.likes}</StyledLikesCount>
-              </StyledLikesContainer>
-              <Box sx={{ display: "flex", marginLeft: "10px" }}>
-                <Badge badgeContent={post.comments} color="primary">
-                  <IconButton size="small">
-                    <ModeCommentOutlinedIcon color="inherit" fontSize="small" />
-                  </IconButton>
-                </Badge>
-              </Box>
-            </Box>
+
           </Box>
           <Divider
             color="#D9D9D9"
@@ -104,6 +90,7 @@ export default function PostCard(props) {
           <Typography
             variant="body2"
             color="text.secondary"
+            align="left"
             sx={{
               display: "flex",
               marginTop: "4px",
@@ -115,8 +102,7 @@ export default function PostCard(props) {
         <CardActions
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: "space-evenly",
           }}
         >
           <Button
@@ -126,7 +112,6 @@ export default function PostCard(props) {
               backgroundColor: "primary.main",
               color: "#fff",
               width: "50%",
-              padding: "6px 12px",
               borderRadius: "8px",
               transition: "background-color 0.3s ease-in-out",
               "&:hover": {
@@ -136,6 +121,23 @@ export default function PostCard(props) {
           >
             Read
           </Button>
+
+          <Box sx={{ display: "flex", flexDirection: 'space-evenly' }}>
+            <StyledLikesContainer>
+              <IconButton size="small">
+                <StyledLikeIcon />
+              </IconButton>
+              <StyledLikesCount>{post.likes}</StyledLikesCount>
+            </StyledLikesContainer>
+
+            <Box sx={{ display: "flex", marginLeft: "10px" }}>
+              <Badge badgeContent={post.comments} color="primary">
+                <IconButton size="small">
+                  <ModeCommentOutlinedIcon color="inherit" fontSize="small" />
+                </IconButton>
+              </Badge>
+            </Box>
+          </Box>
         </CardActions>
       </StyledCard>
     </Grid>

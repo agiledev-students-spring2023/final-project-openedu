@@ -1,0 +1,13 @@
+{
+    "all": true,
+    "check-coverage": true,
+    "functions": 10,
+    "lines": 10,
+    "select": [
+        "src/**/*.js"
+    ],
+    "reporter": [
+        "text",
+        "lcov"
+    ]
+}

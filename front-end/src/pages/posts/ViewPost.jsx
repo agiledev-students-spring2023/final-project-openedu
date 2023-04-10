@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
+import { useTheme } from '@mui/material/styles';
+import MDEditor from '@uiw/react-md-editor';
 import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
@@ -9,6 +10,7 @@ import * as Logger from "../../util/Logger.mjs";
 import axios from "axios";
 
 export function ViewPost() {
+  const theme = useTheme();
   const { postId } = useParams();
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
@@ -60,19 +62,14 @@ export function ViewPost() {
     <Box>
       <BackButton />
       {isPostLoaded ? (
-        <Box>
-          <ReactMarkdown
-            sx={{
-              "& h1": {
-                fontSize: "36px",
-                fontWeight: "bold",
-                marginBottom: "16px",
-              },
-              ...styles.markdownWrapper,
-            }}
-          >
-            {`# ${postTitle}\n\n${postContent}`}
-          </ReactMarkdown>
+        <Box sx={{ marginLeft: '5%' }}>
+          <MDEditor.Markdown
+            source={`## ${postTitle}\n\n${postContent}`}
+            style={{
+              width: '94%',
+              textAlign: 'left',
+              backgroundColor: theme.palette.background.default
+            }} />
           <Box sx={styles.metadataWrapper}>
             <Typography variant="subtitle1" sx={{ color: "#666" }}>
               {" "}

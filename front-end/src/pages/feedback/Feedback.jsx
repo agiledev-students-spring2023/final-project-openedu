@@ -2,11 +2,9 @@ import { React, useState, useEffect } from "react";
 import { Box, Typography, FormGroup, Checkbox, FormControlLabel } from "@mui/material";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
-import { Navigate, useNavigate } from 'react-router-dom';
-import {
-  TextField, InputAdornment, Grid, Button, Container,
-} from '@mui/material';
-import { Add, Logout, Create, Remove } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { TextField, Button } from '@mui/material';
+import { Add, Create, ArrowBack } from '@mui/icons-material';
 import StyledAvater from '../../containers/StyledAvatar';
 import FeedbackCard from '../../containers/FeedbackCard/FeedbackCard';
 import Dialog from '@mui/material/Dialog';
@@ -59,7 +57,7 @@ export default function Suggestion() {
           }}
           onClick={handleClickOpen}>
           <Add />
-          Add New Feedback </Button>
+          Feedback </Button>
 
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Feedback Form</DialogTitle>
@@ -105,10 +103,9 @@ export default function Suggestion() {
           color="error"
           sx={{
             width: "35%",
-            display: 'flex'
           }}
           onClick={() => { navigate("/profile/self"); }}>
-
+          <ArrowBack sx={{ position: 'relative', left: '-10%' }} />
           Back </Button>
 
       </Box>

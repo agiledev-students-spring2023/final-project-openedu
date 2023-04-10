@@ -50,20 +50,12 @@ export default function FeedbackCard(props) {
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <StyledFeedTitle variant="h6">{feed.title}</StyledFeedTitle>
+              <StyledFeedTitle variant="h6" align="left">{feed.title}</StyledFeedTitle>
               <StyledFeedDate variant="caption">
                 {feed.date.slice(0, 10)}
               </StyledFeedDate>
             </Box>
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ display: "flex", marginLeft: "10px" }}>
-                <Badge badgeContent={feed.comments} color="primary">
-                  <IconButton size="small">
-                    <ModeCommentOutlinedIcon color="inherit" fontSize="small" />
-                  </IconButton>
-                </Badge>
-              </Box>
-            </Box>
+
           </Box>
           <Divider
             color="#D9D9D9"
@@ -75,6 +67,7 @@ export default function FeedbackCard(props) {
           <Typography
             variant="body2"
             color="text.secondary"
+            align="left"
             sx={{
               display: "flex",
               marginTop: "4px",

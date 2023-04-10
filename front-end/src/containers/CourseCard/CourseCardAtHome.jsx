@@ -7,6 +7,7 @@ export default function CourseCardAtHome({ entry }) {
     : { name: "Title", completionRate: 0 };
 
   const cardSize = 106;
+
   return (
     <Paper
       variant="outlined"

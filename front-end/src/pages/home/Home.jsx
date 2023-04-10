@@ -19,6 +19,9 @@ import ClassIcon from "@mui/icons-material/Class";
 import * as Util from "../../util/Util.mjs";
 import * as Logger from "../../util/Logger.mjs";
 
+//Todo: add 'learn more' button to page Recent & suggestion.
+//Todo: add link to each card to courseDetail page.
+
 function CourseTypeToggleButton({ value, onChange }) {
   return (
     <ToggleButtonGroup
@@ -81,7 +84,7 @@ export function Home(props) {
 
   const { courseId } = useParams();
 
-  // Logger.verbose("URL: " + url);
+  Logger.verbose("URL: " + url);
   //logger comment out for now
 
   useEffect(() => {

@@ -114,10 +114,11 @@ const LandingUi = () => {
             <BackButton/>
 
             <Box sx={{
-                marginTop: 10,
+                marginTop: '20vh',
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center"
+                alignItems: "center",
+                
             }}>
 
                 <Typography
@@ -201,7 +202,7 @@ export default function LoginWizard() {
         <LandingContext.Provider value={{ landing, setLanding }}>
             <Box>
                 <BackgroundImage />
-                <LandingUi />
+                <LandingUi/>
             </Box>
         </LandingContext.Provider>
 

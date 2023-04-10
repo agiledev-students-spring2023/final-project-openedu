@@ -156,6 +156,7 @@ export default function Suggestion() {
     if (composeMode) return <div></div>;
     const [feed, setFeed] = useState([]);
 
+    //return the layout
     useEffect(() => {
       axios
         .get(Util.getServerAddr() + `/post/list?token=123`)

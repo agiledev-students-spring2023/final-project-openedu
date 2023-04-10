@@ -16,7 +16,7 @@ export default function Loading() {
                 left: 0,
                 height: 1,
                 top: 0,
-                backgroundColor: 'white',
+                backgroundColor: '#28282f',
                 opacity: 0.8,
             }} />
             <CircularProgress size="4rem" sx={{

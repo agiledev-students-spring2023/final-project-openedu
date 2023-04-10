@@ -16,16 +16,6 @@ const Main = (props) => {
   const navigate = useNavigate();
   const { course } = props;
   const [imageUrl, setImageUrl] = useState(null);
-  useEffect(() => {
-    axios
-      .get(Util.getServerAddr() + "/background-image", {
-        params: { token: "1234", width: "200", height: "200" },
-      })
-      .then((response) => {
-        setImageUrl(response.data["content"]);
-      })
-      .catch((error) => console.error(error));
-  }, []);
   return (
     <Box>
       <Box
@@ -40,7 +30,7 @@ const Main = (props) => {
             backgroundColor: '#F5F5F5',
             borderRadius: '20px',
             barder: '1px solid #E0E0E0',
-            backgroundImage: `url(${imageUrl})`,
+            backgroundImage: `url(${course.imageUrl})`,
           }}
         >
         </Paper>
@@ -100,14 +90,15 @@ const Main = (props) => {
 
         </Box>
       </Box>
-      <InfoSec course={{}} />
+      <InfoSec course={course} />
     </Box>
   );
 };
 
 const InfoSec = (props) => {
   const { instructor1, instructor2, instructor3,
-    description, uni, time, preqs, difficulties, language, imgUrl } = props.course;
+    description, courseHours, prerequisites, difficulty, language } = props.course;
+  console.log(props.course);
   return (
     <Box>
       <Box sx={{
@@ -119,12 +110,12 @@ const InfoSec = (props) => {
         <Typography sx={{}}>
           Instructor(s):
         </Typography >
-        <Typography sx={{}}>{`${instructor1 === '' ? 'Unknown' : `${instructor1}`} ${instructor2 === '' ? '' : `, ${instructor2}`} ${instructor3 === '' ? '' : `, ${instructor3}`}`}</Typography>
+        <Typography sx={{ marginLeft: '15%' }}>{`${instructor1 === '' ? 'Unknown' : `${instructor1}`} ${instructor2 === '' ? '' : `, ${instructor2}`}`}</Typography>
 
 
         <Typography sx={{ display: 'flex', justifyContent: 'center' }}>
           Difficulty:
-          <Rating name="read-only" value="2" readOnly precision={0.5} sx={{
+          <Rating name="read-only" value={difficulty} readOnly precision={0.5} sx={{
             '& .MuiRating-iconEmpty': {
               color: '#fff',
             }
@@ -135,17 +126,17 @@ const InfoSec = (props) => {
         <Typography sx={{}}>
           Prerequisites:
         </Typography >
-        <Typography sx={{}}>{preqs}</Typography>
+        <Typography sx={{ marginLeft: '15%' }}>{prerequisites}</Typography>
 
         <Typography sx={{}}>
           Languages:
         </Typography >
-        <Typography sx={{}}>{language}</Typography>
+        <Typography sx={{ marginLeft: '15%' }}>{language}</Typography>
 
         <Typography sx={{}}>
           Course Hour:
         </Typography >
-        <Typography sx={{}}>{time}</Typography>
+        <Typography sx={{ marginLeft: '15%' }}>{courseHours}</Typography>
       </Box>
       <Box sx={{ marginTop: '20px' }}>
         <Typography sx={{ fontWeight: 'bold', float: 'left', clear: 'both', fontSize: '20px' }}>Introduction:</Typography>
@@ -170,7 +161,7 @@ export const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const [isLoaded, setLoaded] = useState(false);
   const baseURL = Util.getServerAddr();
-  const { courseId } = useParams();
+  const { courseId } = useParams(0);
 
   Logger.verbose(CourseDetail.name + " Loaded!");
   Logger.verbose("URL: " + baseURL + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
@@ -237,17 +228,17 @@ export const CourseDetail = () => {
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `${baseURL}/api/course/get_courses_with_id`,
-      params: { courseId }
+      url: Util.getServerAddr() +
+        `/course/detail?token=1234&courseId=${courseId ?? 0}`,
     }).then(res => {
-      if (res.data.ok) {
-        localStorage.setItem("course", JSON.stringify(res.data.course));
-        setCourse(res.data.course);
-        setLoaded(true);
-      }
-      else console.log(res.data.message);
+      // localStorage.setItem("course", JSON.stringify(res.data.course));
+      setCourse(res.data.content);
+      console.log(course);
+      setLoaded(true);
     })
   }, [])
+
+
 
 
   //const imgUrl = Mockaroo.mockImageApi(1920,1080);
@@ -257,8 +248,8 @@ export const CourseDetail = () => {
   return (
     <>
       <BackButton />
-      {!isLoaded ? (<>
-        <Main course />
+      {isLoaded ? (<>
+        <Main course={course} />
       </>) : <Loading />}
     </>
   );

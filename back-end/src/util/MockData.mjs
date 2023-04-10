@@ -1,4 +1,4 @@
-import {faker} from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import * as Util from "./Util.mjs";
 
 let courseList;
@@ -14,14 +14,18 @@ export function imageUrl() {
 export function courses() {
     courseList ??= [...Array(500).keys()].map((index) => ({
         courseId: index,
-        name: faker.random.word(),
+        instructor1: faker.random.words(2),
+        instructor2: faker.random.words(2),
+        name: faker.random.word(4),
         description: faker.random.words(10),
-        university: faker.random.words(5),
-        difficulty: faker.datatype.number({min: 0, max: 5}),
+        university: faker.random.words(4),
+        difficulty: faker.datatype.number({ min: 0, max: 5 }),
         language: faker.random.word(),
         url: faker.internet.url(),
         imageUrl: imageUrl(),
+        prerequisites: faker.random.words(5),
         completionRate: Util.randInt() % 101,
+        courseHours: Util.randInt() % 100,
     }));
 
     return courseList;

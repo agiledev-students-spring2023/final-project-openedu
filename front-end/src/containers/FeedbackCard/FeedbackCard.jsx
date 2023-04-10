@@ -30,9 +30,8 @@ const StyledFeedDate = styled(Typography)({
   color: "text.secondary",
 });
 
-
 export default function FeedbackCard(props) {
-  const { feedId,feed } = props;
+  const { feedId, feed } = props;
   const navigate = useNavigate();
 
   const handleReadMore = () => {
@@ -57,7 +56,6 @@ export default function FeedbackCard(props) {
               </StyledFeedDate>
             </Box>
             <Box sx={{ display: "flex" }}>
-             
               <Box sx={{ display: "flex", marginLeft: "10px" }}>
                 <Badge badgeContent={feed.comments} color="primary">
                   <IconButton size="small">
@@ -103,7 +101,7 @@ export default function FeedbackCard(props) {
               borderRadius: "8px",
               transition: "background-color 0.3s ease-in-out",
               "&:hover": {
-                backgroundColor: "#0066cc",
+                backgroundColor: "#212d61",
               },
             }}
           >

@@ -2,11 +2,11 @@ import * as Constants from "./Constants.mjs";
 import * as FmtTime from "./FmtTime.mjs";
 
 const MsgLevel = {
-    critical : "critical",
-    error : "error",
-    warning : "warning",
-    info : "info",
-    verbose : "verbose"
+    critical: "critical",
+    error: "error",
+    warning: "warning",
+    info: "info",
+    verbose: "verbose"
 };
 
 function getProperMsg(msg) {
@@ -18,33 +18,34 @@ function getProperMsg(msg) {
 function print(msg, msgLevel) {
     const isError = msg instanceof Error;
 
-    if(msgLevel === undefined && isError) {
+    if (msgLevel === undefined && isError) {
         msgLevel = MsgLevel.error;
-    }
-    else {
-        msgLevel = msgLevel??MsgLevel.info;
+    } else {
+        msgLevel = msgLevel ?? MsgLevel.info;
     }
 
-    console.log(`${FmtTime.getCurrentTimeString()}\t[${Constants.APP_NAME}][${MsgLevel[msgLevel]??MsgLevel.verbose}] ${getProperMsg(msg)}`);
+    console.log(`${FmtTime.getCurrentTimeString()}\t[${Constants.APP_NAME}][${MsgLevel[msgLevel] ?? MsgLevel.verbose}] ${getProperMsg(msg)}`);
+
+    return undefined;
 }
 
 
 export function error(msg) {
-    print(msg,MsgLevel.error);
+    print(msg, MsgLevel.error);
 }
 
 export function critical(msg) {
-    print(msg,MsgLevel.critical);
+    print(msg, MsgLevel.critical);
 }
 
 export function warning(msg) {
-    print(msg,MsgLevel.warning);
+    print(msg, MsgLevel.warning);
 }
 
 export function info(msg) {
-    print(msg,MsgLevel.info);
+    print(msg, MsgLevel.info);
 }
 
 export function verbose(msg) {
-    print(msg,MsgLevel.verbose);
+    print(msg, MsgLevel.verbose);
 }

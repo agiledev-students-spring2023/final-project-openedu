@@ -186,10 +186,10 @@ describe('recentSubject', () => {
     });
 
     it('should have a courses property for each recentCourses', () => {
-        recentSubjects().forEach(recentCourses => {
-            assert.ok(Object.prototype.hasOwnProperty.call(recentCourses, 'courses'));
-            assert(Array.isArray(recentCourses.courses));
-            recentCourses.courses.forEach(course => {
+        recentSubjects().forEach(entry => {
+            assert.ok(Object.prototype.hasOwnProperty.call(entry, 'courses'));
+            assert(Array.isArray(entry.courses));
+            entry.courses.forEach(course => {
                 assert.ok(Object.prototype.hasOwnProperty.call(course, 'courseId'));
                 assert(typeof course.courseId === 'number');
             });
@@ -198,10 +198,10 @@ describe('recentSubject', () => {
 
 
     it('should have a completionRate property for each recentCourses', () => {
-        recentSubjects().forEach(recentCourses => {
-            assert.ok(Object.prototype.hasOwnProperty.call(recentCourses, 'completionRate'));
-            assert(typeof recentCourses.completionRate === 'number');
-            assert(recentCourses.completionRate >= 0 && recentCourses.completionRate <= 100);
+        recentSubjects().forEach(entry => {
+            assert.ok(Object.prototype.hasOwnProperty.call(entry, 'completionRate'));
+            assert(typeof entry.completionRate === 'number');
+            assert(entry.completionRate >= 0 && entry.completionRate <= 100);
         });
     });
 });

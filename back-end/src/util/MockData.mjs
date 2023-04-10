@@ -69,18 +69,33 @@ export function posts() {
     return postList;
 }
 
-export function recentSubjects() {
+export function recentCourses() {
     return [...Array(20).keys()].map((index) => {
-        index = (index + Util.randInt() % 2) % subjects().length;
+        index = (index + Util.randInt() % 10) % courses().length;
 
         return courses()[index];
+    });
+}
+
+export function suggestCourses() {
+    return [...Array(20).keys()].map((index) => {
+        index = (index + Util.randInt() % 10) % courses().length;
+        return courses()[index];
+    });
+}
+
+export function recentSubjects() {
+    return [...Array(20).keys()].map((index) => {
+        index = (index + Util.randInt() % 10) % subjects().length;
+
+        return subjects()[index];
     });
 }
 
 export function suggestSubjects() {
     return [...Array(20).keys()].map((index) => {
         index = (index + Util.randInt() % 10) % subjects().length;
-        return courses()[index];
+        return subjects()[index];
     });
 }
 

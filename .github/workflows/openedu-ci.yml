@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm install
-      - run: npx mocha back-end/tests/test_backend.mjs
+      - run: cd back-end && npm run coverage_and_test && cd ../
       - run: cd front-end && npm run build && cd ../
 
   

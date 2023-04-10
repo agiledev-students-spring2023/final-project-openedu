@@ -31,7 +31,7 @@ export function courses() {
 export function recentCourses() {
   let cnt = 0;
 
-  subjectList ??= [...Array(20).keys()].map((subjectId) => {
+  recentCourseList ??= [...Array(20).keys()].map((subjectId) => {
     let nCourses = (Util.randInt() % 10) + 1;
 
     nCourses = Math.min(nCourses, courses().length - cnt);
@@ -59,7 +59,7 @@ export function recentCourses() {
 export function suggestedCourses() {
   let cnt = 0;
 
-  subjectList ??= [...Array(20).keys()].map((subjectId) => {
+  suggestedCourseList ??= [...Array(20).keys()].map((subjectId) => {
     let nCourses = (Util.randInt() % 10) + 1;
 
     nCourses = Math.min(nCourses, courses().length - cnt);
@@ -80,6 +80,8 @@ export function suggestedCourses() {
       completionRate: Util.randInt() % 101,
     };
   });
+
+  return suggestedCourseList;
 }
 
 export function subjects() {

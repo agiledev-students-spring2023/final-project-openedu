@@ -84,7 +84,7 @@ export function Home(props) {
 
   const { courseId } = useParams();
 
-  Logger.verbose("URL: " + url);
+  // Logger.verbose("URL: " + url);
   //logger comment out for now
 
   useEffect(() => {

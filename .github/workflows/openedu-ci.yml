@@ -20,7 +20,7 @@ jobs:
           node-version: '16.x'
       - run: npm install
       - run: cd front-end && npm run build
-
+      - run: npx mocha backend/tests/test_mock_data.mjs
   
 
 

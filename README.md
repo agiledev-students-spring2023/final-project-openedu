@@ -16,12 +16,27 @@
 
 - Node
 - NPM
+- Git
 
 ### How to run this app
-1. Clone this repository
-2. Boot up the backend, please refer to [here](./back-end/README.md).
-3. Boot up the frontend, please refer to [here](./front-end/README.md).
-4. Open [localhost:3000](http://localhost:3000/) in the browser
+1. Clone this repository: 
+   - Run `git clone https://github.com/agiledev-students-spring-2023/final-project-openedu.git`  .
+2. Get into the root directory of this project:
+   - Run `cd ./final-project-openedu` ;
+   - Run `npm install` to install part of the necessary dependencies in order to run the app.
+3. Navigate to and boot up the **backend**: 
+   - Run `cd ./back-end` to go to the backend directory;
+   - Run `npm install` to install all the necessary dependencies in order to run the server;
+   - Run `node src/main.mjs` to setup the server on port `3001`(by default);
+   - (Optional) Run `npm run test` to test the backend. Note: we use **Jest** as the unit-test framework since it has both the testing and  code-coverage-checking functionalities. We are not using istanbul/nyc for it does not support *ES Modules(ESM)*, which is broadly used in our project.
+4. Navigate to and boot up the **frontend**:
+    - Open another terminal;
+    - Run `cd ../` to go back to the root directory (only if you are in the backend directory);
+    - Run `cd ./front-end` to go to the fontend directory;
+    - Run `npm install` to install all the necessary dependencies in order to run the app;
+    - Run `npm start` to run the app in the development mode.
+5. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
 
 ## II. Contributing Members
 

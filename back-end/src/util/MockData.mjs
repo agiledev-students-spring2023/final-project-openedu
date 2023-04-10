@@ -7,7 +7,6 @@ let postList;
 let feedbackList;
 
 
-
 export function imageUrl() {
     return `https://picsum.photos/${1900 + Util.randInt() % 100}/${1000 + Util.randInt() % 100}`;
 }

@@ -12,7 +12,16 @@
 
 ## I. Get Started
 
-**TBD**
+### What you need to run this app
+
+- Node
+- NPM
+
+### How to run this app
+1. Clone this repository
+2. Boot up the backend, please refer to [here](./back-end/README.md).
+3. Boot up the frontend, please refer to [here](./front-end/README.md).
+4. Open [localhost:3000](http://localhost:3000/) in the browser
 
 ## II. Contributing Members
 

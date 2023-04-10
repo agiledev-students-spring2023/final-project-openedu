@@ -4,14 +4,10 @@
   "description": "The back-end of your project will live in this directory.",
   "main": "index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
-    "coverage": "nyc npm run test"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "nyc": "^15.1.0"
-  },
   "type": "module",
   "devDependencies": {
     "@babel/preset-modules": "^0.1.5",

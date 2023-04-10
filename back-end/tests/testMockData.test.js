@@ -1,5 +1,5 @@
 import { courses, subjects } from '../src/util/MockData.mjs';
-
+import * as Network from '../src/networking/NetworkCore.mjs';
 describe('courses', () => {
   let result;
   beforeEach(() => {

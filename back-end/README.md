@@ -1,3 +1,20 @@
-The back-end of your project will live in this directory.
+# Getting Started with OpenEdu Backend
 
-You will most likely initiate the back-end Node.js/Express.js server by running the "npm init" command from within this directory.
+
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm install`
+
+Installs all the necessary dependencies in order to run the server.
+
+### `node src/main.mjs`
+
+Runs the server in port `3001`(by default).
+
+### 
+
+
+

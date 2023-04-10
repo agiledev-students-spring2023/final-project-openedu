@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha tests/test_*.js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

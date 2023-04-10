@@ -22,6 +22,7 @@ export function courses() {
         url: faker.internet.url(),
         imageUrl: imageUrl(),
         completionRate: Util.randInt() % 101,
+        subjectId:faker.datatype.number({min: 0, max: 20}),
     }));
 
     return courseList;

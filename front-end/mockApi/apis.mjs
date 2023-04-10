@@ -33,7 +33,3 @@ let mockDataApi = (op) => {
 let mockImageApi=(width, height)=>{
     return `https://picsum.photos/${width}/${(!height)?width:height}`;
 }
-export  {
-    mockDataApi,
-    mockImageApi
-}

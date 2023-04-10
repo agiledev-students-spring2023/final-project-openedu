@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { Add, Logout, Create, Remove } from "@mui/icons-material";
 import StyledAvater from "../../containers/StyledAvatar";
-import { mockImageApi } from "../../mockApi/apis.mjs";
+
 import { useNavigate } from "react-router-dom";
 import PostCard from "../../containers/PostCard/PostCard";
 import ComposePost from "../posts/ComposePost";
@@ -13,6 +13,17 @@ import FeedIcon from '@mui/icons-material/Feed';
 export default function UserProfile() {
   const navigate = useNavigate();
   const [composeMode, setComposeMode] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
+  useEffect(() => {
+    axios
+      .get(Util.getServerAddr() + "/background-image", {
+        params: { token: "1234", width: "200", height: "200" },
+      })
+      .then((response) => {
+        setImageUrl(response.data["content"]);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   return (
     <Box>
       <Box
@@ -64,7 +75,7 @@ export default function UserProfile() {
         <StyledAvater
           size="72px"
           alt="Hooao"
-          src={mockImageApi(72)}
+          src={imageUrl}
           sx={{
             display: "flex",
           }}

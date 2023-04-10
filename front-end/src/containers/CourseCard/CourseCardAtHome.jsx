@@ -1,22 +1,25 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { mockImageApi } from "../../mockApi/apis.mjs";
-export default function CourseCardAtHome(props) {
-  const { title, completeness } = props.title
-    ? props
-    : { title: "Title", completeness: 0 };
+export default function CourseCardAtHome({ entry }) {
+  const { name, completionRate } = entry.name
+    ? entry
+    : { name: "Title", completionRate: 0 };
 
   const cardSize = 106;
   return (
     <Paper
       variant="outlined"
+      elevation={0}
       sx={{
         width: cardSize,
         height: cardSize,
         backgroundColor: "#F5F5F5",
         borderRadius: "20px",
-        barder: "1px solid #E0E0E0",
-        backgroundImage: `url(${mockImageApi(200, 200)})`,
+        // barder: "1px solid #E0E0E0",
+        backgroundSize: 'cover',
+        backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,
+        // Todo: this doesn't work yet. need to wait for MockDATA redesign & Home.jsx fix.
       }}
       square
     >
@@ -35,7 +38,7 @@ export default function CourseCardAtHome(props) {
             fontSize: "16px",
           }}
         >
-          {title}
+          {name}
         </Typography>
         <Typography
           sx={{
@@ -43,7 +46,7 @@ export default function CourseCardAtHome(props) {
             fontSize: "8px",
           }}
         >
-          {completeness}
+          {completionRate}
         </Typography>
       </Box>
     </Paper>

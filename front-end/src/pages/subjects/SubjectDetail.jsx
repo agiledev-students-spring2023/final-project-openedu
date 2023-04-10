@@ -44,16 +44,6 @@ export function SubjectDetail() {
         ]);
         setLoaded(true);
 
-        // const backupData = [
-        //   {
-        //     id: 3,
-        //     avatar: ClassIcon,
-        //     name: "backupSubject",
-        //     description: "backupDescription",
-        //     completionRate: 37,
-        //   },
-        // ];
-        // setData((backupData ?? [])[0]);
       });
   }, []);
 

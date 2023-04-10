@@ -26,6 +26,8 @@ function print(msg, msgLevel) {
     }
 
     console.log(`${FmtTime.getCurrentTimeString()}\t[${Constants.APP_NAME}][${MsgLevel[msgLevel]??MsgLevel.verbose}] ${getProperMsg(msg)}`);
+
+    return undefined;
 }
 
 

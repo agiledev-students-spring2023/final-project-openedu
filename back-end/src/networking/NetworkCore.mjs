@@ -6,9 +6,10 @@ import path from "path";
 import url from "url";
 import * as Util from "../util/Util.mjs";
 import * as MockData from "../util/MockData.mjs";
-import { subjects } from "../util/MockData.mjs";
+import {imageUrl, subjects} from "../util/MockData.mjs";
 import { cloneObject } from "../util/Util.mjs";
 import cors from "cors";
+import {faker} from "@faker-js/faker";
 
 export const restful = express();
 
@@ -99,11 +100,8 @@ export async function initRestApis() {
 
   restful.get("/course/recent", async (req, res) => {
     if (!Util.isValidGetRequest(req.query, "token")) {
-      Logger.info(
-          `Request ${
-              req.path
-          } with params ${req.query.toLocaleString()} is invalid!`
-      );
+
+      Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
       //Logger.info(`${req.params} does not have enough parameter!`);
       Util.onWebMissingParam(req, res);
       return;
@@ -253,21 +251,53 @@ export async function initRestApis() {
     Util.onWebResponse(res, ret);
   });
 
-  //this api currently response with an image url
+  //this api currently responses with an image url
   restful.get("/background-image", async (req, res) => {
+    const { width, height } = req.query;
+    const image = `https://picsum.photos/${width}/${height}`;
+    Util.onWebResponse(res, image);
+  });
+
+  restful.get("/profile/info",async (req,res) => {
+
     if (!Util.isValidGetRequest(req.query, "token")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
+
+      Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
       //Logger.info(`${req.params} does not have enough parameter!`);
       Util.onWebMissingParam(req, res);
       return;
     }
-    const { width, height } = req.query;
-    const image = `https://picsum.photos/${width}/${height}`;
-    Util.onWebResponse(res, image);
+
+    Util.onWebResponse(res,{
+      "name" : faker.name.fullName(),
+      "userId" : Util.randInt() % 2000,
+      "motto" : faker.random.words(10),
+      "avatar" : MockData.imageUrl()
+    });
+  });
+
+  restful.get("/subject/previous", async (req,res) => {
+    if (!Util.isValidGetRequest(req.query, "token")) {
+
+      Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+      //Logger.info(`${req.params} does not have enough parameter!`);
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    Util.onWebResponse(res,MockData.recentSubjects());
+  });
+
+  restful.get("/subject/recommend", async (req,res) => {
+    if (!Util.isValidGetRequest(req.query, "token")) {
+
+      Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+      //Logger.info(`${req.params} does not have enough parameter!`);
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    Util.onWebResponse(res,MockData.suggestSubjects());
   });
 }
 

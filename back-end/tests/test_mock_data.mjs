@@ -1,5 +1,6 @@
 import { courses, subjects } from '../src/util/MockData.mjs';
 import assert from 'assert';
+import * as Util from "../src/util/Util.mjs";
 
 describe('courses', () => {
     let result;
@@ -120,4 +121,36 @@ describe('subjects', () => {
             assert(subject.completionRate >= 0 && subject.completionRate <= 100);
         });
     });
+});
+
+describe('util', () => {
+
+    let original,callback, testArr;
+
+    before(() => {
+        original = {a : 'a', b : 'b', c : 'c'};
+        callback = () => true;
+        testArr = ["a",undefined,"haha",null,3,4,5,6,7,8,9,10];
+    });
+
+    it('randInt should generate a number less than MAX_SAFE_INTEGER', () => {
+        assert.equal(Util.randInt() < Number.MAX_SAFE_INTEGER, true);
+    });
+
+    it('addCallback should complete normally', () => {
+        assert.equal(Util.addCallback("abc", callback),undefined);
+    });
+
+    it('removeCallback should complete normally', () => {
+        assert.equal(Util.removeCallback("abc", callback),undefined);
+    });
+
+    it('cloneObject should be excluding property c as specified', () => {
+        assert.equal(Util.cloneObject(original,'c')["c"], undefined);
+    });
+
+    it("isPerfectArray should be able to detect nulls and undefined in an array", () => {
+        assert.equal(Util.isPerfectArray(...testArr),false);
+    });
+
 });

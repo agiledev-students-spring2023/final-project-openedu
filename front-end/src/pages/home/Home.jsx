@@ -74,6 +74,7 @@ export function Home(props) {
 
   const [alignment, setAlignment] = React.useState("Recent");
   const [data, setData] = useState([]);
+  const [profile,setProfile] = useState(undefined);
   const [isLoaded, setLoaded] = useState(false);
 
   console.log(data);
@@ -82,24 +83,31 @@ export function Home(props) {
     setAlignment(newAlignment);
   };
 
-  const { courseId } = useParams();
+  // const { courseId } = useParams();
 
   // Logger.verbose("URL: " + url);
   //logger comment out for now
 
   useEffect(() => {
+
+    axios.get(Util.getServerAddr() +
+        `/profile/info?token=1234`).then((response) => {
+
+        Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
+        setProfile(response.data["content"]);
+    });
+
+
     if (alignment === "Recent") {
       // get recent
       console.log("fetching course information");
       axios
         .get(
           Util.getServerAddr() +
-            `/course/recent?token=1234&subjectId=${courseId ?? 0}`
+            `/subject/previous?token=1234`
         )
         .then((response) => {
-          Logger.info(
-            `SubjectList's axios got the following data: \n ${response.data}`
-          );
+          Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
           setData(response.data["content"]);
 
           setLoaded(true);
@@ -120,13 +128,14 @@ export function Home(props) {
 
           setLoaded(true);
         });
+
     } else if (alignment === "Suggestion") {
       // get suggested
       console.log("fetching subject information");
       axios
         .get(
           Util.getServerAddr() +
-            `/course/recommend?token=1234&subjectId=${courseId ?? 0}`
+            `/subject/recommend?token=1234`
         ) //Todo: add SuggestedSubject URL here
         .then((response) => {
           Logger.info(
@@ -197,7 +206,7 @@ export function Home(props) {
                 fontSize: "45px",
               }}
             >
-              UserName!
+                {(profile??{})["name"]??"UserName"}
               {/*get username from backend*/}
             </Typography>
           </Box>

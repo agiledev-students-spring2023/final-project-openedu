@@ -6,33 +6,30 @@ import {
 import StyledAvater from '../../containers/StyledAvatar';
 import { Upload, Event, Save, HighlightOff } from '@mui/icons-material/';
 import axios from 'axios';
-import { mockImageApi, mockDataApi } from '../../mockApi/apis.mjs';
-
+import * as Util from "../../util/Util.mjs";
 
 
 export default function EditProfile(props) {
     const avatarInputRef = useRef(null);
     const [name, setName] = useState('');
+    const [avatarImg, setAvatarImg] = useState('');
     const [email, setEmail] = useState(''); // Email may required?
     const [selectedAvatar, setSelectedAvatar] = useState(null);
     const [description, setDescription] = useState('');
-    const baseURL = "apiConfig.base"; // Backend tbd
     const navigate = useNavigate();
 
     // Mock!
     // Security needed
     useEffect(() => {
-        axios({
-            method: "GET",
-            url: mockDataApi("comments")
-        }).then(res => {
-            const user = res.data[0];
-            setName(user.user_name);
-            setDescription(user.comment);
-        }).catch(err => {
-            console.log(err);
-        });
-
+        axios
+            .get(Util.getServerAddr() + `/profile/info?token=123`)
+            .then((response) => {
+                const userInfo = response.data["content"];
+                setName(userInfo["name"]);
+                setDescription(userInfo["motto"]);
+                setAvatarImg(userInfo["avatar"]);
+            })
+            .catch((error) => console.error(error));
     }, []);
 
     const handleCleanUsername = (e) => {
@@ -99,7 +96,7 @@ export default function EditProfile(props) {
                     justifyContent: "space-between"
                 }}>
 
-                    <StyledAvater alt="USER NAME !" src={mockImageApi(200)} size="90px" />
+                    <StyledAvater src={avatarImg} alt="USER NAME !" size="90px" />
                     <Box sx={{
                         display: 'flex',
                         flexDirection: "column",

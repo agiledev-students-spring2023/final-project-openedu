@@ -15,6 +15,17 @@ import Loading from "../../containers/Loading/Loading";
 const Main = (props) => {
   const navigate = useNavigate();
   const { course } = props;
+  const [imageUrl, setImageUrl] = useState(null);
+  useEffect(() => {
+    axios
+      .get(Util.getServerAddr() + "/background-image", {
+        params: { token: "1234", width: "200", height: "200" },
+      })
+      .then((response) => {
+        setImageUrl(response.data["content"]);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   return (
     <Box>
       <Box
@@ -29,7 +40,7 @@ const Main = (props) => {
             backgroundColor: '#F5F5F5',
             borderRadius: '20px',
             barder: '1px solid #E0E0E0',
-            backgroundImage: `url(${Mockaroo.mockImageApi(400, 200)})`,
+            backgroundImage: `url(${imageUrl})`,
           }}
         >
         </Paper>
@@ -114,9 +125,9 @@ const InfoSec = (props) => {
         <Typography sx={{ display: 'flex', justifyContent: 'center' }}>
           Difficulty:
           <Rating name="read-only" value="2" readOnly precision={0.5} sx={{
-          '& .MuiRating-iconEmpty': {
-            color: '#fff',
-          }
+            '& .MuiRating-iconEmpty': {
+              color: '#fff',
+            }
           }} />
         </Typography >
 

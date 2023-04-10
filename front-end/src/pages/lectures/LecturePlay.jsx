@@ -5,7 +5,6 @@ import {
   ButtonGroup
 } from '@mui/material';
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
-import { mockImageApi } from '../../mockApi/apis.mjs';
 import LectureCard from './LectureCardButton.jsx';
 import { BackButton } from "../../containers/BackButton/BackButton";
 

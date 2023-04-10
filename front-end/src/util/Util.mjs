@@ -195,11 +195,12 @@ export function getTheme() {
                 MuiToggleButton: {
                     styleOverrides: {
                         root: {
-                            color: '#fff',
+                            color: '#4A58A9',
                             border: '1px solid #fff', // ?
                         },
-                        selected: {
+                        "&.Mui-selected": {
                             background: '#33408b',
+                            color: '#fff',
                             // https://mui.com/material-ui/api/toggle-button/#css
                         }
                     },

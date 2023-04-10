@@ -97,6 +97,32 @@ export async function initRestApis() {
     Util.onWebResponse(res, ret);
   });
 
+  restful.get("/course/recent", async (req, res) => {
+    if (!Util.isValidGetRequest(req.query, "token")) {
+      Logger.info(
+          `Request ${
+              req.path
+          } with params ${req.query.toLocaleString()} is invalid!`
+      );
+      //Logger.info(`${req.params} does not have enough parameter!`);
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    const nCourses = Util.randInt() % 200;
+    const courses = MockData.courses();
+
+    const ret = [];
+
+    for (let i = 0; i < nCourses; ++i) {
+      const ind = Util.randInt() % courses.length;
+
+      ret.push(courses[ind]);
+    }
+
+    Util.onWebResponse(res, ret);
+  });
+
   restful.get("/course/previous", async (req, res) => {
     if (!Util.isValidGetRequest(req.query, "token")) {
       Logger.info(

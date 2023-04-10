@@ -37,10 +37,7 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export function CourseCard(
-  /** @type {{ entry: { id: number; name: string; description: string; completionRate: number; } }} */
-  { entry }
-) {
+export function CourseCard({ entry }) {
   const navigate = useNavigate();
   const routeChange = () => {
     navigate(`/courses/detail/${entry.courseId}`);

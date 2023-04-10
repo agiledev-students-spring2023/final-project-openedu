@@ -130,7 +130,7 @@ export default function PostCard(props) {
               borderRadius: "8px",
               transition: "background-color 0.3s ease-in-out",
               "&:hover": {
-                backgroundColor: "#0066cc",
+                backgroundColor: "#212d61",
               },
             }}
           >

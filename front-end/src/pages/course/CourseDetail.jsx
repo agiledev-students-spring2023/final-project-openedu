@@ -1,13 +1,12 @@
-import {React, useEffect, useState} from "react";
+import { React, useEffect, useState } from "react";
 import { Box, CardMedia, Paper, Typography, useTheme } from "@mui/material";
 import { CommentCard } from "./CommentCard";
 import * as Constants from "../../util/Constants.mjs";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 import * as Logger from "../../util/Logger.mjs";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
-import {BackButton} from "../../containers/BackButton/BackButton";
+import { BackButton } from "../../containers/BackButton/BackButton";
 
 export const CourseDetail = () => {
   //TODO: Put useState here
@@ -16,13 +15,16 @@ export const CourseDetail = () => {
   const [isLoaded, setLoaded] = useState(false);
   //const theme = useTheme();
 
-  const {courseId} = useParams();
+  const { courseId } = useParams();
 
   Logger.verbose(CourseDetail.name + " Loaded!");
 
+  Logger.verbose(
+    "URL: " +
+      Util.getServerAddr() +
+      `/course/detail?token=1234&courseId=${courseId ?? 0}`
+  );
 
-  Logger.verbose("URL: " + Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId??0}`);
-  
   useEffect(() => {
     //TODO: Fetch actual data, use props.courseId
     //
@@ -36,36 +38,36 @@ export const CourseDetail = () => {
     // });
 
     axios
-        .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId??0}`)
-        .then((response) => {
+      .get(
+        Util.getServerAddr() +
+          `/course/detail?token=1234&courseId=${courseId ?? 0}`
+      )
+      .then((response) => {
+        Logger.info(
+          `CourseDetail's axios got the following data: \n ${response.data["content"]}`
+        );
 
-          Logger.info(
-              `CourseDetail's axios got the following data: \n ${response.data["content"]}`
-          );
+        setCourseInfo(response.data["content"]);
 
-          setCourseInfo(response.data["content"]);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        Logger.error("error fetching subject information");
+        Logger.error(err);
 
+        //const backupData =
+        setCourseInfo([
+          {
+            courseId: 3,
+            name: "backup_course",
+            description: "backupDescription",
+            imageUrl: "https://picsum.photos/1920/1080",
+          },
+        ]);
 
-
-          setLoaded(true);
-        })
-        .catch((err) => {
-          Logger.error("error fetching subject information");
-          Logger.error(err);
-
-          //const backupData =
-          setCourseInfo([
-            {
-              courseId: 3,
-              name: "backup_course",
-              description: "backupDescription",
-              imageUrl: Mockaroo.mockImageApi(1920,1080)
-            },
-          ]);
-
-          setLoaded(true);
-          //setData((backupData??[])[0])
-        });
+        setLoaded(true);
+        //setData((backupData??[])[0])
+      });
 
     setComments([
       {
@@ -79,7 +81,6 @@ export const CourseDetail = () => {
         msg: "hahahahaha",
       },
     ]);
-
   }, []);
 
   //const imgUrl = Mockaroo.mockImageApi(1920,1080);
@@ -88,7 +89,7 @@ export const CourseDetail = () => {
 
   return (
     <>
-     <BackButton/>
+      <BackButton />
 
       {isLoaded ? (
         <div>
@@ -100,7 +101,7 @@ export const CourseDetail = () => {
             {/*Course Image*/}
             <CardMedia
               alt="course_image"
-              image={courseInfo.imageUrl ?? Mockaroo.mockImageApi(1920, 1080)}
+              image={courseInfo.imageUrl ?? "https://picsum.photos/1920/1080"}
               sx={{
                 height: 200,
                 borderRadius: Constants.UI_CORNER_RADIUS,

@@ -1,4 +1,4 @@
-import { courses, subjects } from '../src/util/MockData.mjs';
+import { courses, subjects, recentCourses } from '../src/util/MockData.mjs';
 import assert from 'assert';
 
 describe('courses', () => {

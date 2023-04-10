@@ -49,7 +49,7 @@ function InputField(props) {
     );
 }
 
-// LandingUI is used for three pages: Begin, Signin, Signup
+// LandingUI is applied to three pages: Begin, Signin, Signup
 const LandingUi = () => {
     const { landing, setLanding } = useContext(LandingContext);
     const navigate = useNavigate();

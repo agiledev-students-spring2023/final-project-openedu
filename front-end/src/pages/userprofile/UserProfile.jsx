@@ -165,7 +165,7 @@ export default function UserProfile() {
 }
 
 function PostSection({ composeMode }) {
-  //this section is not rendered when composeMode is true
+  //when composeMode is true this section is not rendered 
   if (composeMode) return <div></div>;
   const [posts, setPosts] = useState([]);
 

@@ -13,52 +13,29 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 
 const StyledCard = styled(Card)({
   borderRadius: "15px",
 });
 
-const StyledPostTitle = styled(Typography)({
+const StyledFeedTitle = styled(Typography)({
   display: "flex",
-  fontWeight: "bold"
+  fontWeight: "bold",
 });
 
-const StyledPostDate = styled(Typography)({
+const StyledFeedDate = styled(Typography)({
   display: "flex",
   color: "text.secondary",
 });
 
-const StyledLikesContainer = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  bgcolor: "#ab2d25",
-  borderRadius: "8px",
-  color: "#fff",
-  width: "fit-content",
-  height: "40px",
-  padding: "0px 12px",
-});
-
-const StyledLikesCount = styled(Typography)({
-  display: "flex",
-  marginLeft: "5px",
-  marginRight: "12px",
-});
-
-const StyledLikeIcon = styled(FavoriteBorderIcon)({
-  color: "#f44336",
-  fontSize: "20px",
-});
-
-export default function PostCard(props) {
-  const { postId, post } = props;
+export default function FeedbackCard(props) {
+  const { feedId, feed } = props;
   const navigate = useNavigate();
 
   const handleReadMore = () => {
-    navigate(`/post/view/${postId ?? "0"}`); //TODO: replace with error message if postID is not provided
+    navigate(`/post/view/${feedId ?? "0"}`); //TODO: replace with error message if feedID is not provided
   };
 
   return (
@@ -68,15 +45,15 @@ export default function PostCard(props) {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
+              justifyContent: "space-between",
               alignItems: "center",
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <StyledPostTitle variant="h6" align="left">{post.title}</StyledPostTitle>
-              <StyledPostDate variant="caption">
-                {post.date.slice(0, 10)}
-              </StyledPostDate>
+              <StyledFeedTitle variant="h6" align="left">{feed.title}</StyledFeedTitle>
+              <StyledFeedDate variant="caption">
+                {feed.date.slice(0, 10)}
+              </StyledFeedDate>
             </Box>
 
           </Box>
@@ -96,13 +73,14 @@ export default function PostCard(props) {
               marginTop: "4px",
             }}
           >
-            {post.overview}
+            {feed.overview}
           </Typography>
         </CardContent>
         <CardActions
           sx={{
             display: "flex",
-            justifyContent: "space-evenly",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Button
@@ -112,6 +90,7 @@ export default function PostCard(props) {
               backgroundColor: "primary.main",
               color: "#fff",
               width: "50%",
+              padding: "6px 12px",
               borderRadius: "8px",
               transition: "background-color 0.3s ease-in-out",
               "&:hover": {
@@ -119,25 +98,8 @@ export default function PostCard(props) {
               },
             }}
           >
-            Read
+            Review your feedback
           </Button>
-
-          <Box sx={{ display: "flex", flexDirection: 'space-evenly' }}>
-            <StyledLikesContainer>
-              <IconButton size="small">
-                <StyledLikeIcon />
-              </IconButton>
-              <StyledLikesCount>{post.likes}</StyledLikesCount>
-            </StyledLikesContainer>
-
-            <Box sx={{ display: "flex", marginLeft: "10px" }}>
-              <Badge badgeContent={post.comments} color="primary">
-                <IconButton size="small">
-                  <ModeCommentOutlinedIcon color="inherit" fontSize="small" />
-                </IconButton>
-              </Badge>
-            </Box>
-          </Box>
         </CardActions>
       </StyledCard>
     </Grid>

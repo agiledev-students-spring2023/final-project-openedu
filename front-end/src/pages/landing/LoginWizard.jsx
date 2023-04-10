@@ -93,36 +93,37 @@ const LandingUi = () => {
 
         if (page.next===1) { setLanding(1); }
         else {
-            Util.invokeCallback("onNavBarShow",true);
+            Util.invokeCallback("onNavBarShow", true).then(() => true);
             //Util.invokeCallback("onBackEnable",true);
             navigate('/home');
         }
     };
 
-    const handleForget = (e) => {
-        e.preventDefault();
-        setLanding(2);
-    };
-
-    const handleSignup = (e) => {
-        e.preventDefault();
-        setLanding(2);
-    };
+    // const handleForget = (e) => {
+    //     e.preventDefault();
+    //     setLanding(2);
+    // };
+    //
+    // const handleSignup = (e) => {
+    //     e.preventDefault();
+    //     setLanding(2);
+    // };
 
     return (
         <>
             <BackButton/>
 
             <Box sx={{
-                marginTop: 10,
+                marginTop: '20vh',
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center"
+                alignItems: "center",
+                
             }}>
 
                 <Typography
                     sx={{
-                        fontFamily: "Raleway",
+                        //fontFamily: "Raleway",
                         fontWeight: "700",
                         fontSize: "60px",
                         lineHeight: "70px",
@@ -163,30 +164,6 @@ const LandingUi = () => {
                     onClick={handleContinue}>
                     Continue <ChevronRight />
                      </Button>
-
-                {/*<Button*/}
-                {/*    variant='contained'*/}
-                {/*    sx={{*/}
-                {/*        marginTop: '3%',*/}
-                {/*        width: "35%",*/}
-                {/*        fontSize: '100%',*/}
-                {/*        display: page.next === 0 ? "flex" : "none"*/}
-                {/*    }}*/}
-                {/*    onClick={handleForget}>*/}
-                {/*    <Add />*/}
-                {/*    Forget Password</Button>*/}
-
-                {/*<Button*/}
-                {/*    variant='contained'*/}
-                {/*    sx={{*/}
-                {/*        marginTop: '3%',*/}
-                {/*        width: "35%",*/}
-                {/*        fontSize: '100%',*/}
-                {/*        display: page.next === 0 ? "flex" : "none"*/}
-                {/*    }}*/}
-                {/*    onClick={handleSignup}>*/}
-                {/*    <Add />*/}
-                {/*    Sign Up </Button>*/}
             </Box >
         </>
     );
@@ -201,7 +178,7 @@ export default function LoginWizard() {
         <LandingContext.Provider value={{ landing, setLanding }}>
             <Box>
                 <BackgroundImage />
-                <LandingUi />
+                <LandingUi/>
             </Box>
         </LandingContext.Provider>
 

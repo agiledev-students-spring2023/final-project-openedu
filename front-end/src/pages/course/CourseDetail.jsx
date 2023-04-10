@@ -4,7 +4,6 @@ import { Box, Card, Paper, Typography, Button, Divider, Rating } from "@mui/mate
 import { Favorite, PlayArrowRounded } from "@mui/icons-material";
 import { CommentCard } from "./CommentCard";
 import * as Constants from "../../util/Constants.mjs";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 import * as Logger from "../../util/Logger.mjs";
 import { useParams } from "react-router-dom";
 import * as Util from "../../util/Util.mjs";

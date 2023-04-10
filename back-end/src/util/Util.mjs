@@ -19,9 +19,9 @@ export function addCallback(name, func) {
 export function removeCallback(name, func) {
 
     if (callbackMap.has(name)) {
-        (callbackMap.get(name) ?? new Set()).remove(func);
+        (callbackMap.get(name) ?? new Set()).delete(func);
 
-        if (callbackMap.get(name).size() === 0) {
+        if (callbackMap.get(name).size === 0) {
             callbackMap.delete(name);
         }
     }
@@ -31,12 +31,14 @@ export function removeCallback(name, func) {
 export async function invokeCallback(name, ...args) {
 
     if (!callbackMap.has(name)) {
-        return;
+        return undefined;
     }
 
     for (const func of (callbackMap.get(name) ?? new Set())) {
         (async () => func(...args))();
     }
+
+    return undefined;
 }
 
 

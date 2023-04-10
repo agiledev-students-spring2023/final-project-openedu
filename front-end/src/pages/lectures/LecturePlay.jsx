@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box, Paper, Typography, Button,
   Collapse, List, ListItem,
@@ -12,16 +12,15 @@ import { BackButton } from "../../containers/BackButton/BackButton";
 function FoldableButtonList() {
   const [open, setOpen] = useState(false);
   const buttons = [
-    { label: 'Button 1' },
-    { label: 'Button 2' },
-    { label: 'Button 3' },
-    { label: 'Button 4' },
-    { label: 'Button 5' },
-    { label: 'Button 3' },
-    { label: 'Button 4' },
-    { label: 'Button 5' },
+    { label: "Button 1" },
+    { label: "Button 2" },
+    { label: "Button 3" },
+    { label: "Button 4" },
+    { label: "Button 5" },
+    { label: "Button 3" },
+    { label: "Button 4" },
+    { label: "Button 5" },
   ];
-
 
   const handleToggle = () => {
     setOpen(!open);
@@ -30,16 +29,16 @@ function FoldableButtonList() {
   return (
     <Box >
       <Button onClick={handleToggle} sx={{ mb: 1 }}>
-        {open ? 'Hide' : 'Show more'}
+        {open ? "Hide" : "Show more"}
       </Button>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List
           sx={{
-            width: '100%',
-            position: 'relative',
-            overflow: 'auto',
+            width: "100%",
+            position: "relative",
+            overflow: "auto",
             maxHeight: 300,
-            '& ul': { padding: 0 }
+            "& ul": { padding: 0 },
           }}
           subheader={<li />}
         >
@@ -57,30 +56,29 @@ function FoldableButtonList() {
 
 
 
-
 const VideoInfo = () => {
   return (
-    <Box
-      className="info">
+    <Box className="info">
       <Box
         className="info-texts"
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          marginTop: '3vh'
-        }}>
+          display: "flex",
+          flexDirection: "column",
+          marginTop: "3vh",
+        }}
+      >
         <Typography
-          variant='h5'
+          variant="h5"
           sx={{
-            display: 'flex',
+            display: "flex",
           }}
         >
           Course Title
         </Typography>
         <Typography
-          variant='h11'
+          variant="h11"
           sx={{
-            display: 'flex',
+            display: "flex",
           }}
         >
           Introduction, collapse needed
@@ -93,10 +91,16 @@ const VideoInfo = () => {
 const VideoFrame = () => {
   const videoId = "CWglkNBUmD4";
   return (
-    <Box >
+    <Box>
       <Box
         className="player"
-        sx={{ position: 'relative', width: '100%', height: '20vh', pb: '56.25%' }}>
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: "20vh",
+          pb: "56.25%",
+        }}
+      >
         <iframe
           src={`https://www.youtube.com/embed/${videoId}`}
           title="Video"
@@ -105,19 +109,14 @@ const VideoFrame = () => {
           frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
-          style={{ position: 'absolute', top: 0, left: 0 }}
+          style={{ position: "absolute", top: 0, left: 0 }}
         />
       </Box>
 
-      <Box
-        className="info">
-
-      </Box>
+      <Box className="info"></Box>
     </Box>
-
   );
 };
-
 
 const Sections = () => {
   const [vid, setVid] = useState(true);
@@ -129,11 +128,24 @@ const Sections = () => {
     }}>
       <ButtonGroup variant='plain' size='large'
         sx={{
-          marginTop: '3vh',
-          display: 'flex',
-        }}>
-        <Button onClick={() => { setVid(true); }}>Videos</Button>
-        <Button onClick={() => { setVid(false); }}>Comments</Button>
+          marginTop: "3vh",
+          display: "flex",
+        }}
+      >
+        <Button
+          onClick={() => {
+            setVid(true);
+          }}
+        >
+          Videos
+        </Button>
+        <Button
+          onClick={() => {
+            setVid(false);
+          }}
+        >
+          Comments
+        </Button>
       </ButtonGroup>
       {vid ? <FoldableButtonList sx={{ display: 'flex' }} /> : <Box />}
     </Box>

@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
 import * as PropTypes from "prop-types";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 
 //need fix during Sprint3,
 function LinearProgressWithLabel(props) {
@@ -38,10 +37,7 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export function CourseCard(
-  /** @type {{ entry: { id: number; name: string; description: string; completionRate: number; } }} */
-  { entry }
-) {
+export function CourseCard({ entry }) {
   const navigate = useNavigate();
   const routeChange = () => {
     navigate(`/courses/detail/${entry.courseId}`);
@@ -64,7 +60,7 @@ export function CourseCard(
             }}
             component="img"
             height="140"
-            image={Mockaroo.mockImageApi(1920, 1080)}
+            image={entry.imageUrl ?? "Course Image"}
             alt="green iguana"
           />
           <Typography variant="h5" component="div">

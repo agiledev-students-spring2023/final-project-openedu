@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
 import * as PropTypes from "prop-types";
-import * as Mockaroo from "../../mockApi/apis.mjs";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -72,7 +71,8 @@ export function SubjectCard(
             id={entry.subjectId ?? 0}
             component="img"
             height="140"
-            image={entry.imageUrl ?? Mockaroo.mockImageApi(1920, 1080)}
+            image={entry.imageUrl ?? "Subject Image"}
+            //Todo: change to backend
             //alt="green iguana"
           />
           <Typography variant="h5" component="div">

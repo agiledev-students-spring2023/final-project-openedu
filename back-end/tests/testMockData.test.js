@@ -1,4 +1,8 @@
-import { courses, subjects, recentCourses, suggestedCourses } from '../src/util/MockData.mjs';
+import {
+  courses, subjects, recentCourses,
+  suggestCourses, suggestSubjects, recentSubjects
+} from '../src/util/MockData.mjs';
+import * as Util from "../src/util/Util.mjs"
 import * as Network from '../src/networking/NetworkCore.mjs';
 describe('courses', () => {
   let result;
@@ -149,17 +153,6 @@ describe('recentCourses', () => {
     });
   });
 
-  test('should have a courses property for each recentCourses', () => {
-    result.forEach(recentCourses => {
-      expect(recentCourses).toHaveProperty('courses');
-      expect(Array.isArray(recentCourses.courses)).toBe(true);
-      recentCourses.courses.forEach(course => {
-        expect(course).toHaveProperty('courseId');
-        expect(typeof course.courseId).toBe('number');
-      });
-    });
-  });
-
   test('should have a completionRate property for each recentCourses', () => {
     result.forEach(recentCourses => {
       expect(recentCourses).toHaveProperty('completionRate');
@@ -170,51 +163,166 @@ describe('recentCourses', () => {
 });
 
 
-describe('suggestedCourses', () => {
+describe('suggestCourses', () => {
   let result;
 
   beforeEach(() => {
-    result = suggestedCourses();
+    result = suggestCourses();
   });
 
-  it('should have a subjectId property for each suggestedCourses', () => {
-    result.forEach(suggestedCourses => {
-      expect(suggestedCourses).toHaveProperty('subjectId');
-      expect(typeof suggestedCourses.subjectId).toBe('number');
+  it('should have a subjectId property for each suggestCourses', () => {
+    result.forEach(suggestCourses => {
+      expect(suggestCourses).toHaveProperty('subjectId');
+      expect(typeof suggestCourses.subjectId).toBe('number');
     });
   });
 
-  it('should have a name property for each suggestedCourses', () => {
-    result.forEach(suggestedCourses => {
-      expect(suggestedCourses).toHaveProperty('name');
-      expect(typeof suggestedCourses.name).toBe('string');
+  it('should have a name property for each suggestCourses', () => {
+    result.forEach(suggestCourses => {
+      expect(suggestCourses).toHaveProperty('name');
+      expect(typeof suggestCourses.name).toBe('string');
     });
   });
 
-  it('should have a description property for each suggestedCourses', () => {
-    result.forEach(suggestedCourses => {
-      expect(suggestedCourses).toHaveProperty('description');
-      expect(typeof suggestedCourses.description).toBe('string');
+  it('should have a description property for each suggestCourses', () => {
+    result.forEach(suggestCourses => {
+      expect(suggestCourses).toHaveProperty('description');
+      expect(typeof suggestCourses.description).toBe('string');
     });
   });
 
-  it('should have a courses property for each suggestedCourses', () => {
-    result.forEach(suggestedCourses => {
-      expect(suggestedCourses).toHaveProperty('courses');
-      expect(Array.isArray(suggestedCourses.courses)).toBe(true);
-      suggestedCourses.courses.forEach(course => {
+  it('should have a completionRate property for each suggestCourses', () => {
+    result.forEach(suggestCourses => {
+      expect(suggestCourses).toHaveProperty('completionRate');
+      expect(typeof suggestCourses.completionRate).toBe('number');
+      expect(suggestCourses.completionRate).toBeGreaterThanOrEqual(0);
+      expect(suggestCourses.completionRate).toBeLessThanOrEqual(100);
+    });
+  });
+});
+
+describe('recentSubject', () => {
+  it('should have a subjectId property for each recentCourses', () => {
+    recentSubjects().forEach((recentCourses) => {
+      expect(recentCourses).toHaveProperty('subjectId');
+      expect(typeof recentCourses.subjectId).toBe('number');
+    });
+  });
+
+  it('should have a name property for each recentCourses', () => {
+    recentSubjects().forEach((recentCourses) => {
+      expect(recentCourses).toHaveProperty('name');
+      expect(typeof recentCourses.name).toBe('string');
+    });
+  });
+
+  it('should have a description property for each recentCourses', () => {
+    recentSubjects().forEach((recentCourses) => {
+      expect(recentCourses).toHaveProperty('description');
+      expect(typeof recentCourses.description).toBe('string');
+    });
+  });
+
+  it('should have a courses property for each recentCourses', () => {
+    recentSubjects().forEach((entry) => {
+      expect(entry).toHaveProperty('courses');
+      expect(Array.isArray(entry.courses)).toBe(true);
+      entry.courses.forEach((course) => {
         expect(course).toHaveProperty('courseId');
         expect(typeof course.courseId).toBe('number');
       });
     });
   });
 
-  it('should have a completionRate property for each suggestedCourses', () => {
-    result.forEach(suggestedCourses => {
-      expect(suggestedCourses).toHaveProperty('completionRate');
-      expect(typeof suggestedCourses.completionRate).toBe('number');
-      expect(suggestedCourses.completionRate).toBeGreaterThanOrEqual(0);
-      expect(suggestedCourses.completionRate).toBeLessThanOrEqual(100);
+  it('should have a completionRate property for each recentCourses', () => {
+    recentSubjects().forEach((entry) => {
+      expect(entry).toHaveProperty('completionRate');
+      expect(typeof entry.completionRate).toBe('number');
+      expect(entry.completionRate).toBeGreaterThanOrEqual(0);
+      expect(entry.completionRate).toBeLessThanOrEqual(100);
     });
   });
 });
+
+describe('suggestSubjects', () => {
+  let result;
+
+  beforeEach(() => {
+    result = suggestSubjects();
+  });
+
+  it('should have a subjectId property for each entry', () => {
+    result.forEach((entry) => {
+      expect(entry).toHaveProperty('subjectId');
+      expect(typeof entry.subjectId).toBe('number');
+    });
+  });
+
+  it('should have a name property for each entry', () => {
+    result.forEach((entry) => {
+      expect(entry).toHaveProperty('name');
+      expect(typeof entry.name).toBe('string');
+    });
+  });
+
+  it('should have a description property for each entry', () => {
+    result.forEach((entry) => {
+      expect(entry).toHaveProperty('description');
+      expect(typeof entry.description).toBe('string');
+    });
+  });
+
+  it('should have a courses property for each entry', () => {
+    result.forEach((entry) => {
+      expect(entry).toHaveProperty('courses');
+      expect(Array.isArray(entry.courses)).toBe(true);
+      entry.courses.forEach((course) => {
+        expect(course).toHaveProperty('courseId');
+        expect(typeof course.courseId).toBe('number');
+      });
+    });
+  });
+
+  it('should have a completionRate property for each entry', () => {
+    result.forEach((entry) => {
+      expect(entry).toHaveProperty('completionRate');
+      expect(typeof entry.completionRate).toBe('number');
+      expect(entry.completionRate).toBeGreaterThanOrEqual(0);
+      expect(entry.completionRate).toBeLessThanOrEqual(100);
+    });
+  });
+});
+
+
+describe('util', () => {
+
+  let original, callback, testArr;
+
+  beforeEach(() => {
+    original = { a: 'a', b: 'b', c: 'c' };
+    callback = () => true;
+    testArr = ["a", undefined, "haha", null, 3, 4, 5, 6, 7, 8, 9, 10];
+  });
+
+  it('randInt should generate a number less than MAX_SAFE_INTEGER', () => {
+    expect(Util.randInt()).toBeLessThan(Number.MAX_SAFE_INTEGER);
+  });
+
+  it('addCallback should complete normally', () => {
+    expect(Util.addCallback("abc", callback)).toBeUndefined();
+  });
+
+  it('removeCallback should complete normally', () => {
+    expect(Util.removeCallback("abc", callback)).toBeUndefined();
+  });
+
+  it('cloneObject should be excluding property c as specified', () => {
+    expect(Util.cloneObject(original, 'c')["c"]).toBeUndefined();
+  });
+
+  it("isPerfectArray should be able to detect nulls and undefined in an array", () => {
+    expect(Util.isPerfectArray(...testArr)).toBe(false);
+  });
+
+});
+

@@ -4,8 +4,12 @@ import * as Util from "./Util.mjs";
 let courseList;
 let subjectList;
 let postList;
+
 let recentCourseList;
 let suggestedCourseList;
+
+
+let feedbackList;
 
 
 export function courses() {
@@ -117,4 +121,16 @@ export function posts() {
   }));
 
   return postList;
+}
+
+export function feedback() {
+  feedbackList ??= [...Array(100).keys()].map((index) => ({
+  feedbackId: index,
+  title: faker.random.words(5),
+  content: faker.random.words(100),
+  overview: faker.random.words(15),
+  date: faker.date.past(),
+}));
+
+return feedbackList;
 }

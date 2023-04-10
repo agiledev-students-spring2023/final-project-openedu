@@ -75,7 +75,7 @@ export function ViewPost() {
           </ReactMarkdown>
           <Box sx={styles.metadataWrapper}>
             <Typography variant="subtitle1" sx={{ color: "#666" }}>
-              Posted on:{" "}
+              {" "}
               {new Date(postDate).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",

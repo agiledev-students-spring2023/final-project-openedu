@@ -19,19 +19,15 @@ import ClassIcon from "@mui/icons-material/Class";
 import * as Util from "../../util/Util.mjs";
 import * as Logger from "../../util/Logger.mjs";
 
-function CourseTypeToggleButton() {
-  const [alignment, setAlignment] = React.useState("Recent");
+//Todo: add 'learn more' button to page Recent & suggestion.
+//Todo: add link to each card to courseDetail page.
 
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
-
+function CourseTypeToggleButton({ value, onChange }) {
   return (
     <ToggleButtonGroup
-      color="primary"
-      value={alignment}
+      value={value}
       exclusive
-      onChange={handleChange}
+      onChange={onChange}
       aria-label="Platform"
       align="center"
       sx={{
@@ -47,7 +43,7 @@ function CourseTypeToggleButton() {
   );
 }
 
-const CourseSlide = (props) => {
+const CourseSlide = ({ data }) => {
   return (
     <Box
       sx={{
@@ -63,17 +59,102 @@ const CourseSlide = (props) => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 6, sm: 8, md: 12 }}
       >
-        {Array.from(Array(6)).map((_, index) => (
+        {data.slice(0, 6).map((entry, index) => (
           <Grid item xs={2} sm={4} md={4} key={index}>
-            <CourseCard />
+            <CourseCard key={index} entry={entry} />
           </Grid>
         ))}
       </Grid>
     </Box>
   );
 };
+
 export function Home(props) {
   const navigate = useNavigate();
+
+  const [alignment, setAlignment] = React.useState("Recent");
+  const [data, setData] = useState([]);
+  const [isLoaded, setLoaded] = useState(false);
+
+  console.log(data);
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  const { courseId } = useParams();
+
+  // Logger.verbose("URL: " + url);
+  //logger comment out for now
+
+  useEffect(() => {
+    if (alignment === "Recent") {
+      // get recent
+      console.log("fetching course information");
+      axios
+        .get(
+          Util.getServerAddr() +
+            `/course/recent?token=1234&subjectId=${courseId ?? 0}`
+        )
+        .then((response) => {
+          Logger.info(
+            `SubjectList's axios got the following data: \n ${response.data}`
+          );
+          setData(response.data["content"]);
+
+          setLoaded(true);
+        })
+        .catch((err) => {
+          Logger.error("error fetching subject information");
+          Logger.error(err);
+
+          //const backupData =
+          setData([
+            {
+              id: 3,
+              name: "backupRecentSubject",
+              description: "backupRecentDescription",
+              completionRate: 37,
+            },
+          ]);
+
+          setLoaded(true);
+        });
+    } else if (alignment === "Suggestion") {
+      // get suggested
+      console.log("fetching subject information");
+      axios
+        .get(
+          Util.getServerAddr() +
+            `/course/recommend?token=1234&subjectId=${courseId ?? 0}`
+        ) //Todo: add SuggestedSubject URL here
+        .then((response) => {
+          Logger.info(
+            `SubjectList's axios got the following data: \n ${response.data}`
+          );
+          setData(response.data["content"]);
+
+          setLoaded(true);
+        })
+        .catch((err) => {
+          Logger.error("error fetching subject information");
+          Logger.error(err);
+
+          //const backupData =
+          setData([
+            {
+              id: 3,
+              name: "backupSubject",
+              description: "backupDescription",
+              completionRate: 37,
+            },
+          ]);
+
+          setLoaded(true);
+          //setData((backupData??[])[0])
+        });
+    }
+  }, [alignment]);
 
   return (
     <Box>
@@ -166,11 +247,11 @@ export function Home(props) {
               margin: "auto",
             }}
           >
-            <CourseTypeToggleButton />
+            <CourseTypeToggleButton value={alignment} onChange={handleChange} />
           </Box>
         </Box>
 
-        <CourseSlide className="courseCards" />
+        <CourseSlide data={data} className="courseCards" />
       </Box>
     </Box>
   );

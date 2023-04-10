@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Box, Paper, Typography } from "@mui/material";
+import { mockImageApi } from "../../mockApi/apis.mjs";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
-export default function CourseCardAtHome(props) {
-  const { title, completeness } = props.title
-    ? props
-    : { title: "Title", completeness: 0 };
+export default function CourseCardAtHome({ entry }) {
+  const { name, completionRate } = entry.name
+    ? entry
+    : { name: "Title", completionRate: 0 };
 
   const cardSize = 106;
+
 
   const [imageUrl, setImageUrl] = useState(null);
   useEffect(() => {
@@ -20,16 +22,21 @@ export default function CourseCardAtHome(props) {
       })
       .catch((error) => console.error(error));
   }, []);
+
   return (
     <Paper
       variant="outlined"
+      elevation={0}
       sx={{
         width: cardSize,
         height: cardSize,
         backgroundColor: "#F5F5F5",
         borderRadius: "20px",
-        barder: "1px solid #E0E0E0",
-        backgroundImage: `url(${imageUrl})`,
+
+        // barder: "1px solid #E0E0E0",
+        backgroundSize: "cover",
+        backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,
+
       }}
       square
     >
@@ -48,7 +55,7 @@ export default function CourseCardAtHome(props) {
             fontSize: "16px",
           }}
         >
-          {title}
+          {name}
         </Typography>
         <Typography
           sx={{
@@ -56,7 +63,7 @@ export default function CourseCardAtHome(props) {
             fontSize: "8px",
           }}
         >
-          {completeness}
+          {completionRate}
         </Typography>
       </Box>
     </Paper>

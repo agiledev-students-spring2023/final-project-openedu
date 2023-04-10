@@ -32,25 +32,24 @@ export default function RecentlyUsedAvatars() {
 
 
 
-    const handleSaveChanges = () => {
-        console.log("RecentlyUsedAvatars/handleSaveChanges Mocked");
-        navigate(-1);
-        //TODO: Enable this in Sprint 2
-        // axios({
-        //     method: "POST",
-        //     url: `${baseURL}/api/user/update_profile`,
-        //     data: {
-        //         selectedAvatar
-        //     }
-        // }).then(res => {
-        //     navigate(-1)
-        // }).catch(err=>{console.log(err)})
-    };
+  const handleSaveChanges = () => {
+    console.log("RecentlyUsedAvatars/handleSaveChanges Mocked");
+    navigate(-1);
+    //TODO: Enable this in Sprint 2
+    // axios({
+    //     method: "POST",
+    //     url: `${baseURL}/api/user/update_profile`,
+    //     data: {
+    //         selectedAvatar
+    //     }
+    // }).then(res => {
+    //     navigate(-1)
+    // }).catch(err=>{console.log(err)})
+  };
 
-    const handleAvatarClick = (item) => {
-        setSelectedAvatar(item);
-    };
-
+  const handleAvatarClick = (item) => {
+    setSelectedAvatar(item);
+  };
 
     return (
         <>

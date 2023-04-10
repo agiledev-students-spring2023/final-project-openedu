@@ -1,3 +1,5 @@
+// This is the deprecated version of the test file. It is kept here for reference.
+
 import {
     courses,
     recentCourses,

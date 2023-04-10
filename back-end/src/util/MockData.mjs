@@ -26,6 +26,7 @@ export function courses() {
         prerequisites: faker.random.words(5),
         completionRate: Util.randInt() % 101,
         courseHours: Util.randInt() % 100,
+        subjectId:faker.datatype.number({min: 0, max: 20}),
     }));
 
     return courseList;

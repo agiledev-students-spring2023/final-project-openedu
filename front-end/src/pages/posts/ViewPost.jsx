@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
-import { useTheme } from '@mui/material/styles';
-import MDEditor from '@uiw/react-md-editor';
+import { useTheme } from "@mui/material/styles";
+import MDEditor from "@uiw/react-md-editor";
 import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
@@ -62,14 +62,16 @@ export function ViewPost() {
     <Box>
       <BackButton />
       {isPostLoaded ? (
-        <Box sx={{ marginLeft: '5%' }}>
+        <Box sx={{ marginLeft: "5%" }}>
           <MDEditor.Markdown
             source={`## ${postTitle}\n\n${postContent}`}
             style={{
-              width: '94%',
-              textAlign: 'left',
-              backgroundColor: theme.palette.background.default
-            }} />
+              width: "94%",
+              textAlign: "left",
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.text.primary,
+            }}
+          />
           <Box sx={styles.metadataWrapper}>
             <Typography variant="subtitle1" sx={{ color: "#666" }}>
               {" "}

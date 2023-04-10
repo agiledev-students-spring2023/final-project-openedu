@@ -19,7 +19,7 @@ export function courses() {
         name: faker.random.word(4),
         description: faker.random.words(10),
         university: faker.random.words(4),
-        difficulty: faker.datatype.number({ min: 0, max: 5 }),
+        difficulty: faker.datatype.number({ min: 1, max: 5 }),
         language: faker.random.word(),
         url: faker.internet.url(),
         imageUrl: imageUrl(),

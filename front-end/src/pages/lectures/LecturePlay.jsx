@@ -7,7 +7,9 @@ import {
 import { Favorite, PlayArrowRounded } from '@mui/icons-material';
 import LectureCard from './LectureCardButton.jsx';
 import { BackButton } from "../../containers/BackButton/BackButton";
-
+import axios from "axios";
+import * as Util from "../../util/Util.mjs";
+import Loading from "../../containers/Loading/Loading.jsx";
 function FoldableButtonList() {
   const [open, setOpen] = useState(false);
   const buttons = [
@@ -41,11 +43,13 @@ function FoldableButtonList() {
           }}
           subheader={<li />}
         >
+          {/* 
+          DB needed here!
           {buttons.map((button, index) => (
             <ListItem disablePadding key={index}>
               <LectureCard />
             </ListItem>
-          ))}
+          ))} */}
         </List>
       </Collapse>
     </Box>
@@ -55,7 +59,8 @@ function FoldableButtonList() {
 
 
 
-const VideoInfo = () => {
+const VideoInfo = (props) => {
+  const { course } = props;
   return (
     <Box className="info">
       <Box
@@ -72,7 +77,7 @@ const VideoInfo = () => {
             display: "flex",
           }}
         >
-          Course Title
+          {course.name}
         </Typography>
         <Typography
           variant="h11"
@@ -80,15 +85,15 @@ const VideoInfo = () => {
             display: "flex",
           }}
         >
-          Introduction, collapse needed
         </Typography>
       </Box>
     </Box>
   );
 };
 
-const VideoFrame = () => {
-  const videoId = "CWglkNBUmD4";
+const VideoFrame = (props) => {
+  let { videoId } = props;
+  videoId = videoId ?? "CWglkNBUmD4";
   return (
     <Box>
       <Box
@@ -152,19 +157,36 @@ const Sections = () => {
 };
 
 export default function PlayScreen() {
-  //const cardSize = 106;
+  const [course, setCourse] = useState({});
+  const [courseId, setCourseId] = useState(0);
+  const [isLoaded, setLoaded] = useState(false);
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: Util.getServerAddr() +
+        `/course/detail?token=1234&courseId=${courseId ?? 0}`,
+    }).then(res => {
+      // localStorage.setItem("course", JSON.stringify(res.data.course));
+      setCourse(res.data.content);
+      setLoaded(true);
+      console.log(course);
+    });
+  }, []);
   return (
     <>
-      <BackButton />
+      {!isLoaded ? <Loading /> :
+        (<>
+          <BackButton />
 
-      <Box sx={{
-        marginTop: '2vh'
-      }}>
+          <Box sx={{
+            marginTop: '2vh'
+          }}>
 
-        <VideoFrame />
-        <VideoInfo />
-        <Sections />
-      </Box>
+            <VideoFrame course={course} />
+            <VideoInfo course={course} />
+            <Sections course={course} />
+          </Box>
+        </>)}
     </>
   );
 }

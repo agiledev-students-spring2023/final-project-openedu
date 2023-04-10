@@ -74,7 +74,7 @@ const Main = (props) => {
               width: "45%",
               display: 'flex'
             }}
-            onClick={() => { navigate('/courses/play') }}>
+            onClick={() => { navigate('/courses/play'); }}>
             <PlayArrowRounded />
             Play </Button>
           <Button
@@ -99,7 +99,7 @@ const InfoSec = (props) => {
   const { instructor1, instructor2, instructor3,
     description, courseHours, prerequisites, difficulty, language } = props.course;
   console.log(props.course);
-  return (
+    return (
     <Box>
       <Box sx={{
         marginTop: '2vh',
@@ -149,8 +149,8 @@ const InfoSec = (props) => {
         </Typography>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 
 
@@ -233,10 +233,9 @@ export const CourseDetail = () => {
     }).then(res => {
       // localStorage.setItem("course", JSON.stringify(res.data.course));
       setCourse(res.data.content);
-      console.log(course);
       setLoaded(true);
-    })
-  }, [])
+    });
+  }, []);
 
 
 

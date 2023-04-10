@@ -27,16 +27,6 @@ export const CourseDetail = () => {
 
   useEffect(() => {
     //TODO: Fetch actual data, use props.courseId
-    //
-    // setCourseInfo({
-    //   courseId: 0,
-    //   name: "foo",
-    //   detail: "ipsum_lorem",
-    //   language: "Java",
-    //   difficulty: "Hard",
-    //   url: "https://youtube.com",
-    // });
-
     axios
       .get(
         Util.getServerAddr() +

@@ -17,9 +17,8 @@ export default function CourseCardAtHome({ entry }) {
         backgroundColor: "#F5F5F5",
         borderRadius: "20px",
         // barder: "1px solid #E0E0E0",
-        backgroundSize: 'cover',
+        backgroundSize: "cover",
         backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,
-        // Todo: this doesn't work yet. need to wait for MockDATA redesign & Home.jsx fix.
       }}
       square
     >

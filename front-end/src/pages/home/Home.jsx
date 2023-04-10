@@ -82,6 +82,7 @@ export function Home(props) {
   const { courseId } = useParams();
 
   // Logger.verbose("URL: " + url);
+  //logger comment out for now
 
   useEffect(() => {
     if (alignment === "Recent") {
@@ -115,7 +116,6 @@ export function Home(props) {
           ]);
 
           setLoaded(true);
-          //setData((backupData??[])[0])
         });
     } else if (alignment === "Suggestion") {
       // get suggested

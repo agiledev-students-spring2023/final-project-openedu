@@ -1,50 +1,36 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
-  Box,
-  TextField,
-  InputAdornment,
-  Grid,
-  Button,
-  Container,
-} from "@mui/material";
-import StyledAvater from "../../containers/StyledAvatar";
-import { Upload, Event, Save, HighlightOff } from "@mui/icons-material/";
-import axios from "axios";
+    Box, TextField, InputAdornment, Grid, Button, Container,
+} from '@mui/material';
+import StyledAvater from '../../containers/StyledAvatar';
+import { Upload, Event, Save, HighlightOff } from '@mui/icons-material/';
+import axios from 'axios';
 import * as Util from "../../util/Util.mjs";
 
-export default function EditProfile(props) {
-  const avatarInputRef = useRef(null);
-  const [name, setName] = useState("");
-  //const [email, setEmail] = useState(""); // Email may required?
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const [description, setDescription] = useState("");
-  //const baseURL = "apiConfig.base"; // Backend tbd
-  const navigate = useNavigate();
-  const [imageUrl, setImageUrl] = useState(null);
 
-  useEffect(() => {
-    // axios({
-    //   method: "GET",
-    //   url: mockDataApi("comments"),
-    // })
-    //   .then((res) => {
-    //     const user = res.data[0];
-    //     setName(user.user_name);
-    //     setDescription(user.comment);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    axios
-      .get(Util.getServerAddr() + "/background-image", {
-        params: { token: "1234", width: "200", height: "200" },
-      })
-      .then((response) => {
-        setImageUrl(response.data["content"]);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+export default function EditProfile(props) {
+    const avatarInputRef = useRef(null);
+    const [name, setName] = useState('');
+    const [avatarImg, setAvatarImg] = useState('');
+    const [email, setEmail] = useState(''); // Email may required?
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
+    const [description, setDescription] = useState('');
+    const navigate = useNavigate();
+
+    // Mock!
+    // Security needed
+    useEffect(() => {
+        axios
+            .get(Util.getServerAddr() + `/profile/info?token=123`)
+            .then((response) => {
+                const userInfo = response.data["content"];
+                setName(userInfo["name"]);
+                setDescription(userInfo["motto"]);
+                setAvatarImg(userInfo["avatar"]);
+            })
+            .catch((error) => console.error(error));
+    }, []);
 
   const handleCleanUsername = (e) => {
     e.preventDefault();
@@ -97,46 +83,42 @@ export default function EditProfile(props) {
     console.log(formData); // For testing purposes only
   };
 
-  return (
-    <Container fixed sx={{ marginTop: "10%" }}>
-      <Box>
-        {/* Avatar */}
-        <Box
-          sx={{
-            width: "95%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <StyledAvater alt="USER NAME !" src={imageUrl} size="90px" />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "66%",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <div>
-              <input
-                type="file"
-                onChange={handleAvatarUpload}
-                ref={avatarInputRef}
-                style={{ display: "none" }}
-              />
-              <Button
-                variant="contained"
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                }}
-                onClick={handleSelectAvatar}
-              >
-                <Upload sx={{ marginRight: "7%" }} />
-                Upload Avatar{" "}
-              </Button>
-            </div>
+    return (
+        <Container fixed sx={{ marginTop: "10%" }}>
+            <Box>
+                {/* Avatar */}
+                <Box sx={{
+                    width: '95%',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between"
+                }}>
+
+                    <StyledAvater src={avatarImg} alt="USER NAME !" size="90px" />
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: "column",
+                        width: "66%",
+                        justifyContent: "space-evenly"
+                    }}>
+
+                        <div>
+                            <input
+                                type="file"
+                                onChange={handleAvatarUpload}
+                                ref={avatarInputRef}
+                                style={{ display: 'none' }}
+                            />
+                            <Button
+                                variant='contained'
+                                sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                }}
+                                onClick={handleSelectAvatar}>
+                                <Upload sx={{ marginRight: "7%" }} />
+                                Upload Avatar </Button>
+                        </div>
 
             <Button
               variant="contained"

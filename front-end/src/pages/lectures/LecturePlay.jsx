@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
-  Paper,
-  Typography,
-  Button,
-  Collapse,
-  List,
-  ListItem,
-  ButtonGroup,
-} from "@mui/material";
-import { Favorite, PlayArrowRounded } from "@mui/icons-material";
-import LectureCard from "./LectureCardButton.jsx";
+  Box, Paper, Typography, Button,
+  Collapse, List, ListItem,
+  ButtonGroup
+} from '@mui/material';
+import { Favorite, PlayArrowRounded } from '@mui/icons-material';
+import LectureCard from './LectureCardButton.jsx';
 import { BackButton } from "../../containers/BackButton/BackButton";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
-
+import Loading from "../../containers/Loading/Loading.jsx";
 function FoldableButtonList() {
   const [open, setOpen] = useState(false);
   const buttons = [
@@ -33,9 +28,7 @@ function FoldableButtonList() {
   };
 
   return (
-    <Box>
-      <BackButton />
-
+    <Box >
       <Button onClick={handleToggle} sx={{ mb: 1 }}>
         {open ? "Hide" : "Show more"}
       </Button>
@@ -50,110 +43,24 @@ function FoldableButtonList() {
           }}
           subheader={<li />}
         >
+          {/* 
+          DB needed here!
           {buttons.map((button, index) => (
             <ListItem disablePadding key={index}>
               <LectureCard />
             </ListItem>
-          ))}
+          ))} */}
         </List>
       </Collapse>
     </Box>
   );
 }
 
-const Layer = () => {
-  const [imageUrl, setImageUrl] = useState(null);
-  useEffect(() => {
-    axios
-      .get(Util.getServerAddr() + "/background-image", {
-        params: { token: "1234", width: "400", height: "200" },
-      })
-      .then((response) => {
-        setImageUrl(response.data["content"]);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-  return (
-    <Box>
-      <Box className="prompt" sx={{}}>
-        <Paper
-          variant="outlined"
-          sx={{
-            width: 1,
-            height: "200px",
-            backgroundColor: "#F5F5F5",
-            borderRadius: "20px",
-            barder: "1px solid #E0E0E0",
-            backgroundImage: `url(${imageUrl})`,
-          }}
-        ></Paper>
 
-        <Box
-          className="prompt-texts"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "3vh",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              display: "flex",
-            }}
-          >
-            Course Title
-          </Typography>
-          <Typography
-            variant="h11"
-            sx={{
-              display: "flex",
-            }}
-          >
-            Introduction, collapse needed
-          </Typography>
-        </Box>
-      </Box>
 
-      <Box className="play-buttons">
-        <Box
-          sx={{
-            marginTop: "3vh",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{
-              width: "45%",
-              display: "flex",
-            }}
-            onClick={() => {}}
-          >
-            <PlayArrowRounded />
-            Play{" "}
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{
-              width: "45%",
-              display: "flex",
-            }}
-            onClick={() => {}}
-          >
-            <Favorite />
-            Favorite{" "}
-          </Button>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
 
-const VideoInfo = () => {
+const VideoInfo = (props) => {
+  const { course } = props;
   return (
     <Box className="info">
       <Box
@@ -170,7 +77,7 @@ const VideoInfo = () => {
             display: "flex",
           }}
         >
-          Course Title
+          {course.name}
         </Typography>
         <Typography
           variant="h11"
@@ -178,15 +85,15 @@ const VideoInfo = () => {
             display: "flex",
           }}
         >
-          Introduction, collapse needed
         </Typography>
       </Box>
     </Box>
   );
 };
 
-const VideoFrame = () => {
-  const videoId = "CWglkNBUmD4";
+const VideoFrame = (props) => {
+  let { videoId } = props;
+  videoId = videoId ?? "CWglkNBUmD4";
   return (
     <Box>
       <Box
@@ -203,6 +110,7 @@ const VideoFrame = () => {
           title="Video"
           width="100%"
           height="100%"
+          frameBorder="0"
           allow="autoplay; encrypted-media"
           allowFullScreen
           style={{ position: "absolute", top: 0, left: 0 }}
@@ -218,15 +126,11 @@ const Sections = () => {
   const [vid, setVid] = useState(true);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <ButtonGroup
-        variant="plain"
-        size="large"
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      <ButtonGroup variant='plain' size='large'
         sx={{
           marginTop: "3vh",
           display: "flex",
@@ -247,22 +151,42 @@ const Sections = () => {
           Comments
         </Button>
       </ButtonGroup>
-      {vid ? <FoldableButtonList sx={{ display: "flex" }} /> : <Box />}
+      {vid ? <FoldableButtonList sx={{ display: 'flex' }} /> : <Box />}
     </Box>
   );
 };
 
 export default function PlayScreen() {
-  //const cardSize = 106;
+  const [course, setCourse] = useState({});
+  const [courseId, setCourseId] = useState(0);
+  const [isLoaded, setLoaded] = useState(false);
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: Util.getServerAddr() +
+        `/course/detail?token=1234&courseId=${courseId ?? 0}`,
+    }).then(res => {
+      // localStorage.setItem("course", JSON.stringify(res.data.course));
+      setCourse(res.data.content);
+      setLoaded(true);
+      console.log(course);
+    });
+  }, []);
   return (
-    <Box
-      sx={{
-        marginTop: "5vh",
-      }}
-    >
-      <VideoFrame />
-      <VideoInfo />
-      <Sections />
-    </Box>
+    <>
+      {!isLoaded ? <Loading /> :
+        (<>
+          <BackButton />
+
+          <Box sx={{
+            marginTop: '2vh'
+          }}>
+
+            <VideoFrame videoId={course.videoId} />
+            <VideoInfo course={course} />
+            <Sections course={course} />
+          </Box>
+        </>)}
+    </>
   );
 }

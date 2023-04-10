@@ -56,7 +56,7 @@ export function getRoutes() {
         <Route path="post">
           <Route path="view/:postId" element={<ViewPost />} />
         </Route>
-        <Route path="error" element={<ErrorPage />} />
+        <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
   );

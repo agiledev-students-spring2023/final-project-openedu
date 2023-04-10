@@ -30,6 +30,6 @@ export const mockDataApi = (op) => {
 
 // Just add your desired image size (width & height) after our URL, and you'll get a random image.
 // To get a square image, just add the width.
-export const mockImageApi = (width, height) => {
+ const mockImageApi = (width, height) => {
     return `https://picsum.photos/${width}/${(!height) ? width : height}`;
 };

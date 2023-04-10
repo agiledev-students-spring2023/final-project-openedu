@@ -13,7 +13,7 @@ export default function RecentlyUsedAvatars() {
     const [selectedAvatar, setSelectedAvatar] = useState(null);
     const navigate = useNavigate();
     // Mocked!!!!
-    const tmpAvs = [1, 2, 3, 4, 5, 6];
+    const tmpAvs = [];
     useEffect(() => {
         axios
             .get(Util.getServerAddr() + `/profile/info?token=123`)
@@ -66,7 +66,7 @@ export default function RecentlyUsedAvatars() {
                     marginLeft: '5%',
                     marginBottom: '7%',
                 }}>
-                    {tmpAvs.map((ele, id) => {
+                    {tmpAvs.length > 0 ? tmpAvs.map((ele, id) => {
                         return (
                             <Avatar
                                 src={avatars}
@@ -80,7 +80,7 @@ export default function RecentlyUsedAvatars() {
                                 }}
                                 onClick={handleAvatarClick} />
                         );
-                    })}
+                    }) : <Box>There is no used pic for your profile!</Box>}
                 </Box>
                 <Button
                     variant='contained'

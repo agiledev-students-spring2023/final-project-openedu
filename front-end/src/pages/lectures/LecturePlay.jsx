@@ -182,7 +182,7 @@ export default function PlayScreen() {
             marginTop: '2vh'
           }}>
 
-            <VideoFrame course={course} />
+            <VideoFrame videoId={course.videoId} />
             <VideoInfo course={course} />
             <Sections course={course} />
           </Box>

@@ -4,14 +4,11 @@
   "description": "The back-end of your project will live in this directory.",
   "main": "index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
+    "coverage_and_test" : "c8 mocha tests/test_backend.mjs --extension=mjs --require=esm"
   },
+
   "author": "",
   "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "@babel/preset-modules": "^0.1.5",
-    "esm": "^3.2.25",
-    "jest": "^29.5.0"
-  }
+  "type": "module"
 }

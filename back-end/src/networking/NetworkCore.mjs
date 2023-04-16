@@ -299,6 +299,44 @@ export async function initRestApis() {
 
         Util.onWebResponse(res, MockData.suggestSubjects());
     });
+
+    restful.post("/login/fresh",async (req,res) => {
+
+        if (!Util.isValidPostRequest(req.body, "email")) {
+
+            Logger.info(`Request ${req.path} with params ${req.body.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+        //TODO: Initiates a login session and notify user whether the email supplied is associated with an existing user
+    });
+
+    restful.post("/login/register",async (req,res) => {
+
+        if (!Util.isValidPostRequest(req.body, "email","password")) {
+
+            Logger.info(`Request ${req.path} with params ${req.body.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+
+        //TODO: Grant a new token to the user
+    });
+
+    restful.post("/login/verify",async (req,res) => {
+
+        if (!Util.isValidPostRequest(req.body, "email","password")) {
+
+            Logger.info(`Request ${req.path} with params ${req.body.toLocaleString()} is invalid!`);
+            //Logger.info(`${req.params} does not have enough parameter!`);
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+
+        //TODO: Reject if the password is wrong, otherwise grant a new token to the user
+    });
 }
 
 /**

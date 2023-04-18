@@ -286,14 +286,14 @@ export function setKey (key, value) {
     }
 
     //add token
-    const userTokenDetails = { userID: 'value1', token: 'value2',createTime: 'value3', isValid: 'value4' }
-    const token = userTokenDetails.token
-    serializedAuthToken.push(token)
+    const userTokenDetails = { userID: 'value1', token: 'value2',createTime: 'value3', isValid: 'value4' };
+    const token = userTokenDetails.token;
+    serializedAuthToken.push(token);
     console.log(serializedAuthToken);
 
     //stringfy OBJ
     const updatedAuthToken = JSON.stringify(serializedAuthToken);
-    
+
     //set OBJ into localStorage
     localStorage.setItem('authToken', updatedAuthToken);
 

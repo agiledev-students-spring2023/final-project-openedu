@@ -120,11 +120,6 @@ export async function getValidUser(token) {
             return undefined;
         }
 
-        else if(tokenEntry.isVerified === false) {
-            Logger.info(`Token not verified yet: ${token}`);
-            return undefined;
-        }
-
         const user = await User.findOne({"email" : tokenEntry["email"]});
 
         if(user === null) {

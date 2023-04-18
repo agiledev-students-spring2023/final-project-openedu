@@ -1,5 +1,4 @@
 import * as Mongo from "mongoose";
-import {SchemaType} from "mongoose";
 export const Course = Mongo.Schema({
     courseId: Number,
     instructors: [String],
@@ -18,17 +17,18 @@ export const Course = Mongo.Schema({
 
 export const User = Mongo.Schema({
     userId: Number,
+    email: String,
     name: String,
     pwd: String,
     motto: String,
-    avatar: String
+    avatar: String,
+    isBanned: Boolean
 });
 
 export const Token = Mongo.Schema({
     userId: Number,
     token: String,
-    createTime: String,
-    isValid : Boolean
+    createTime: String
 });
 
 export const Subject = Mongo.Schema({
@@ -47,5 +47,7 @@ export const Comment = Mongo.Schema({
     msg: String
 });
 
-export {Mongo};
-
+export const Counter = new Mongo.Schema({
+    key: String,
+    count: Number
+});

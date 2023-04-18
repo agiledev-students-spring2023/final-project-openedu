@@ -2,6 +2,9 @@ import * as Models from './MongoModels.mjs';
 import * as Mongo from "mongoose";
 import * as Util from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
+import * as Bcrypt from "bcrypt";
+import * as FmtTime from "../util/FmtTime.mjs";
+import * as AtomicCounter from "./AtomicCounter.mjs";
 
 const modelMap = new Map();
 
@@ -12,7 +15,8 @@ export const registerModels = () => {
         "subjects": Models.Subject,
         "users": Models.User,
         "comments": Models.Comment,
-        "tokens": Models.Token
+        "tokens": Models.Token,
+        "counters" : Models.Counter,
     };
 
     for (const collection in modelList) {
@@ -48,4 +52,108 @@ export function getModel(model) {
         Logger.error(`No such MongoDB Model: ${model}.`);
 
     return modelMap.get(model);
+}
+
+export async function isExistingUser(email) {
+    if(email === undefined)
+        return false;
+
+    return getModel("users").findOne({"email" : email}) !== null;
+}
+
+export async function validateUser(email,pwd) {
+
+    if(email === undefined || pwd === undefined)
+        return undefined;
+
+    try {
+        const res = await getModel("user").findOne({
+            "email": email
+        });
+
+        //Existing User
+        if(res !== null && !await Bcrypt.compare(pwd,res["pwd"]??"")) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw new Error(`invalid credentials! email: ${email}, pwd: ${pwd}`);
+        }
+
+        //New User
+        else if(res === null) {
+            const newUser = getModel("users")({
+                "email" : email,
+                "pwd" : await Bcrypt.hash(pwd,Util.getConfigParam("HASH_SALT")??1919),
+                "createTime" : FmtTime.getCurrentTimeString(),
+                "userId": AtomicCounter.getIncrementCount("user_id"),
+                "isBanned" : false
+            });
+
+            return Util.cloneObject(await newUser.save(),"pwd");
+        }
+
+        return Util.cloneObject(res,"pwd");
+
+    } catch(e){
+        Logger.error(e);
+        return undefined;
+    }
+
+}
+
+export async function getValidUser(token) {
+
+    if(token === undefined)
+        return undefined;
+
+    const User = getModel("users");
+    const Token = getModel("tokens");
+
+    if(User === undefined || Token === undefined) {
+        Logger.error("collections not registered in MongoDB!");
+        return undefined;
+    }
+
+    try {
+        const tokenEntry = await Token.findOne({'token': token});
+
+        if(tokenEntry === null) {
+            Logger.info(`Token not found: ${token}`);
+            return undefined;
+        }
+
+        else if(tokenEntry.isVerified === false) {
+            Logger.info(`Token not verified yet: ${token}`);
+            return undefined;
+        }
+
+        const user = await User.findOne({"email" : tokenEntry["email"]});
+
+        if(user === null) {
+            Logger.info(`User not found with email: ${tokenEntry["email"]}`);
+            return undefined;
+        }
+        else if(user.isBanned === true) {
+            Logger.info(`User with email ${tokenEntry["email"]} BANNED!`);
+            return undefined;
+        }
+
+        return user;
+
+    } catch (e) {
+
+        Logger.error(e);
+        return undefined;
+
+    }
+    //Unreachable code
+    //return undefined;
+}
+
+export async function invalidToken(token) {
+    if(token === undefined || token === "") return;
+
+    await getModel("tokens").deleteMany({"token" : token});
+}
+
+export async function isTokenValid(token) {
+    return (await getValidUser(token)) !== undefined;
 }

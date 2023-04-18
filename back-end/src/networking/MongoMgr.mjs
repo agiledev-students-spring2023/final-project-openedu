@@ -5,6 +5,7 @@ import * as Logger from "../util/Logger.mjs";
 import * as Bcrypt from "bcrypt";
 import * as FmtTime from "../util/FmtTime.mjs";
 import * as AtomicCounter from "./AtomicCounter.mjs";
+import {v4 as uuidv4} from 'uuid';
 
 const modelMap = new Map();
 
@@ -66,37 +67,41 @@ export async function validateUser(email,pwd) {
     if(email === undefined || pwd === undefined)
         return undefined;
 
-    try {
-        const res = await getModel("user").findOne({
-            "email": email
-        });
 
-        //Existing User
-        if(res !== null && !await Bcrypt.compare(pwd,res["pwd"]??"")) {
-            // noinspection ExceptionCaughtLocallyJS
-            throw new Error(`invalid credentials! email: ${email}, pwd: ${pwd}`);
-        }
+    const res = await getModel("user").findOne({
+        "email": email
+    });
 
-        //New User
-        else if(res === null) {
-            const newUser = getModel("users")({
-                "email" : email,
-                "pwd" : await Bcrypt.hash(pwd,Util.getConfigParam("HASH_SALT")??1919),
-                "createTime" : FmtTime.getCurrentTimeString(),
-                "userId": AtomicCounter.getIncrementCount("user_id"),
-                "isBanned" : false
-            });
-
-            return Util.cloneObject(await newUser.save(),"pwd");
-        }
-
-        return Util.cloneObject(res,"pwd");
-
-    } catch(e){
-        Logger.error(e);
-        return undefined;
+    //Existing User
+    if(res !== null && !await Bcrypt.compare(pwd,res["pwd"]??"")) {
+        throw new Error(`invalid_credentials`);
     }
 
+    //New User
+    else if(res === null) {
+        const newUser = getModel("users")({
+            "email" : email,
+            "pwd" : await Bcrypt.hash(pwd,Util.getConfigParam("HASH_SALT")??1919),
+            "createTime" : FmtTime.getCurrentTimeString(),
+            "userId": AtomicCounter.getIncrementCount("user_id"),
+            "isBanned" : false
+        });
+
+        return Util.cloneObject(await newUser.save(),"pwd");
+    }
+
+    return Util.cloneObject(res,"pwd");
+}
+
+export async function getUserInfo(email) {
+
+    if(email === undefined) return undefined;
+
+    return Util.cloneObject(
+        await getModel("users")
+            .findOne({"email" : email}),
+        "pwd"
+    );
 }
 
 export async function getValidUser(token) {
@@ -141,6 +146,14 @@ export async function getValidUser(token) {
     }
     //Unreachable code
     //return undefined;
+}
+
+export async function grantToken(userId) {
+    return await getModel("tokens")({
+        token: uuidv4(),
+        userId: userId,
+        createTime: FmtTime.getCurrentTimeString()
+    }).save();
 }
 
 export async function invalidToken(token) {

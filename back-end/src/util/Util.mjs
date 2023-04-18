@@ -78,7 +78,7 @@ export function onWebResponse(res, content, isGood, statusCode) {
 }
 export function onWebMissingParam(req,res) {
 
-    Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
+    Logger.info(`Request ${req.path} with params ${(req.query??req.body).toLocaleString()} is invalid!`);
 
     return onWebResponse(res, {msg : "missing_param"}, false, 422); //HTTP 422: Unprocessable Entity
 }

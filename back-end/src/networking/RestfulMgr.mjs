@@ -2,6 +2,7 @@ import * as Util from "../util/Util.mjs";
 import {cloneObject} from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
+import * as MongoMgr from "../networking/MongoMgr.mjs";
 import {subjects} from "../util/MockData.mjs";
 import {faker} from "@faker-js/faker";
 import {restful} from "./NetworkCore.mjs";
@@ -159,12 +160,6 @@ export async function initRestApis() {
 
     restful.get("/post", async (req, res) => {
         if (!Util.isValidGetRequest(req.query, "token", "postId")) {
-            Logger.info(
-                `Request ${
-                    req.path
-                } with params ${req.query.toLocaleString()} is invalid!`
-            );
-            //Logger.info(`${req.params} does not have enough parameter!`);
             Util.onWebMissingParam(req, res);
             return;
         }
@@ -178,12 +173,6 @@ export async function initRestApis() {
 
     restful.get("/post/list", async (req, res) => {
         if (!Util.isValidGetRequest(req.query, "token")) {
-            Logger.info(
-                `Request ${
-                    req.path
-                } with params ${req.query.toLocaleString()} is invalid!`
-            );
-            //Logger.info(`${req.params} does not have enough parameter!`);
             Util.onWebMissingParam(req, res);
             return;
         }
@@ -217,9 +206,6 @@ export async function initRestApis() {
     restful.get("/profile/info", async (req, res) => {
 
         if (!Util.isValidGetRequest(req.query, "token")) {
-
-            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
-            //Logger.info(`${req.params} does not have enough parameter!`);
             Util.onWebMissingParam(req, res);
             return;
         }
@@ -234,9 +220,6 @@ export async function initRestApis() {
 
     restful.get("/subject/previous", async (req, res) => {
         if (!Util.isValidGetRequest(req.query, "token")) {
-
-            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
-            //Logger.info(`${req.params} does not have enough parameter!`);
             Util.onWebMissingParam(req, res);
             return;
         }
@@ -246,9 +229,6 @@ export async function initRestApis() {
 
     restful.get("/subject/recommend", async (req, res) => {
         if (!Util.isValidGetRequest(req.query, "token")) {
-
-            Logger.info(`Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`);
-            //Logger.info(`${req.params} does not have enough parameter!`);
             Util.onWebMissingParam(req, res);
             return;
         }
@@ -256,41 +236,53 @@ export async function initRestApis() {
         Util.onWebResponse(res, MockData.suggestSubjects());
     });
 
-    restful.post("/login/fresh", async (req, res) => {
+    restful.get("/login/info", async(req, res) => {
 
-        if (!Util.isValidPostRequest(req.body, "email")) {
+       if(!Util.isValidGetRequest(req.query,"email")) {
+           Util.onWebMissingParam(req,res);
+           return;
+       }
 
-            Logger.info(`Request ${req.path} with params ${req.body.toLocaleString()} is invalid!`);
-            //Logger.info(`${req.params} does not have enough parameter!`);
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-        //TODO: Initiates a login session and notify user whether the email supplied is associated with an existing user
+       const entry = MongoMgr.getUserInfo(req.query["email"]);
+
+       Util.onWebResponse(
+           res,
+           entry === null ? undefined : entry,
+           entry !== null);
+
     });
 
-    restful.post("/login/register", async (req, res) => {
+    restful.post("/login/validate", async (req, res) => {
 
-        if (!Util.isValidPostRequest(req.body, "email", "password")) {
-
-            Logger.info(`Request ${req.path} with params ${req.body.toLocaleString()} is invalid!`);
-            //Logger.info(`${req.params} does not have enough parameter!`);
+        if (!Util.isValidPostRequest(req.body, "email", "pwd")) {
             Util.onWebMissingParam(req, res);
             return;
         }
 
-        //TODO: Grant a new token to the user
+        try {
+            const userEntry = MongoMgr.validateUser(req.body["email"], req.body["pwd"]);
+
+            userEntry["token"] = (await MongoMgr.grantToken(
+                userEntry["userId"]??0
+            ))["token"];
+
+            Util.onWebResponse(res,Util.cloneObject(userEntry,"pwd"));
+        } catch(e) {
+            Logger.error(e);
+            Util.onWebResponse(res,e.message,false);
+        }
     });
 
-    restful.post("/login/verify", async (req, res) => {
+    restful.get("/login/token/validate", async (req, res) => {
 
-        if (!Util.isValidPostRequest(req.body, "email", "password")) {
-
-            Logger.info(`Request ${req.path} with params ${req.body.toLocaleString()} is invalid!`);
-            //Logger.info(`${req.params} does not have enough parameter!`);
+        if (!Util.isValidPostRequest(req.query, "token")) {
             Util.onWebMissingParam(req, res);
             return;
         }
 
-        //TODO: Reject if the password is wrong, otherwise grant a new token to the user
+        const isValid = MongoMgr.isTokenValid(req.query["token"]);
+
+        Util.onWebResponse(res, isValid ? "valid" : "invalid", isValid);
+
     });
 }

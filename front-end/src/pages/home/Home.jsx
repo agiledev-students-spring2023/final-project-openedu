@@ -257,18 +257,15 @@ export function Home(props) {
                 </Box>
 
                 <CourseSlide data={data} className="courseCards"/>
-
-                <Button variant="contained" size="small" value={alignment} onChange={handleClick}
-                sx={{
+                <Box
+                    sx={{
+                    display: "flex",
+                    margin: "auto",
                     marginTop: "5%",
-                    alignItems: "center",
-                    width: "50%",
-                    // marginLeft: "5%",
-                    // marginRight: "5%",
-                    // '&:hover': {
-                    //     backgroundColor: 'primary.main',
-                    //     opacity: [0.9, 0.8, 0.7],}
-                }}>Learn More</Button>
+                    }}
+                >
+                    <Button variant="contained" size="small" value={alignment} onClick={handleClick}>Learn More</Button>
+                </Box>
             </Box>
         </Box>
     );

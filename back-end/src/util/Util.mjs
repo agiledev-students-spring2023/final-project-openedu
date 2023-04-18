@@ -93,11 +93,25 @@ export function isValidPostRequest(obj, ...keys) {
 
 export function cloneObject(obj, ...excludeProps) {
 
+    if(obj === null || obj === undefined) return obj;
+
     return Object.fromEntries(
         Object.entries(obj)
             .filter(([key]) => !excludeProps.includes(key))
     );
 }
+
+export function trimMongoDocument(document, ...excludeProps) {
+    if(document === null)
+        return document;
+
+    return cloneObject(
+        document.toObject(),
+        "_id","__v",
+        ...excludeProps
+    );
+}
+
 
 export function isValidGetRequest(queryObject, ...requiredParams) {
 

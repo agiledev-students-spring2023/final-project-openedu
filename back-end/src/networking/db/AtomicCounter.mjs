@@ -4,7 +4,6 @@ const mutexMap = new Map();
 import {Mutex} from "async-mutex";
 
 
-const Counter = () => MongoMgr.getModel("counters");
 
 function getCounterMutex(key) {
     if (mutexMap.get(key ?? "") !== undefined)
@@ -17,7 +16,7 @@ function getCounterMutex(key) {
 }
 
 export async function getIncrementCount(key) {
-    const counter = await Counter.findOne({key: key});
+    const counter = await MongoMgr.getModel("counters").findOne({key: key});
     const mutex = getCounterMutex(key ?? "");
     await mutex.acquire();
 
@@ -27,9 +26,12 @@ export async function getIncrementCount(key) {
         await counter.save();
 
         mutex.release();
+
+        //Logger.info("New count: " + ret);
+
         return ret;
     } else {
-        const entry = new Counter(
+        const entry = new MongoMgr.getModel("counters")(
             {
                 key: key ?? "",
                 count: 1
@@ -38,6 +40,10 @@ export async function getIncrementCount(key) {
 
         await entry.save();
         mutex.release();
+
+        //Logger.info("New Count: " + 0);
+
+
         return 0;
     }
 }

@@ -2,7 +2,7 @@ import * as Util from "../util/Util.mjs";
 import {cloneObject} from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
-import * as MongoMgr from "../networking/MongoMgr.mjs";
+import * as MongoMgr from "./db/MongoMgr.mjs";
 import {subjects} from "../util/MockData.mjs";
 import {faker} from "@faker-js/faker";
 import {restful} from "./NetworkCore.mjs";
@@ -243,12 +243,15 @@ export async function initRestApis() {
            return;
        }
 
-       const entry = MongoMgr.getUserInfo(req.query["email"]);
+       const entry = await MongoMgr.getUserInfo(req.query["email"]);
+       const isUserValid = entry !== null && entry !== undefined;
+
+       Logger.info(entry);
 
        Util.onWebResponse(
            res,
-           entry === null ? undefined : entry,
-           entry !== null);
+           isUserValid ? entry : "user_invalid",
+           isUserValid);
 
     });
 
@@ -260,11 +263,17 @@ export async function initRestApis() {
         }
 
         try {
-            const userEntry = MongoMgr.validateUser(req.body["email"], req.body["pwd"]);
+            Logger.info(`Begin user validation of ${req.body["email"]}`);
+
+            const userEntry = await MongoMgr.validateUser(req.body["email"], req.body["pwd"]);
+
+            Logger.info(`Validation Complete`);
 
             userEntry["token"] = (await MongoMgr.grantToken(
                 userEntry["userId"]??0
             ))["token"];
+
+            Logger.info(`Token Granted`);
 
             Util.onWebResponse(res,Util.cloneObject(userEntry,"pwd"));
         } catch(e) {

@@ -5,7 +5,7 @@ import * as Logger from "../util/Logger.mjs";
 import path from "path";
 import url from "url";
 import cors from "cors";
-import * as MongoMgr from "./MongoMgr.mjs";
+import * as MongoMgr from "./db/MongoMgr.mjs";
 import {initRestApis} from "./RestfulMgr.mjs";
 
 export const restful = express();

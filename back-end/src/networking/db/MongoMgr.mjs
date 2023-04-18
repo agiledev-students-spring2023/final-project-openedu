@@ -1,11 +1,12 @@
 import * as Models from './MongoModels.mjs';
 import * as Mongo from "mongoose";
-import * as Util from "../util/Util.mjs";
-import * as Logger from "../util/Logger.mjs";
+import * as Util from "../../util/Util.mjs";
+import * as Logger from "../../util/Logger.mjs";
 import * as Bcrypt from "bcrypt";
-import * as FmtTime from "../util/FmtTime.mjs";
+import * as FmtTime from "../../util/FmtTime.mjs";
 import * as AtomicCounter from "./AtomicCounter.mjs";
 import {v4 as uuidv4} from 'uuid';
+import {trimMongoDocument} from "../../util/Util.mjs";
 
 const modelMap = new Map();
 
@@ -68,9 +69,11 @@ export async function validateUser(email,pwd) {
         return undefined;
 
 
-    const res = await getModel("user").findOne({
+    const res = await getModel("users").findOne({
         "email": email
     });
+
+    Logger.info("Done Locating user");
 
     //Existing User
     if(res !== null && !await Bcrypt.compare(pwd,res["pwd"]??"")) {
@@ -79,29 +82,30 @@ export async function validateUser(email,pwd) {
 
     //New User
     else if(res === null) {
-        const newUser = getModel("users")({
+        const newUser = new getModel("users")({
             "email" : email,
-            "pwd" : await Bcrypt.hash(pwd,Util.getConfigParam("HASH_SALT")??1919),
+            "pwd" : await Bcrypt.hash(pwd,Number(Util.getConfigParam("HASH_SALT"))??6),
             "createTime" : FmtTime.getCurrentTimeString(),
-            "userId": AtomicCounter.getIncrementCount("user_id"),
+            "userId": await AtomicCounter.getIncrementCount("user_id"),
             "isBanned" : false
         });
 
-        return Util.cloneObject(await newUser.save(),"pwd");
+        newUser.save();
+
+        return Util.trimMongoDocument(newUser,"pwd");
     }
 
-    return Util.cloneObject(res,"pwd");
+    return Util.trimMongoDocument(res,"pwd");
 }
 
 export async function getUserInfo(email) {
 
     if(email === undefined) return undefined;
 
-    return Util.cloneObject(
-        await getModel("users")
-            .findOne({"email" : email}),
-        "pwd"
-    );
+    return Util.trimMongoDocument(
+        await getModel("users").findOne({"email" : email}),
+        "pwd");
+
 }
 
 export async function getValidUser(token) {
@@ -125,10 +129,10 @@ export async function getValidUser(token) {
             return undefined;
         }
 
-        const user = await User.findOne({"email" : tokenEntry["email"]});
+        const user = await User.findOne({"userId" : tokenEntry["userId"]});
 
         if(user === null) {
-            Logger.info(`User not found with email: ${tokenEntry["email"]}`);
+            Logger.info(`User not found with userId: ${tokenEntry["userId"]}`);
             return undefined;
         }
         else if(user.isBanned === true) {
@@ -149,11 +153,16 @@ export async function getValidUser(token) {
 }
 
 export async function grantToken(userId) {
-    return await getModel("tokens")({
+
+    const doc = new getModel("tokens")({
         token: uuidv4(),
         userId: userId,
         createTime: FmtTime.getCurrentTimeString()
-    }).save();
+    });
+
+    doc.save();
+
+    return trimMongoDocument(doc);
 }
 
 export async function invalidToken(token) {

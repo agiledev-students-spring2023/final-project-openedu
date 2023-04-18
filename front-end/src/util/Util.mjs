@@ -265,3 +265,36 @@ export function asChildPage(component) {
         <Outlet />
     </div>;
 }
+
+export function getKey(){
+//serialize localStorage to JSON --> 拿key
+
+
+}
+
+export function setKey (key, value) {
+//serialize localStorage to JSON  (x) --> add new key-value to x --> de-serialize x to string and replace localStorage content
+
+    //get OBJ from localStorage
+    const authToken = localStorage.getItem('authToken');
+    let serializedAuthToken;
+    if (authToken !== null) {
+        serializedAuthToken = JSON.parse(authToken);
+        console.log(serializedAuthToken);
+    } else {
+        console.log('No value found in localStorage for key "myKey"');
+    }
+
+    //add token
+    const userTokenDetails = { userID: 'value1', token: 'value2',createTime: 'value3', isValid: 'value4' }
+    const token = userTokenDetails.token
+    serializedAuthToken.push(token)
+    console.log(serializedAuthToken);
+
+    //stringfy OBJ
+    const updatedAuthToken = JSON.stringify(serializedAuthToken);
+    
+    //set OBJ into localStorage
+    localStorage.setItem('authToken', updatedAuthToken);
+
+}

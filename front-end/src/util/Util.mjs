@@ -266,11 +266,6 @@ export function asChildPage(component) {
     </div>;
 }
 
-export function getKey(){
-//serialize localStorage to JSON --> 拿key
-
-
-}
 
 export function setKey (key, value) {
 //serialize localStorage to JSON  (x) --> add new key-value to x --> de-serialize x to string and replace localStorage content
@@ -291,7 +286,7 @@ export function setKey (key, value) {
     serializedAuthToken.push(token);
     console.log(serializedAuthToken);
 
-    //stringfy OBJ
+    //stringify OBJ
     const updatedAuthToken = JSON.stringify(serializedAuthToken);
 
     //set OBJ into localStorage

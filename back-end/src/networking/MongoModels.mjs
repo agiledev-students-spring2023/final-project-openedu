@@ -1,5 +1,5 @@
 import * as Mongo from "mongoose";
-
+import {SchemaType} from "mongoose";
 export const Course = Mongo.Schema({
     courseId: Number,
     instructors: [String],
@@ -19,8 +19,16 @@ export const Course = Mongo.Schema({
 export const User = Mongo.Schema({
     userId: Number,
     name: String,
+    pwd: String,
     motto: String,
     avatar: String
+});
+
+export const Token = Mongo.Schema({
+    userId: Number,
+    token: String,
+    createTime: String,
+    isValid : Boolean
 });
 
 export const Subject = Mongo.Schema({

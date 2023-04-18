@@ -7,16 +7,33 @@ const modelMap = new Map();
 
 export const registerModels = () => {
 
-    const modelList = ["courses","subjects","users","comments"];
+    const modelList = {
 
-    Mongo.model("users",Models.User);
-    Mongo.model("subjects",Models.Subject);
-    Mongo.model("courses",Models.Course);
-    Mongo.model("comments",Models.Comment);
+        "courses" : Models.Course,
+        "subjects" : Models.Subject,
+        "users" : Models.User,
+        "comments" : Models.Comment,
+        "tokens" : Models.Token
+    };
 
-    modelList.forEach(async (model) => {
-        modelMap.set(model, Mongo.model(model));
-    });
+    //const modelList = ["courses","subjects","users","comments","tokens"];
+
+    for(const collection in modelList) {
+
+        Mongo.model(collection, modelList[collection]);
+        modelMap.set(collection, Mongo.model(collection));
+    }
+
+    // Mongo.model("users",Models.User);
+    // Mongo.model("subjects",Models.Subject);
+    // Mongo.model("courses",Models.Course);
+    // Mongo.model("comments",Models.Comment);
+    // Mongo.model("tokens",Models.Token);
+    //
+    //
+    // modelList.forEach(async (model) => {
+    //     modelMap.set(model, Mongo.model(model));
+    // });
 
 };
 

@@ -14,8 +14,10 @@ export function imageUrl() {
 export function courses() {
     courseList ??= [...Array(500).keys()].map((index) => ({
         courseId: index,
-        instructor1: faker.random.words(2),
-        instructor2: faker.random.words(2),
+        instructors: [
+            faker.random.words(2),
+            faker.random.words(2)
+        ],
         name: faker.random.word(4),
         description: faker.random.words(10),
         university: faker.random.words(4),
@@ -23,10 +25,14 @@ export function courses() {
         language: faker.random.word(),
         url: faker.internet.url(),
         imageUrl: imageUrl(),
-        prerequisites: faker.random.words(5),
+
+        prerequisites:
+            [...Array(5).keys()]
+            .map(_ => faker.random.words(2)
+            ),
+
         completionRate: Util.randInt() % 101,
         courseHours: Util.randInt() % 100,
-        subjectId:faker.datatype.number({min: 0, max: 20}),
     }));
 
     return courseList;

@@ -1,9 +1,11 @@
 import { colors, createTheme } from '@mui/material';
 import { Outlet } from "react-router-dom";
 import React from 'react';
+import * as dotenv from "dotenv";
+import * as Logger from "Logger.mjs";
 
 const callbackMap = new Map();
-let loadedConfig;
+let isEnvReady = false;
 
 export function addCallback(name, func) {
 
@@ -250,12 +252,22 @@ export function getTheme() {
 }
 
 
-export function getEnvParam(name) {
-    return process.env.name;
+export function getConfigParam(key) {
+    if(!isEnvReady) {
+        dotenv.config();
+        isEnvReady = true;
+    }
+
+    if(process.env[key] === undefined) {
+        // noinspection ExceptionCaughtLocallyJS
+        Logger.info(`Config Key "${key}" not present!`);
+    }
+
+    return process.env[key];
 }
 
 export function getServerAddr() {
-    return getEnvParam("server_addr_debug") ?? "http://localhost:3001";
+    return getConfigParam("server_addr_debug") ?? "http://localhost:3001";
 }
 
 export function asChildPage(component) {

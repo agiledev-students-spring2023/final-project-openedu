@@ -1,7 +1,8 @@
 import * as Logger from "../util/Logger.mjs";
+import * as dotenv from "dotenv";
 
+let isEnvReady = false;
 const callbackMap = new Map();
-
 
 export function addCallback(name, func) {
 
@@ -15,6 +16,19 @@ export function addCallback(name, func) {
     }
 }
 
+export function getConfigParam(key) {
+    if(!isEnvReady) {
+        dotenv.config();
+        isEnvReady = true;
+    }
+
+    if(process.env[key.toUpperCase()] === undefined) {
+        // noinspection ExceptionCaughtLocallyJS
+        Logger.info(`Config key "${key}" not present!`);
+    }
+
+    return process.env[key.toUpperCase()];
+}
 
 export function removeCallback(name, func) {
 
@@ -40,8 +54,6 @@ export async function invokeCallback(name, ...args) {
 
     return undefined;
 }
-
-
 
 /**
  * Generates a random integer that ranges from 0 to Number.MAX_SAFE_INTEGER.

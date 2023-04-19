@@ -2,7 +2,7 @@ import { colors, createTheme } from '@mui/material';
 import { Outlet } from "react-router-dom";
 import React from 'react';
 import * as dotenv from "dotenv";
-import * as Logger from "Logger.mjs";
+import * as Logger from "./Logger.mjs";
 
 const callbackMap = new Map();
 let isEnvReady = false;

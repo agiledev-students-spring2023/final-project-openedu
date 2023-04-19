@@ -20,6 +20,7 @@ export default function CourseCardAtHome({ entry }) {
 
         // barder: "1px solid #E0E0E0",
         backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
         backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,
       }}
       square

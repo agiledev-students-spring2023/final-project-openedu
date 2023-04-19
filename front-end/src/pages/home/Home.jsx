@@ -72,6 +72,13 @@ export function Home(props) {
         setAlignment(newAlignment);
     };
 
+    const handleClick = () => {
+        if (alignment === "Recent") {
+            navigate("/course/recent");
+        } else if (alignment === "Suggestion") {
+            navigate("/course/recommend");
+        }
+    };
     // const { courseId } = useParams();
 
     // Logger.verbose("URL: " + url);
@@ -182,17 +189,17 @@ export function Home(props) {
                             sx={{
                                 fontFamily: "Raleway",
                                 display: "flex",
-                                fontSize: "30px",
+                                fontSize: "40px",
                             }}
                         >
-                            Welcome,
+                            Welcome
                         </Typography>
                         <Typography
                             variant="h3"
                             sx={{
                                 fontWeight: "900",
                                 display: "flex",
-                                fontSize: "45px",
+                                fontSize: "35px",
                             }}
                         >
                             {(profile ?? {})["name"] ?? "UserName"}
@@ -250,6 +257,15 @@ export function Home(props) {
                 </Box>
 
                 <CourseSlide data={data} className="courseCards"/>
+                <Box
+                    sx={{
+                    display: "flex",
+                    margin: "auto",
+                    marginTop: "5%",
+                    }}
+                >
+                    <Button variant="contained" size="small" value={alignment} onClick={handleClick}>Learn More</Button>
+                </Box>
             </Box>
         </Box>
     );

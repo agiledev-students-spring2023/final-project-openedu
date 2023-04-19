@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 export default function CourseCardAtHome({ entry }) {
   const { name, completionRate } = entry.name
@@ -7,18 +8,27 @@ export default function CourseCardAtHome({ entry }) {
     : { name: "Title", completionRate: 0 };
 
   const cardSize = 106;
+    const navigate = useNavigate();
+  const handleCardClick = () => {
+    console.log("card clicked");
+
+    //Todo: need to setup navigation
+    //navigate to course detail page
+      navigate("/course/detail/{courseId}"); //Todo: get the CourseID from window
+  };
 
   return (
     <Paper
       variant="outlined"
       elevation={0}
+      onClick={handleCardClick}
       sx={{
         width: cardSize,
         height: cardSize,
         backgroundColor: "#F5F5F5",
         borderRadius: "20px",
-
-        // barder: "1px solid #E0E0E0",
+        //Todo: need to fix the background image sizing issue with real DB data
+        barder: "1px solid #E0E0E0",
         backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,

@@ -8,7 +8,6 @@ import * as Util from "../../util/Util.mjs";
 import axios from "axios";
 import * as Logger from "../../util/Logger.mjs";
 
-//Todo: add 'learn more' button to page Recent & suggestion.
 //Todo: add link to each card to courseDetail page.
 
 function CourseTypeToggleButton({value, onChange}) {

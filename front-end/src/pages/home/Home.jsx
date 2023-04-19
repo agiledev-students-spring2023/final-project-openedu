@@ -79,10 +79,8 @@ export function Home(props) {
             navigate("/course/recommend");
         }
     };
-    // const { courseId } = useParams();
-
-    // Logger.verbose("URL: " + url);
-    //logger comment out for now
+    //Note: handleClick function works, need to work on fix (does not go to expected page, but goes to error page)
+    //Todo: Need to fix the routing issue
 
     useEffect(() => {
 
@@ -257,6 +255,7 @@ export function Home(props) {
                 </Box>
 
                 <CourseSlide data={data} className="courseCards"/>
+
                 <Box
                     sx={{
                     display: "flex",

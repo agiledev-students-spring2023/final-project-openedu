@@ -1,8 +1,8 @@
-import {Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography,} from "@mui/material";
-import {CreateOutlined} from "@mui/icons-material";
-import React, {useEffect, useState} from "react";
+import { Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import { CreateOutlined } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
@@ -10,7 +10,7 @@ import * as Logger from "../../util/Logger.mjs";
 
 //Todo: add link to each card to courseDetail page.
 
-function CourseTypeToggleButton({value, onChange}) {
+function CourseTypeToggleButton({ value, onChange }) {
     return (
         <ToggleButtonGroup
             value={value}
@@ -31,7 +31,20 @@ function CourseTypeToggleButton({value, onChange}) {
     );
 }
 
-const CourseSlide = ({data}) => {
+
+const CourseSlide = ({ data }) => {
+    const navigate = useNavigate();
+    const handleCardClick = (entry) => {
+
+        console.log("card clicked", entry);
+
+        //navigate to subject detail page
+        const path = `/subjects/detail/${entry.subjectId}`;
+
+        navigate(path);
+
+    };
+
     return (
         <Box
             sx={{
@@ -44,12 +57,12 @@ const CourseSlide = ({data}) => {
         >
             <Grid
                 container
-                spacing={{xs: 2, md: 3}}
-                columns={{xs: 6, sm: 8, md: 12}}
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 6, sm: 8, md: 12 }}
             >
                 {data.slice(0, 6).map((entry, index) => (
-                    <Grid item xs={2} sm={4} md={4} key={index}>
-                        <CourseCard key={index} entry={entry}/>
+                    <Grid item xs={2} sm={4} md={4} key={index} onClick={() => handleCardClick(entry)}>
+                        <CourseCard key={index} entry={entry} />
                     </Grid>
                 ))}
             </Grid>
@@ -73,22 +86,21 @@ export function Home(props) {
 
     const handleClick = () => {
         if (alignment === "Recent") {
-            navigate("/course/recent");
+            navigate("/subjects/recent");
         } else if (alignment === "Suggestion") {
-            navigate("/course/recommend");
+            navigate("/subjects/recommend");
         }
     };
-    //Note: handleClick function works, need to work on fix (does not go to expected page, but goes to error page)
-    //Todo: Need to fix the routing issue
+    //Todo: fix subjects recommend feeding from backend (missing)
 
     useEffect(() => {
 
         axios.get(Util.getServerAddr() +
             `/profile/info?token=1234`).then((response) => {
 
-            Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
-            setProfile(response.data["content"]);
-        });
+                Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
+                setProfile(response.data["content"]);
+            });
 
 
         if (alignment === "Recent") {
@@ -160,7 +172,7 @@ export function Home(props) {
 
     return (
         <Box>
-            <BackgroundImage/>
+            <BackgroundImage />
             <Box>
                 <Box
                     className="welcome_line"
@@ -249,17 +261,17 @@ export function Home(props) {
                             margin: "auto",
                         }}
                     >
-                        <CourseTypeToggleButton value={alignment} onChange={handleChange}/>
+                        <CourseTypeToggleButton value={alignment} onChange={handleChange} />
                     </Box>
                 </Box>
 
-                <CourseSlide data={data} className="courseCards"/>
+                <CourseSlide data={data} className="courseCards" />
 
                 <Box
                     sx={{
-                    display: "flex",
-                    margin: "auto",
-                    marginTop: "5%",
+                        display: "flex",
+                        margin: "auto",
+                        marginTop: "5%",
                     }}
                 >
                     <Button variant="contained" size="small" value={alignment} onClick={handleClick}>Learn More</Button>

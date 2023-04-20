@@ -8,6 +8,8 @@ export default function CourseCardAtHome({ entry }) {
 
   const cardSize = 106;
 
+
+
   return (
     <Paper
       variant="outlined"
@@ -15,12 +17,11 @@ export default function CourseCardAtHome({ entry }) {
       sx={{
         width: cardSize,
         height: cardSize,
-        backgroundColor: "#F5F5F5",
+        // backgroundColor: "#F5F5F5",
+          //removed to fix the background image sizing issue
         borderRadius: "20px",
-
-        // barder: "1px solid #E0E0E0",
         backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
+        backgroundRepeat: "no-repeat",
         backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,
       }}
       square

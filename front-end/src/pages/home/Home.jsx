@@ -26,7 +26,7 @@ function CourseTypeToggleButton({ value, onChange }) {
             }}
         >
             <ToggleButton value="Recent">Recent</ToggleButton>
-            <ToggleButton value="Suggestion">Suggestion</ToggleButton>
+            <ToggleButton value="Suggestion">Suggesstion</ToggleButton>
         </ToggleButtonGroup>
     );
 }
@@ -71,6 +71,7 @@ const CourseSlide = ({ data }) => {
 };
 
 export function Home(props) {
+
     const navigate = useNavigate();
 
     const [alignment, setAlignment] = React.useState("Recent");
@@ -80,18 +81,26 @@ export function Home(props) {
 
     console.log(data);
 
+    //this is for the toggle button, handle the source of the course slides
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
 
+    //this is for the onClick source of the course slides. It links to the course detail page
     const handleClick = () => {
         if (alignment === "Recent") {
             navigate("/subjects/recent");
+
+            console.log("recent clicked");
+
         } else if (alignment === "Suggestion") {
-            navigate("/subjects/recommend");
+            navigate("/subject/recommend");
+
+            console.log("suggestion clicked");
+
         }
     };
-    //Todo: fix subjects recommend feeding from backend (missing)
+
 
     useEffect(() => {
 
@@ -104,7 +113,9 @@ export function Home(props) {
 
 
         if (alignment === "Recent") {
-            // get recent
+
+            // get course slide data about recent course
+
             console.log("fetching course information");
             axios
                 .get(
@@ -135,13 +146,15 @@ export function Home(props) {
                 });
 
         } else if (alignment === "Suggestion") {
-            // get suggested
+
+            // get course slide data about recommended course
+
             console.log("fetching subject information");
             axios
                 .get(
                     Util.getServerAddr() +
                     `/subject/recommend?token=1234`
-                ) //Todo: add SuggestedSubject URL here
+                )
                 .then((response) => {
                     Logger.info(
                         `SubjectList's axios got the following data: \n ${response.data}`
@@ -165,7 +178,6 @@ export function Home(props) {
                     ]);
 
                     setLoaded(true);
-                    //setData((backupData??[])[0])
                 });
         }
     }, [alignment]);
@@ -212,9 +224,10 @@ export function Home(props) {
                             }}
                         >
                             {(profile ?? {})["name"] ?? "UserName"}
-                            {/*get username from backend*/}
                         </Typography>
                     </Box>
+
+                    {/*profile edit button*/}
                     <Button
                         onClick={() => {
                             navigate("/profile/edit");
@@ -242,7 +255,6 @@ export function Home(props) {
                     display: "flex",
                     flexDirection: "column",
                     paddingBottom: "5vh",
-                    //todo: change container position here
                 }}
             >
                 <Box

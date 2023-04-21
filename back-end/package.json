@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
-    "coverage_and_test" : "c8 mocha tests/test_backend.mjs --extension=mjs --require=esm"
+    "coverage_and_test": "c8 mocha tests/test_backend.mjs --extension=mjs --require=esm"
   },
-
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }

@@ -7,6 +7,9 @@ import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
 import * as Logger from "../../util/Logger.mjs";
+import AddIcon from '@mui/icons-material/Add';
+import HistoryIcon from '@mui/icons-material/History';
+import RecommendIcon from '@mui/icons-material/Recommend';
 
 //Todo: add link to each card to courseDetail page.
 
@@ -19,14 +22,25 @@ function CourseTypeToggleButton({ value, onChange }) {
             aria-label="Platform"
             align="center"
             sx={{
-                marginLeft: "5%",
+                // marginLeft: "5%",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
             }}
         >
-            <ToggleButton value="Recent">Recent</ToggleButton>
-            <ToggleButton value="Suggestion">Suggesstion</ToggleButton>
+            <ToggleButton
+                value="Recent"
+            >
+                <HistoryIcon sx={{ mr: 0.5 }}/>
+                Recent
+            </ToggleButton>
+
+            <ToggleButton
+                value="Suggestion"
+            >
+                <RecommendIcon sx={{ mr: 0.5 }}/>
+                Suggesstion
+            </ToggleButton>
         </ToggleButtonGroup>
     );
 }
@@ -86,7 +100,7 @@ export function Home(props) {
         setAlignment(newAlignment);
     };
 
-    //this is for the onClick source of the course slides. It links to the course detail page
+    //this is for the onClick source of the course slides. It links to the subject detail page
     const handleClick = () => {
         if (alignment === "Recent") {
             navigate("/subjects/recent");
@@ -94,7 +108,9 @@ export function Home(props) {
             console.log("recent clicked");
 
         } else if (alignment === "Suggestion") {
-            navigate("/subject/recommend");
+            navigate("/subjects/recommend");
+
+            //Todo: need to fix the link to subject suggestion page
 
             console.log("suggestion clicked");
 
@@ -194,8 +210,8 @@ export function Home(props) {
                         justifyContent: "space-between",
                         width: 1,
                         alignItems: "center",
-                        marginTop: "20vh",
-                        marginBottom: "6vh",
+                        marginTop: "15vh",
+                        marginBottom: "10vh",
                     }}
                 >
                     <Box
@@ -251,6 +267,7 @@ export function Home(props) {
                     backgroundColor: "background.default",
                     position: "absolute",
                     left: "0",
+                    bottom: "6vh",
                     width: "1",
                     display: "flex",
                     flexDirection: "column",
@@ -276,17 +293,37 @@ export function Home(props) {
                         <CourseTypeToggleButton value={alignment} onChange={handleChange} />
                     </Box>
                 </Box>
-
-                <CourseSlide data={data} className="courseCards" />
+                <Box
+                    sx={{
+                        marginBottom: "2vh",
+                    }}
+                >
+                    <CourseSlide
+                        data={data}
+                        className="courseCards"
+                        sx={{
+                        marginTop: "5vh",
+                        }}
+                    />
+                </Box>
 
                 <Box
                     sx={{
                         display: "flex",
                         margin: "auto",
-                        marginTop: "5%",
+                        marginTop: "1%",
+
                     }}
                 >
-                    <Button variant="contained" size="small" value={alignment} onClick={handleClick}>Learn More</Button>
+                    <Button
+                        variant="contained"
+                        size="medium"
+                        value={alignment}
+                        onClick={handleClick}
+                        startIcon={<AddIcon/>}
+                    >
+                        Find Out More
+                    </Button>
                 </Box>
             </Box>
         </Box>

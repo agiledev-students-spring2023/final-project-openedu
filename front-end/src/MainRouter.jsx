@@ -30,9 +30,9 @@ export const MainRouter = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/subjects" element={<SubjectList />} />
           <Route path="/subjects/subject_detail/:subjectId" element={<SubjectDetail />} />
-          <Route path="/recent_subject_list" element={<RecentSubjectList />} />
+          <Route path="/subjects/recent" element={<RecentSubjectList />} />
           <Route path="/recent_subject_list/subject_detail/:subjectId" element={<SubjectDetail />} />
-          <Route path="/suggest_subject_list" element={<SuggestSubjectList />} />
+          <Route path="/subjects/recommend" element={<SuggestSubjectList />} />
           <Route path="/suggest_subject_list/subject_detail/:subjectId" element={<SubjectDetail />} />
           <Route path="/course_detail" element={<CourseDetail />} />
           <Route path="/signin" element={<LoginWizard />} />

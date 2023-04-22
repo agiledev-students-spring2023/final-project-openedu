@@ -108,7 +108,7 @@ export function Home(props) {
             console.log("recent clicked");
 
         } else if (alignment === "Suggestion") {
-            navigate("/subjects/recommend");
+            navigate("/subjects/suggest");
 
             //Todo: need to fix the link to subject suggestion page
 

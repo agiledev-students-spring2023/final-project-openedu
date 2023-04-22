@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Typography, Box, Button } from '@mui/material';
-import { mockImageApi } from '../../mockApi/apis.mjs';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import * as Util from "../../util/Util.mjs";
@@ -14,6 +13,7 @@ export default function RecentlyUsedAvatars() {
     const navigate = useNavigate();
     // Mocked!!!!
     const tmpAvs = [];
+
     useEffect(() => {
         axios
             .get(Util.getServerAddr() + `/profile/info?token=123`)
@@ -27,8 +27,8 @@ export default function RecentlyUsedAvatars() {
                 setIsLoaded(true);
             })
             .catch((error) => console.error(error));
-    }, []);
 
+    }, []);
 
 
 

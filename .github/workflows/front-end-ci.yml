@@ -10,7 +10,7 @@ jobs:
     # Configure working directory
     defaults:
       run:
-        working-directory: ./
+        working-directory: ./front-end
 
     steps:
       - uses: actions/checkout@v3
@@ -19,8 +19,7 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm install
-      - run: cd back-end && npm run coverage_and_test && cd ../
-      - run: cd front-end && npm run build && cd ../
+      - run: npm run build
 
   
 

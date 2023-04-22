@@ -13,28 +13,37 @@ export function imageUrl() {
 }
 
 export function courses() {
-  courseList ??= [...Array(500).keys()].map((index) => ({
-    courseId: index,
-    instructor1: faker.random.words(2),
-    instructor2: faker.random.words(2),
-    name: faker.random.word(4),
-    description: faker.random.words(10),
-    university: faker.random.words(4),
-    difficulty: faker.datatype.number({ min: 1, max: 5 }),
-    language: faker.random.word(),
-    url: faker.internet.url(),
-    imageUrl: imageUrl(),
-    prerequisites: faker.random.words(5),
-    completionRate: Util.randInt() % 101,
-    courseHours: Util.randInt() % 100,
-    subjectId: faker.datatype.number({ min: 0, max: 20 }),
-  }));
+    courseList ??= [...Array(500).keys()].map((index) => ({
+        courseId: index,
+        instructors: [
+            faker.random.words(2),
+            faker.random.words(2)
+        ],
+        name: faker.random.word(4),
+        description: faker.random.words(10),
+        university: faker.random.words(4),
+        difficulty: faker.datatype.number({ min: 1, max: 5 }),
+        language: faker.random.word(),
+        url: faker.internet.url(),
+        imageUrl: imageUrl(),
+
+        prerequisites:
+            [...Array(5).keys()]
+            .map(_ => faker.random.words(2)
+            ),
+
+        completionRate: Util.randInt() % 101,
+        courseHours: Util.randInt() % 100,
+    }));
 
   return courseList;
 }
 
 export function subjects() {
   let cnt = 0;
+
+  //We require courses so lets load courses first
+  courses();
 
   subjectList ??= [...Array(20).keys()].map((subjectId) => {
     let nCourses = (Util.randInt() % 10) + 1;
@@ -44,7 +53,9 @@ export function subjects() {
     const courseArr = [];
 
     for (let i = 0; i < nCourses; ++i) {
-      courseArr.push(courses()[cnt]);
+      courseList[cnt].subjectId = subjectId;
+      courseArr.push(courseList[cnt]);
+
       ++cnt;
     }
 
@@ -116,4 +127,9 @@ export function feedback() {
   }));
 
   return feedbackList;
+}
+
+export function init() {
+    subjects();
+    courses();
 }

@@ -8,6 +8,8 @@ import {
 } from "../src/util/MockData.mjs";
 import * as Util from "../src/util/Util.mjs";
 import * as Network from "../src/networking/NetworkCore.mjs";
+
+
 describe("courses", () => {
   let result;
   beforeEach(() => {

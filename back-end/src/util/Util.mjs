@@ -1,5 +1,7 @@
 import * as Logger from "../util/Logger.mjs";
+import * as dotenv from "dotenv";
 
+let isEnvReady = false;
 const callbackMap = new Map();
 
 export function addCallback(name, func) {
@@ -10,6 +12,20 @@ export function addCallback(name, func) {
     newSet.add(func);
     callbackMap.set(name, newSet);
   }
+}
+
+export function getConfigParam(key) {
+    if(!isEnvReady) {
+        dotenv.config();
+        isEnvReady = true;
+    }
+
+    if(process.env[key.toUpperCase()] === undefined) {
+        // noinspection ExceptionCaughtLocallyJS
+        Logger.info(`Config key "${key}" not present!`);
+    }
+
+    return process.env[key.toUpperCase()];
 }
 
 export function removeCallback(name, func) {
@@ -59,7 +75,9 @@ export function onWebMissingParam(req, res) {
     `Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`
   );
 
-  return onWebResponse(res, { msg: "missing_param" }, false, 422); //HTTP 422: Unprocessable Entity
+    Logger.info(`Request ${req.path} with params ${(req.query??req.body).toLocaleString()} is invalid!`);
+
+    return onWebResponse(res, {msg : "missing_param"}, false, 422); //HTTP 422: Unprocessable Entity
 }
 
 export function isPerfectArray(...arr) {
@@ -73,10 +91,26 @@ export function isValidPostRequest(obj, ...keys) {
 }
 
 export function cloneObject(obj, ...excludeProps) {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([key]) => !excludeProps.includes(key))
-  );
+
+    if(obj === null || obj === undefined) return obj;
+
+    return Object.fromEntries(
+        Object.entries(obj)
+            .filter(([key]) => !excludeProps.includes(key))
+    );
 }
+
+export function trimMongoDocument(document, ...excludeProps) {
+    if(document === null)
+        return document;
+
+    return cloneObject(
+        document.toObject(),
+        "_id","__v",
+        ...excludeProps
+    );
+}
+
 
 export function isValidGetRequest(queryObject, ...requiredParams) {
   if (queryObject === null) return false;

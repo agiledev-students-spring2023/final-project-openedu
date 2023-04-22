@@ -7,6 +7,7 @@ import StyledAvater from '../../containers/StyledAvatar';
 import { Upload, Event, Save, HighlightOff } from '@mui/icons-material/';
 import axios from 'axios';
 import * as Util from "../../util/Util.mjs";
+import * as Logger from "../../util/Logger.mjs";
 
 
 export default function EditProfile(props) {
@@ -29,7 +30,7 @@ export default function EditProfile(props) {
                 setDescription(userInfo["motto"]);
                 setAvatarImg(userInfo["avatar"]);
             })
-            .catch((error) => console.error(error));
+            .catch((error) => Logger.error(error));
     }, []);
 
   const handleCleanUsername = (e) => {
@@ -66,7 +67,7 @@ export default function EditProfile(props) {
   const handleAvatarUpload = (e) => {
     e.preventDefault();
     setSelectedAvatar(e.target.files[0]);
-    console.log(selectedAvatar);
+    Logger.info(selectedAvatar);
     const formData = new FormData();
     // More data can be appended, related to user info/security..
     formData.append("file", selectedAvatar);
@@ -80,7 +81,7 @@ export default function EditProfile(props) {
     //   console.log(error);
     // });
 
-    console.log(formData); // For testing purposes only
+    Logger.info(formData); // For testing purposes only
   };
 
     return (

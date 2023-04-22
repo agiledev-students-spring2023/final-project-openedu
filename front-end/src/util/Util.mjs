@@ -1,9 +1,10 @@
 import { colors, createTheme } from '@mui/material';
 import { Outlet } from "react-router-dom";
 import React from 'react';
+// import * as dotenv from "dotenv";
+import * as Logger from "./Logger.mjs";
 
 const callbackMap = new Map();
-let loadedConfig;
 
 export function addCallback(name, func) {
 
@@ -250,12 +251,26 @@ export function getTheme() {
 }
 
 
-export function getEnvParam(name) {
-    return process.env.name;
+//NOTE: React.js env keys shall be defined with the REACT_APP_ prefix, otherwise I cannot read it in
+export function getConfigParam(key) {
+    // if(!isEnvReady) {
+    //     //dotenv.config();
+    //     isEnvReady = true;
+    // }
+
+    //key = key.toUpperCase();
+    key = "REACT_APP_" + key.toUpperCase();
+
+    if(process.env[key] === undefined) {
+        // noinspection ExceptionCaughtLocallyJS
+        Logger.info(`Config Key "${key}" not present!`);
+    }
+
+    return process.env[key];
 }
 
 export function getServerAddr() {
-    return getEnvParam("server_addr_debug") ?? "http://localhost:3001";
+    return getConfigParam("server_addr_debug")??"http://localhost:3001";
 }
 
 export function asChildPage(component) {
@@ -268,7 +283,6 @@ export function asChildPage(component) {
 
 export function getKey(){
 //serialize localStorage to JSON --> 拿key
-
 
 }
 

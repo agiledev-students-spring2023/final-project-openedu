@@ -47,8 +47,8 @@ const CourseController = {
     });
   },
   getCoursesWithSubject: async (req, res) => {
-    const { subject_num } = req.query;
-    const courses = (await CourseModel.getCoursesWithSubject(subject_num))[0];
+    const { subject_num: subjectNum } = req.query;
+    const courses = (await CourseModel.getCoursesWithSubject(subjectNum))[0];
     const tbnArr = [];
     const tbnArrResolution = [
       "maxres",

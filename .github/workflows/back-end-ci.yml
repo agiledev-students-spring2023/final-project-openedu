@@ -1,0 +1,26 @@
+name: Express.JS Backend CI
+
+on: pull_request
+#on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Configure working directory
+    defaults:
+      run:
+        working-directory: ./back-end
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - run: npm install
+      - run: npm run coverage_and_test
+
+  
+
+

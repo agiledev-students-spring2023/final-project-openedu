@@ -9,13 +9,11 @@ import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
 
 export function RecentSubjectList() {
-
-    const url = Util.getServerAddr() + "/subject/previous?token=1234";
-    //const url = Mockaroo.mockDataApi("subjects"); //Add API URL
+  const url = Util.getServerAddr() + "/subject/previous?token=1234";
+  //const url = Mockaroo.mockDataApi("subjects"); //Add API URL
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
-
 
   useEffect(() => {
     console.log("fetching subject information");
@@ -26,29 +24,23 @@ export function RecentSubjectList() {
           `SubjectList's axios got the following data: \n ${response.data}`
         );
         setData(response.data["content"]);
-
+        console.log(response.data);
         setLoaded(true);
       })
       .catch((err) => {
         Logger.error("error fetching subject information");
         Logger.error(err);
 
-        //const backupData =
         setData([
           {
             id: 3,
-            name: "backupSubject",
-            description: "backupDescription",
+            name: "backupRecentSubject",
+            description: "backupRecentDescription",
             completionRate: 37,
           },
         ]);
-
         setLoaded(true);
-        //setData((backupData??[])[0])
       });
-    // .finally(() => {
-    //   setLoaded(true);
-    // })
   }, []);
 
   return (

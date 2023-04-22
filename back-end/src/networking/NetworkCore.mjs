@@ -28,23 +28,23 @@ const server = Http.createServer(restful);
 export const socketIoServer = new SocketIo.Server(server);
 
 export async function initMiddleware() {
-    restful.use(express.urlencoded({extended: false}));
+  restful.use(express.urlencoded({ extended: false }));
 
-    //Parse application/json POST requests
-    restful.use(express.json());
+  //Parse application/json POST requests
+  restful.use(express.json());
 
-    //Static file serving
-    restful.use(
-        express.static(
-            path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "public")
-        )
-    );
+  //Static file serving
+  restful.use(
+    express.static(
+      path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "public")
+    )
+  );
 
-    const corsOptions = {
-        origin: `http://localhost:${process.env.PORT || 3000}`,
-    };
+  const corsOptions = {
+    origin: `http://localhost:${process.env.PORT || 3000}`,
+  };
 
-    restful.use(cors(corsOptions));
+  restful.use(cors(corsOptions));
 }
 
 /**
@@ -52,9 +52,9 @@ export async function initMiddleware() {
  * @param port port number.
  */
 export function bind(port) {
-    server.listen(port, () => {
-        Logger.info(`server started listening at port ${port}`);
-    });
+  server.listen(port, () => {
+    Logger.info(`server started listening at port ${port}`);
+  });
 }
 
 export async function startServer(port) {

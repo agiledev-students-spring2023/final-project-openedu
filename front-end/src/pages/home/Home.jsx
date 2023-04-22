@@ -1,17 +1,19 @@
-import {Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography,} from "@mui/material";
-import {CreateOutlined} from "@mui/icons-material";
-import React, {useEffect, useState} from "react";
+import { Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import { CreateOutlined } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
 import * as Logger from "../../util/Logger.mjs";
+import AddIcon from '@mui/icons-material/Add';
+import HistoryIcon from '@mui/icons-material/History';
+import RecommendIcon from '@mui/icons-material/Recommend';
 
-//Todo: add 'learn more' button to page Recent & suggestion.
 //Todo: add link to each card to courseDetail page.
 
-function CourseTypeToggleButton({value, onChange}) {
+function CourseTypeToggleButton({ value, onChange }) {
     return (
         <ToggleButtonGroup
             value={value}
@@ -20,19 +22,43 @@ function CourseTypeToggleButton({value, onChange}) {
             aria-label="Platform"
             align="center"
             sx={{
-                marginLeft: "5%",
+                // marginLeft: "5%",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
             }}
         >
-            <ToggleButton value="Recent">Recent</ToggleButton>
-            <ToggleButton value="Suggestion">Suggestion</ToggleButton>
+            <ToggleButton
+                value="Recent"
+            >
+                <HistoryIcon sx={{ mr: 0.5 }}/>
+                Recent
+            </ToggleButton>
+
+            <ToggleButton
+                value="Suggestion"
+            >
+                <RecommendIcon sx={{ mr: 0.5 }}/>
+                Suggesstion
+            </ToggleButton>
         </ToggleButtonGroup>
     );
 }
 
-const CourseSlide = ({data}) => {
+
+const CourseSlide = ({ data }) => {
+    const navigate = useNavigate();
+    const handleCardClick = (entry) => {
+
+        console.log("card clicked", entry);
+
+        //navigate to subject detail page
+        const path = `/subjects/detail/${entry.subjectId}`;
+
+        navigate(path);
+
+    };
+
     return (
         <Box
             sx={{
@@ -45,12 +71,12 @@ const CourseSlide = ({data}) => {
         >
             <Grid
                 container
-                spacing={{xs: 2, md: 3}}
-                columns={{xs: 6, sm: 8, md: 12}}
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 6, sm: 8, md: 12 }}
             >
                 {data.slice(0, 6).map((entry, index) => (
-                    <Grid item xs={2} sm={4} md={4} key={index}>
-                        <CourseCard key={index} entry={entry}/>
+                    <Grid item xs={2} sm={4} md={4} key={index} onClick={() => handleCardClick(entry)}>
+                        <CourseCard key={index} entry={entry} />
                     </Grid>
                 ))}
             </Grid>
@@ -59,6 +85,7 @@ const CourseSlide = ({data}) => {
 };
 
 export function Home(props) {
+
     const navigate = useNavigate();
 
     const [alignment, setAlignment] = React.useState("Recent");
@@ -68,27 +95,43 @@ export function Home(props) {
 
     console.log(data);
 
+    //this is for the toggle button, handle the source of the course slides
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
 
-    // const { courseId } = useParams();
+    //this is for the onClick source of the course slides. It links to the subject detail page
+    const handleClick = () => {
+        if (alignment === "Recent") {
+            navigate("/subjects/recent");
 
-    // Logger.verbose("URL: " + url);
-    //logger comment out for now
+            console.log("recent clicked");
+
+        } else if (alignment === "Suggestion") {
+            navigate("/subjects/suggest");
+
+            //Todo: need to fix the link to subject suggestion page
+
+            console.log("suggestion clicked");
+
+        }
+    };
+
 
     useEffect(() => {
 
         axios.get(Util.getServerAddr() +
             `/profile/info?token=1234`).then((response) => {
 
-            Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
-            setProfile(response.data["content"]);
-        });
+                Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
+                setProfile(response.data["content"]);
+            });
 
 
         if (alignment === "Recent") {
-            // get recent
+
+            // get course slide data about recent course
+
             console.log("fetching course information");
             axios
                 .get(
@@ -119,13 +162,15 @@ export function Home(props) {
                 });
 
         } else if (alignment === "Suggestion") {
-            // get suggested
+
+            // get course slide data about recommended course
+
             console.log("fetching subject information");
             axios
                 .get(
                     Util.getServerAddr() +
                     `/subject/recommend?token=1234`
-                ) //Todo: add SuggestedSubject URL here
+                )
                 .then((response) => {
                     Logger.info(
                         `SubjectList's axios got the following data: \n ${response.data}`
@@ -149,14 +194,13 @@ export function Home(props) {
                     ]);
 
                     setLoaded(true);
-                    //setData((backupData??[])[0])
                 });
         }
     }, [alignment]);
 
     return (
         <Box>
-            <BackgroundImage/>
+            <BackgroundImage />
             <Box>
                 <Box
                     className="welcome_line"
@@ -166,8 +210,8 @@ export function Home(props) {
                         justifyContent: "space-between",
                         width: 1,
                         alignItems: "center",
-                        marginTop: "20vh",
-                        marginBottom: "6vh",
+                        marginTop: "15vh",
+                        marginBottom: "10vh",
                     }}
                 >
                     <Box
@@ -182,23 +226,24 @@ export function Home(props) {
                             sx={{
                                 fontFamily: "Raleway",
                                 display: "flex",
-                                fontSize: "30px",
+                                fontSize: "40px",
                             }}
                         >
-                            Welcome,
+                            Welcome
                         </Typography>
                         <Typography
                             variant="h3"
                             sx={{
                                 fontWeight: "900",
                                 display: "flex",
-                                fontSize: "45px",
+                                fontSize: "35px",
                             }}
                         >
                             {(profile ?? {})["name"] ?? "UserName"}
-                            {/*get username from backend*/}
                         </Typography>
                     </Box>
+
+                    {/*profile edit button*/}
                     <Button
                         onClick={() => {
                             navigate("/profile/edit");
@@ -222,11 +267,11 @@ export function Home(props) {
                     backgroundColor: "background.default",
                     position: "absolute",
                     left: "0",
+                    bottom: "6vh",
                     width: "1",
                     display: "flex",
                     flexDirection: "column",
                     paddingBottom: "5vh",
-                    //todo: change container position here
                 }}
             >
                 <Box
@@ -245,11 +290,41 @@ export function Home(props) {
                             margin: "auto",
                         }}
                     >
-                        <CourseTypeToggleButton value={alignment} onChange={handleChange}/>
+                        <CourseTypeToggleButton value={alignment} onChange={handleChange} />
                     </Box>
                 </Box>
+                <Box
+                    sx={{
+                        marginBottom: "2vh",
+                    }}
+                >
+                    <CourseSlide
+                        data={data}
+                        className="courseCards"
+                        sx={{
+                        marginTop: "5vh",
+                        }}
+                    />
+                </Box>
 
-                <CourseSlide data={data} className="courseCards"/>
+                <Box
+                    sx={{
+                        display: "flex",
+                        margin: "auto",
+                        marginTop: "1%",
+
+                    }}
+                >
+                    <Button
+                        variant="contained"
+                        size="medium"
+                        value={alignment}
+                        onClick={handleClick}
+                        startIcon={<AddIcon/>}
+                    >
+                        Find Out More
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );

@@ -99,15 +99,6 @@ const LandingUi = () => {
         }
     };
 
-    // const handleForget = (e) => {
-    //     e.preventDefault();
-    //     setLanding(2);
-    // };
-    //
-    // const handleSignup = (e) => {
-    //     e.preventDefault();
-    //     setLanding(2);
-    // };
 
     return (
         <>

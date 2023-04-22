@@ -3,7 +3,7 @@ import * as Utils from '../src/util/Util.mjs';
 import * as Logger from '../src/util/Logger.mjs';
 
 async function startApp() {
-    await NetworkCore.startServer(3001);
+  await NetworkCore.startServer(3001);
 }
 
 try {

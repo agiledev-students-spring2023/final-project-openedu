@@ -8,6 +8,9 @@ import {faker} from "@faker-js/faker";
 import {restful} from "./NetworkCore.mjs";
 
 export async function initRestApis() {
+
+    MockData.init();
+
     restful.get("/test", async (req, res) => {
         const name = req.query["name"] ?? "human";
         Util.onWebResponse(res, `Hello ${name}!`, 1);

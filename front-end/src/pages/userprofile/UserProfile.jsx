@@ -9,6 +9,7 @@ import ComposePost from "../posts/ComposePost";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
 import FeedIcon from '@mui/icons-material/Feed';
+import * as Logger from "../../util/Logger.mjs";
 
 export default function UserProfile() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function UserProfile() {
       .then((response) => {
         setImageUrl(response.data["content"]);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => Logger.error(error));
   }, []);
   return (
     <Box>

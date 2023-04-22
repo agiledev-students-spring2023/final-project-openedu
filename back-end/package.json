@@ -12,5 +12,8 @@
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "prettier": "2.8.7"
   }
 }

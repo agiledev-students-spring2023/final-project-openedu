@@ -1,7 +1,5 @@
 # Getting Started with OpenEdu Backend
 
-
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -17,6 +15,3 @@ Runs the server in port `3001`(by default).
 ### `node run test`
 
 Run all the test cases for the app with code coverage.
-
-
-

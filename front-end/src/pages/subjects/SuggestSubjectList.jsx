@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SubjectCard } from "./SubjectCard";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
 import { TypeAnimation } from "react-type-animation";
@@ -9,28 +8,29 @@ import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
 
 export function SuggestSubjectList() {
-
-    const url = Util.getServerAddr() + "/subject/recommend?token=1234";
+  const url = Util.getServerAddr() + "/subject/recommend?token=1234";
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
-  const navigate = useNavigate();
-  const subjectId = useParams();
-
   useEffect(() => {
     console.log("fetching subject information");
-    axios(url)
+    axios
+      .get(url)
       .then((response) => {
-        setData(response.data);
+        Logger.info(
+          `SubjectList's axios got the following data: \n ${response.data}`
+        );
+        setData(response.data["content"]);
         console.log(response.data);
         setLoaded(true);
       })
       .catch((err) => {
         console.log("error fetching subject information");
         console.log(err);
+        Logger.error("error fetching subject information");
+        Logger.error(err);
 
-        //const backupData =
         setData([
           {
             id: 3,
@@ -41,7 +41,6 @@ export function SuggestSubjectList() {
         ]);
 
         setLoaded(true);
-        //setData((backupData??[])[0])
       });
   }, []);
 

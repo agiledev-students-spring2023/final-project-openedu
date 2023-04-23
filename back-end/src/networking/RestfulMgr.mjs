@@ -9,9 +9,7 @@ import { faker } from "@faker-js/faker";
 import { restful } from "./NetworkCore.mjs";
 
 export async function initRestApis() {
-    const Subject = MongoMgr.getModel("subjects");
-
-    MockData.init();
+  MockData.init();
 
     restful.get("/test", async (req, res) => {
         const name = req.query["name"] ?? "human";

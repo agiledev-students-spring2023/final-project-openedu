@@ -56,10 +56,10 @@ export function bind(port) {
     Logger.info(`server started listening at port ${port}`);
   });
 }
-
 export async function startServer(port) {
-    await initMiddleware();
-    await initRestApis();
-    await MongoMgr.init();
-    bind(port ?? 3000);
+  await initMiddleware();
+  await MongoMgr.init();
+  await initRestApis();
+  bind(port ?? 3000);
 }
+

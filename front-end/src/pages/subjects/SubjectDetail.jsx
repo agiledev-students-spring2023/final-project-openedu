@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CourseCard } from "./CourseCard.jsx";
 import axios from "axios";
 import ClassIcon from "@mui/icons-material/Class";
-import { Typography, CardMedia, Box } from "@mui/material";
+import { Typography, CardMedia, Box, Button, Collapse, useTheme } from "@mui/material";
 import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 import * as Constants from "../../util/Constants.mjs";
@@ -11,11 +11,12 @@ import { useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
 
 export function SubjectDetail() {
-  const [data, setData] = useState([]);
+  const [subject, setSubject] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
   const { subjectId } = useParams();
-
+  const theme = useTheme();
   const url =
     Util.getServerAddr() +
     `/subject/detail?subjectId=${subjectId ?? 0}&token=1234`;
@@ -26,14 +27,15 @@ export function SubjectDetail() {
     Logger.info("fetching course information");
     axios(url)
       .then((response) => {
-        setData(response.data["content"]);
+        setCourses(response.data["content"].courses);
+        setSubject(response.data["content"].subject);
         setLoaded(true);
       })
       .catch((err) => {
         console.log("error fetching subject information");
         console.log(err);
 
-        setData([
+        setSubject([
           {
             courseId: 3,
             avatar: ClassIcon,
@@ -46,6 +48,9 @@ export function SubjectDetail() {
 
       });
   }, []);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+
 
   return (
     <>
@@ -60,7 +65,7 @@ export function SubjectDetail() {
           {/*Course Image*/}
           <CardMedia
             alt="course_image"
-            image={data.imageUrl}
+            image={subject.imageUrl}
             sx={{
               height: 300,
               borderRadius: Constants.UI_CORNER_RADIUS,
@@ -72,7 +77,7 @@ export function SubjectDetail() {
             }}
           >
             <Typography
-              variant="h3"
+              variant="h5"
               sx={{
                 // margin: Constants.UI_HORIZ_OFFSET,
                 textAlign: "left",
@@ -82,57 +87,40 @@ export function SubjectDetail() {
                 //color: "text.primary",
               }}
             >
-              Courses
+              {subject.name}
             </Typography>
-            <Typography
-              variant="h5"
-              sx={{
-                textAlign: "left",
-              }}
-            >
-              {data.name}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                textAlign: "left",
-              }}
-            >
-              {data.description}
-            </Typography>
-            <TypeAnimation
-              sequence={[
-                "Which course would you like to learn today?", // Types 'One'
-                1000, // Waits 1s
-                "Pick one that interests you!",
-                2000,
-                "Pick a Course, take a look at it!",
-                3000,
+            <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
+              <Typography variant="body" color="text.secondary" align="left"
+                sx={{
+                  display: "flex",
+                  marginTop: "4px",
+                }}>
+                {subject.description}
+              </Typography>
+            </Collapse>
+            <Button
+              variant="outlined"
+              onClick={() => setIsExpanded(!isExpanded)}
+            size="small"
+            sx={{
+              position: 'relative',
+              right: '-35%',
+              color: 'white',
+              marginTop: "1vh",
+            }}>
+            {isExpanded ? 'Collapse' : 'Read more'}
+          </Button>
 
-                async () => {
-                  Logger.verbose(
-                    "SubjectDetail: Typewriter Sequence completed"
-                  ); // Place optional callbacks anywhere in the array
-                },
-              ]}
-              wrapper="span"
-              cursor={true}
-              repeat={0}
-              style={{
-                fontSize: "1em",
-                display: "inline-block",
-                marginTop: "2vh",
-              }}
-            />
-          </Box>
-
-          {data["courses"].map((entry, index) => (
-            <CourseCard key={index} entry={entry} />
-          ))}
         </Box>
+
+          {courses.map((entry, index) => (
+          <CourseCard key={index} entry={entry} />
+        ))}
+    </Box >
       ) : (
-        <></>
-      )}
+    <></>
+  )
+}
     </>
   );
 }

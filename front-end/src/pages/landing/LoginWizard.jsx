@@ -134,16 +134,25 @@ const LandingUi = () => {
 
         }
         else {
-
             const res = await axios.post(Util.getServerAddr() + "/login/validate",{"email":userEmail, "pwd": userInput});
             Logger.verbose(`/login/validate comes back with: ${JSON.stringify(res.data)}`);
 
+            //Auth Successful
+            if(res.data["status"] === 0) {
 
-            Util.invokeCallback("onNavBarShow", true).then(() => true);
+                //Write everything we received from server to localStorage
+                for(const prop in Object.keys(res.data["content"])) {
+                    Util.writeLocalValue(prop, res.data["content"][prop]).then(_ => true);
+                }
 
+                Util.invokeCallback("onNavBarShow", true).then(() => true);
+                navigate('/home');
+            }
+            else {
+                await Util.invokeCallback("onClearLoginInput");
+                await Util.invokeCallback("onShowSnackBar","error",`Login Failed!, reason: ${res.data["content"]}`);
+            }
 
-            //Util.invokeCallback("onBackEnable",true);
-            navigate('/home');
         }
     };
 

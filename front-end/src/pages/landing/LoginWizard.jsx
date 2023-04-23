@@ -141,8 +141,8 @@ const LandingUi = () => {
             if(res.data["status"] === 0) {
 
                 //Write everything we received from server to localStorage
-                for(const prop in Object.keys(res.data["content"])) {
-                    Util.writeLocalValue(prop, res.data["content"][prop]).then(_ => true);
+                for(const [key,value] of Object.entries(res.data["content"])) {
+                    Util.writeLocalValue(key, value).then(_ => true);
                 }
 
                 Util.invokeCallback("onNavBarShow", true).then(() => true);

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "@mui/material/Card";
 import {
+  Card,
+  Collapse,
   Box,
   Button,
   CardContent,
@@ -45,6 +46,11 @@ export function SubjectCard(
   const routeChange = () => {
     navigate(`../detail/${entry.subjectId}`);
   };
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   //Logger.verbose(`Image URL: ${entry.imageUrl}`);
 
@@ -72,18 +78,43 @@ export function SubjectCard(
             component="img"
             height="140"
             image={entry.imageUrl ?? "Subject Image"}
-            //Todo: change to backend
-            //alt="green iguana"
+          //Todo: change to backend
+          //alt="green iguana"
           />
           <Typography variant="h5" component="div">
             {entry.name ?? "Subject Name"}
           </Typography>
-          <Typography variant="body" component="div">
-            {entry.description ?? "Subject Description"}
-          </Typography>
+
+
+          <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
+            <Typography variant="body" color="text.secondary" align="left"
+            sx={{
+              display: "flex",
+              marginTop: "4px",
+            }}>
+              {entry.description}
+            </Typography>
+          </Collapse>
+          <Button 
+          variant="outlined" 
+          onClick={handleExpandClick} 
+          size="small" 
+          sx={{
+            position:'relative',
+            right: '-35%',
+            color:'white',
+            marginTop: "1vh",
+            backgroundColor: theme.palette.neutral.main,
+            }}>
+            {isExpanded ? 'Collapse' : 'Read more'}
+          </Button>
+
+
           {/*<Typography variant="subtitle" component="div">*/}
           {/*  CompletionRate: {entry.completionRate ?? 0}*/}
           {/*</Typography>*/}
+
+
           <Box
             sx={{
               display: "Grid",

@@ -1,12 +1,11 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {Backdrop, Box, Button, InputAdornment, TextField, Typography} from '@mui/material';
 import BackgroundImage from "../../containers/BackgroundImage/index.jsx";
-import {Add, ChevronRight, HighlightOff} from "@mui/icons-material";
+import {ChevronRight, HighlightOff} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
 import {BackButton} from "../../containers/BackButton/BackButton";
 import axios from "axios";
-import {getServerAddr} from "../../util/Util.mjs";
 import * as Logger from "../../util/Logger.mjs";
 
 // Use Context to make globals,or functions between parent/child
@@ -79,8 +78,6 @@ const LandingUi = () => {
 
     const { landing, setLanding } = useContext(LandingContext);
     const navigate = useNavigate();
-    const {inputValue, setInputValue} = useState("");
-
 
     let page = {
         header: 'Begin',
@@ -229,13 +226,13 @@ export default function LoginWizard() {
                 <BackgroundImage/>
 
                 <Backdrop open sx={{
-                    "z-index" : 0,
+                    "zIndex" : 0,
                 }}/>
 
                 <Backdrop open={landing > 0} sx={{
                     color: "#fff",
-                    "z-index" : 0,
-                    backdropFilter:  "blur(100px)"
+                    "zIndex" : 0,
+                    backdropFilter:  "blur(30px)"
                 }}/>
 
 

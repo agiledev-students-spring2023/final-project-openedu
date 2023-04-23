@@ -167,8 +167,16 @@ export async function initRestApis() {
 
     //this api currently responses with an image url
     restful.get("/background-image", async (req, res) => {
-        const {width, height} = req.query;
-        const image = `https://picsum.photos/${width}/${height}`;
+
+        if (!Util.isValidWebRequest(req.query, "width","height")) {
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+
+        const image = `https://picsum.photos/${req.query["width"]}/${req.query["height"]}`;
+
+        Logger.info("Image URL: " +image);
+
         Util.onWebResponse(res, image);
     });
 

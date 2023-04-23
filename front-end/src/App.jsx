@@ -4,7 +4,7 @@ import { MainRouter } from './MainRouter.jsx';
 import * as Util from './util/Util.mjs';
 import React, { useEffect } from "react";
 import * as Logger from "./util/Logger.mjs";
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import {ThemeProvider, CssBaseline, createTheme} from '@mui/material';
 import { Layout } from "./containers/Layout/Layout";
 import { RouterProvider, useNavigate } from "react-router-dom";
 import { getRoutes } from "./util/Routing.mjs";
@@ -20,7 +20,8 @@ export function App() {
 
   // Note: Main router is a wrapper of the main body
   return (
-    <ThemeProvider theme={Util.getTheme()}>
+    <ThemeProvider theme={Util.getTheme()}
+    >
       <CssBaseline />
       <div className="App">
         <Layout>

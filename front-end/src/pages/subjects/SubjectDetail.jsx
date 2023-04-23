@@ -23,7 +23,7 @@ export function SubjectDetail() {
   Logger.verbose("URL: " + url);
 
   useEffect(() => {
-    console.log("fetching course information");
+    Logger.info("fetching course information");
     axios(url)
       .then((response) => {
         setData(response.data["content"]);

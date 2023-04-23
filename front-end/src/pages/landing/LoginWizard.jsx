@@ -1,16 +1,42 @@
-import React, {createContext, useContext, useState} from 'react';
-import {Box, Button, InputAdornment, TextField, Typography} from '@mui/material';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import {Backdrop, Box, Button, InputAdornment, TextField, Typography} from '@mui/material';
 import BackgroundImage from "../../containers/BackgroundImage/index.jsx";
-import {Add, ChevronRight, HighlightOff} from "@mui/icons-material";
+import {ChevronRight, HighlightOff} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import * as Util from "../../util/Util.mjs";
 import {BackButton} from "../../containers/BackButton/BackButton";
+import axios from "axios";
+import * as Logger from "../../util/Logger.mjs";
 
 // Use Context to make globals,or functions between parent/child
 export const LandingContext = createContext(null);
 
+let userInput = "",
+    userEmail = "";
+
 function InputField(props) {
     const [input, setInput] = useState("");
+    const [fieldType, setFieldType] = useState("text");
+
+    let onClearInput;
+    let onUpdateLoginFieldType;
+    
+    useEffect(() => {
+
+        onClearInput ??= () => {
+            setInput("");
+            userInput = "";
+        };
+
+        onUpdateLoginFieldType ??= (newType) => {
+            setFieldType(newType);
+        };
+
+        Util.addCallback("onClearLoginInput",onClearInput);
+        Util.addCallback("onUpdateLoginFieldType",onUpdateLoginFieldType);
+
+    },[]);
+
     const handleCleanInput = (e) => {
         e.preventDefault();
         setInput("");
@@ -21,6 +47,7 @@ function InputField(props) {
                 marginTop: '11%',
             }}>
                 <TextField
+                    type={fieldType}
                     label={props.label}
                     variant="filled"
                     value={input}
@@ -41,7 +68,11 @@ function InputField(props) {
                             </InputAdornment>
                         ),
                     }}
-                    onChange={(e) => { setInput(e.target.value); }}
+                    onChange={(e) => {
+                        setInput(e.target.value);
+                        //Logger.info(`New Input: ${e.target.value}`);
+                        userInput = e.target.value;
+                    }}
                 />
             </Box>
         </Box>
@@ -51,8 +82,10 @@ function InputField(props) {
 
 // LandingUI is applied to three pages: Begin, Signin, Signup
 const LandingUi = () => {
+
     const { landing, setLanding } = useContext(LandingContext);
     const navigate = useNavigate();
+
     let page = {
         header: 'Begin',
         subheader: `Let's start with your email`,
@@ -91,11 +124,41 @@ const LandingUi = () => {
     const handleContinue = async (e) => {
         e.preventDefault();
 
-        if (page.next===1) { setLanding(1); }
+        //Next page is password page
+        if (page.next === 1) {
+
+            const res = await axios.get(Util.getServerAddr() + "/login/info",{params: {"email" : userInput}});
+            Logger.verbose(`/login/info comes back with: ${JSON.stringify(res.data)}`);
+
+            userEmail = userInput;
+
+            Util.invokeCallback("onClearLoginInput");
+            Util.invokeCallback("onUpdateLoginFieldType","password");
+            //If status = 1, then the user does not exist and we shall proceed to create a new account, otherwise enter password
+            setLanding(res.data["status"] === 1 ? 2 : 1);
+
+
+        }
         else {
-            Util.invokeCallback("onNavBarShow", true).then(() => true);
-            //Util.invokeCallback("onBackEnable",true);
-            navigate('/home');
+            const res = await axios.post(Util.getServerAddr() + "/login/validate",{"email":userEmail, "pwd": userInput});
+            Logger.verbose(`/login/validate comes back with: ${JSON.stringify(res.data)}`);
+
+            //Auth Successful
+            if(res.data["status"] === 0) {
+
+                //Write everything we received from server to localStorage
+                for(const [key,value] of Object.entries(res.data["content"])) {
+                    Util.writeLocalValue(key, value).then(_ => true);
+                }
+
+                Util.invokeCallback("onNavBarShow", true).then(() => true);
+                navigate('/home');
+            }
+            else {
+                await Util.invokeCallback("onClearLoginInput");
+                await Util.invokeCallback("onShowSnackBar","error",`Login Failed!, reason: ${res.data["content"]}`);
+            }
+
         }
     };
 
@@ -119,25 +182,26 @@ const LandingUi = () => {
                         fontSize: "60px",
                         lineHeight: "70px",
                         textShadow: "0px 3px 2px rgba(200, 200, 200)",
+                        "z-index" : 2000
                     }}
                     variant="h1"
                 >
                     {page.header}
                 </Typography>
-            </Box>
 
-            <Box
-                sx={{ marginTop: '2%' }}>
                 <Typography sx={{
-                    fontFamily: "Inter",
+                    marginTop: "10px",
                     fontWeight: "500",
                     fontSize: "16px",
-                    textShadow: "0px 1px 1px rgba(200, 200, 200)"
+                    textShadow: "0px 1px 1px rgba(200, 200, 200)",
+                    "z-index" : 2000
                 }}>
                     {page.subheader}
                 </Typography>
             </Box>
-            <InputField label={page.input} />
+
+
+            <InputField label={page.input}/>
 
             <Box sx={{
                 display: 'flex',
@@ -168,7 +232,19 @@ export default function LoginWizard() {
     return Util.asChildPage(
         <LandingContext.Provider value={{ landing, setLanding }}>
             <Box>
-                <BackgroundImage />
+                <BackgroundImage/>
+
+                <Backdrop open sx={{
+                    "zIndex" : 0,
+                }}/>
+
+                <Backdrop open={landing > 0} sx={{
+                    color: "#fff",
+                    "zIndex" : 0,
+                    backdropFilter:  "blur(30px)"
+                }}/>
+
+
                 <LandingUi/>
             </Box>
         </LandingContext.Provider>

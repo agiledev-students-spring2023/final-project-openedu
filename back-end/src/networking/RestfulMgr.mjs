@@ -3,14 +3,15 @@ import { cloneObject } from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
-import { Mongo } from "./db/MongoMgr.mjs";
-import { subjects } from "../util/MockData.mjs";
+import { GetPlayListPic } from "../util/ThridPartyAPIs.mjs";
 import { faker } from "@faker-js/faker";
 import { restful } from "./NetworkCore.mjs";
 
+
 export async function initRestApis() {
-  MockData.init();
-  const Subject = MongoMgr.getModel("subjects");
+    MockData.init();
+    const Subject = MongoMgr.getModel("subjects");
+    const Course = MongoMgr.getModel("courses");
     restful.get("/test", async (req, res) => {
         const name = req.query["name"] ?? "human";
         Util.onWebResponse(res, `Hello ${name}!`, 1);
@@ -116,9 +117,13 @@ export async function initRestApis() {
         }
         const subjectId = req.query["subjectId"] ?? 1;
         const subject = await Subject.findOne({ subjectId });
-        if (subjectId >= subjects().length)
-            Util.onWebResponse(res, "invalid_subject_id", false);
-        else Util.onWebResponse(res, {subject, courses: MockData.courses()});
+        const courses = await Course.find({ subjectId });
+        const vidUrls = courses.map(course => course["youtubeUrl"]);
+        const courseImages = await GetPlayListPic(vidUrls);
+        courses.forEach((course, index) => {
+            course.imageUrl = courseImages[index];
+        })
+        Util.onWebResponse(res, { subject, courses });
     });
 
     restful.get("/post", async (req, res) => {

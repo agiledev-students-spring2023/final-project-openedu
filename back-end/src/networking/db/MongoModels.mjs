@@ -21,19 +21,19 @@ export const Course = Mongo.Schema({
 
 
 export const User = Mongo.Schema({
-    userId: Number,
-    email: String,
-    name: String,
-    pwd: String,
-    motto: String,
-    avatar: String,
-    isBanned: Boolean
+  userId: Number,
+  email: String,
+  name: String,
+  pwd: String,
+  motto: String,
+  avatar: String,
+  isBanned: Boolean,
 });
 
 export const Token = Mongo.Schema({
-    userId: Number,
-    token: String,
-    createTime: String
+  userId: Number,
+  token: String,
+  createTime: String,
 });
 
 export const Subject = Mongo.Schema({
@@ -46,16 +46,26 @@ export const Subject = Mongo.Schema({
 });
 
 export const Comment = Mongo.Schema({
-    postTime: String,
-    courseId: Number,
-    userId: Number,
-    rating: Number, //-1 if not present, [0,5] if present
-    msg: String
+  postTime: String,
+  courseId: Number,
+  userId: Number,
+  rating: Number, //-1 if not present, [0,5] if present
+  msg: String,
 });
 
 export const Counter = new Mongo.Schema({
-    key: String,
-    count: Number
+  key: String,
+  count: Number,
+});
+
+export const Post = Mongo.Schema({
+  postId: Number,
+  userId: Number,
+  title: String,
+  content: String,
+  overview: String,
+  likes: Number,
+  createTime: String,
 });
 
 

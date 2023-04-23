@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -9,6 +9,7 @@ import {
   Box,
   CardMedia,
   LinearProgress,
+  Collapse
 } from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
 import * as PropTypes from "prop-types";
@@ -39,6 +40,7 @@ LinearProgressWithLabel.propTypes = {
 
 export function CourseCard({ entry }) {
   const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(false);
   const routeChange = () => {
     navigate(`/courses/detail/${entry.courseId}`);
   };
@@ -66,9 +68,27 @@ export function CourseCard({ entry }) {
           <Typography variant="h5" component="div">
             {entry.name ?? "Course Name"}
           </Typography>
-          <Typography variant="body" component="div">
-            {entry.description ?? "Course Description"}
-          </Typography>
+          <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
+            <Typography variant="body" color="text.secondary" align="left"
+            sx={{
+              display: "flex",
+              marginTop: "4px",
+            }}>
+              {entry.description}
+            </Typography>
+          </Collapse>
+          <Button
+              variant="outlined"
+              onClick={() => setIsExpanded(!isExpanded)}
+            size="small"
+            sx={{
+              position: 'relative',
+              right: '-35%',
+              color: 'white',
+              marginTop: "1vh",
+            }}>
+            {isExpanded ? 'Collapse' : 'Read more'}
+          </Button>
           {/*<Typography variant="caption" component="div">*/}
           {/*  CompletionRate: {entry.completionRate ?? 0}*/}
           {/*</Typography>*/}

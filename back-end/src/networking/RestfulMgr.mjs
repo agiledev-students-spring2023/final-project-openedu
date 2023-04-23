@@ -3,15 +3,12 @@ import { cloneObject } from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
-import { Mongo } from "./db/MongoMgr.mjs";
-import {subjects} from "../util/MockData.mjs";
-import {faker} from "@faker-js/faker";
-import {restful} from "./NetworkCore.mjs";
+import { subjects } from "../util/MockData.mjs";
+import { faker } from "@faker-js/faker";
+import { restful } from "./NetworkCore.mjs";
 
 export async function initRestApis() {
-    const Subject = MongoMgr.getModel("subjects");
-
-    MockData.init();
+  MockData.init();
 
   restful.get("/test", async (req, res) => {
     const name = req.query["name"] ?? "human";
@@ -108,10 +105,13 @@ export async function initRestApis() {
       return;
     }
 
-        //Mask the course lists of subjects out since that should be queried separately via /subject/detail
-        const subjects = await Subject.find()
-        Util.onWebResponse(res, subjects);
+    //Mask the course lists of subjects out since that should be queried separately via /subject/detail
+    const subjects = MockData.subjects().map((element) => {
+      return cloneObject(element, "courses");
     });
+
+    Util.onWebResponse(res, subjects);
+  });
 
   restful.get("/subject/detail", async (req, res) => {
     if (!Util.isValidWebRequest(req.query, "token", "subjectId")) {

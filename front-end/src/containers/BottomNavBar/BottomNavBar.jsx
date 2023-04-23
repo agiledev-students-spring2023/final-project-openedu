@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 
 let visibilityListener;
+let pageChangeListener;
 
 export function BottomNavBar() {
 
@@ -38,7 +39,15 @@ export function BottomNavBar() {
       setVisibility(isVisible);
     };
 
+    pageChangeListener ??= (newPageIndex) => {
+        Logger.verbose(`Page Change triggered ${newPageIndex}`);
+
+        setPageIndex(newPageIndex);
+    };
+
     Util.addCallback("onNavBarShow", visibilityListener);
+    Util.addCallback("setNewPage", pageChangeListener);
+
 
   }, []);
 

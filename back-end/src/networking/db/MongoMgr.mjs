@@ -134,8 +134,6 @@ export async function getValidUser(token) {
     Logger.error(e);
     return undefined;
   }
-  //Unreachable code
-  //return undefined;
 }
 
 export async function grantToken(userId) {

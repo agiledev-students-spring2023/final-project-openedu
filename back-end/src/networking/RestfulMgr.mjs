@@ -16,14 +16,8 @@ export async function initRestApis() {
   });
 
   restful.get("/course/list", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
-      //Logger.info(`${req.params} does not have enough parameter!`);
-      Util.onWebMissingParam(req, res);
+    if (!Util.isValidWebRequest(req.query, "token")) {
+      Util.onWebMissingParam(req, req.query, res);
       return;
     }
     const courses = MockData.courses();
@@ -32,14 +26,8 @@ export async function initRestApis() {
   });
 
   restful.get("/course/recommend", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
-      //Logger.info(`${req.params} does not have enough parameter!`);
-      Util.onWebMissingParam(req, res);
+    if (!Util.isValidWebRequest(req.query, "token")) {
+      Util.onWebMissingParam(req, req.query, res);
       return;
     }
 
@@ -58,13 +46,7 @@ export async function initRestApis() {
   });
 
   restful.get("/course/recent", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
-      //Logger.info(`${req.params} does not have enough parameter!`);
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -84,13 +66,7 @@ export async function initRestApis() {
   });
 
   restful.get("/course/previous", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
-      //Logger.info(`${req.params} does not have enough parameter!`);
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -110,13 +86,7 @@ export async function initRestApis() {
   });
 
   restful.get("/course/detail", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token", "courseId")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
-      //Logger.info(`${req.params} does not have enough parameter!`);
+    if (!Util.isValidWebRequest(req.query, "token", "courseId")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -130,8 +100,7 @@ export async function initRestApis() {
   });
 
   restful.get("/subject/list", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
-      //Logger.info(`${req.params} does not have enough parameter!`);
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -145,13 +114,7 @@ export async function initRestApis() {
   });
 
   restful.get("/subject/detail", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token", "subjectId")) {
-      Logger.info(
-        `Request ${
-          req.path
-        } with params ${req.query.toLocaleString()} is invalid!`
-      );
-      //Logger.info(`${req.params} does not have enough parameter!`);
+    if (!Util.isValidWebRequest(req.query, "token", "subjectId")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -164,7 +127,7 @@ export async function initRestApis() {
   });
 
   restful.get("/post", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token", "postId")) {
+    if (!Util.isValidWebRequest(req.query, "token", "postId")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -205,7 +168,7 @@ export async function initRestApis() {
   });
 
   restful.get("/post/list", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -241,13 +204,20 @@ export async function initRestApis() {
 
   //this api currently responses with an image url
   restful.get("/background-image", async (req, res) => {
-    const { width, height } = req.query;
-    const image = `https://picsum.photos/${width}/${height}`;
+    if (!Util.isValidWebRequest(req.query, "width", "height")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    const image = `https://picsum.photos/${req.query["width"]}/${req.query["height"]}`;
+
+    Logger.info("Image URL: " + image);
+
     Util.onWebResponse(res, image);
   });
 
   restful.get("/profile/info", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -261,7 +231,7 @@ export async function initRestApis() {
   });
 
   restful.get("/subject/previous", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -270,7 +240,7 @@ export async function initRestApis() {
   });
 
   restful.get("/subject/recommend", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "token")) {
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -279,7 +249,7 @@ export async function initRestApis() {
   });
 
   restful.get("/login/info", async (req, res) => {
-    if (!Util.isValidGetRequest(req.query, "email")) {
+    if (!Util.isValidWebRequest(req.query, "email")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -293,7 +263,7 @@ export async function initRestApis() {
   });
 
   restful.post("/login/validate", async (req, res) => {
-    if (!Util.isValidPostRequest(req.body, "email", "pwd")) {
+    if (!Util.isValidWebRequest(req.body, "email", "pwd")) {
       Util.onWebMissingParam(req, res);
       return;
     }
@@ -322,7 +292,7 @@ export async function initRestApis() {
   });
 
   restful.get("/login/token/validate", async (req, res) => {
-    if (!Util.isValidPostRequest(req.query, "token")) {
+    if (!Util.isValidWebRequest(req.query, "token")) {
       Util.onWebMissingParam(req, res);
       return;
     }

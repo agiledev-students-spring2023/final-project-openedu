@@ -16,9 +16,10 @@ let userInput = "",
 
 function InputField(props) {
     const [input, setInput] = useState("");
+    const [fieldType, setFieldType] = useState("text");
 
     let onClearInput;
-
+    let onUpdateLoginFieldType;
     
     useEffect(() => {
 
@@ -27,7 +28,12 @@ function InputField(props) {
             userInput = "";
         };
 
+        onUpdateLoginFieldType ??= (newType) => {
+            setFieldType(newType);
+        };
+
         Util.addCallback("onClearLoginInput",onClearInput);
+        Util.addCallback("onUpdateLoginFieldType",onUpdateLoginFieldType);
 
     },[]);
 
@@ -41,6 +47,7 @@ function InputField(props) {
                 marginTop: '11%',
             }}>
                 <TextField
+                    type={fieldType}
                     label={props.label}
                     variant="filled"
                     value={input}
@@ -125,9 +132,11 @@ const LandingUi = () => {
 
             userEmail = userInput;
 
-            await Util.invokeCallback("onClearLoginInput");
+            Util.invokeCallback("onClearLoginInput");
+            Util.invokeCallback("onUpdateLoginFieldType","password");
             //If status = 1, then the user does not exist and we shall proceed to create a new account, otherwise enter password
             setLanding(res.data["status"] === 1 ? 2 : 1);
+
 
         }
         else {

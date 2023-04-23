@@ -78,7 +78,7 @@ export default function PostCard(props) {
                 {post.title}
               </StyledPostTitle>
               <StyledPostDate variant="caption">
-                {post.createTime.slice(0, 10)}
+                {post.createTime?.slice(0, 10)}
               </StyledPostDate>
             </Box>
           </Box>

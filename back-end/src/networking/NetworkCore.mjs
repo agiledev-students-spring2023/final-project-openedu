@@ -59,7 +59,7 @@ export function bind(port) {
 
 export async function startServer(port) {
     await initMiddleware();
-    await initRestApis();
     await MongoMgr.init();
+    await initRestApis();
     bind(port ?? 3000);
 }

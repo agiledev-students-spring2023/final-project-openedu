@@ -1,24 +1,19 @@
 import * as Mongo from "mongoose";
 export const Course = Mongo.Schema({
-    courseId: { type: Number, required: true, min: 1 },
-    instructors: [String],
-    name: { type: String, required: true, maxlength: 255 },
-    instructor1: { type: String, maxlength: 255 },
-    instructor2: { type: String, maxlength: 255 },
-    instructor3: { type: String, maxlength: 255 },
-    description: { type: String, maxlength: 1024 },
-    university: String,
-    difficulty: { type: Number, min: 0, max: 5 },
-    language: String,
-    url: String,
-    imageUrl: String,
-    prerequisites: [String],
-    //completionRate: {type: Number, min: 0, max: 100},
-    courseHours: Number,
-    subjectId: { type: Number, required: true, min: 1 }
+  courseId: Number,
+  instructors: [String],
+  name: String,
+  description: String,
+  university: String,
+  difficulty: { type: Number, min: 0, max: 5 },
+  language: String,
+  url: String,
+  imageUrl: String,
+  prerequisites: [String],
+  //completionRate: {type: Number, min: 0, max: 100},
+  courseHours: Number,
+  subjectId: Number,
 });
-
-
 
 export const User = Mongo.Schema({
   userId: Number,
@@ -37,12 +32,11 @@ export const Token = Mongo.Schema({
 });
 
 export const Subject = Mongo.Schema({
-    subjectId: { type: Number, required: true, min: 1 },
-    name: { type: String, required: true, maxlength: 255 },
-    description: { type: String, required: true, maxlength: 1024 },
-    wikiUrl: { type: String, maxlength: 255 },
-    imageUrl: String,
-    //completionRate: {type: Number, min: 0, max: 100},
+  subjectId: Number,
+  name: String,
+  description: String,
+  imageUrl: String,
+  //completionRate: {type: Number, min: 0, max: 100},
 });
 
 export const Comment = Mongo.Schema({
@@ -67,6 +61,3 @@ export const Post = Mongo.Schema({
   likes: Number,
   createTime: String,
 });
-
-
-

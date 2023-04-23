@@ -197,7 +197,7 @@ export async function initRestApis() {
     const overview = content.length > 50 ? content.substring(0, 50) : content;
 
     try {
-      const post = MongoMgr.createPost(userId, title, content, overview);
+      const post = await MongoMgr.createPost(userId, title, content, overview);
       Util.onWebResponse(res, post);
     } catch (err) {
       Util.onWebResponse(res, err, false);
@@ -213,7 +213,8 @@ export async function initRestApis() {
     const userId = req.query["userId"] ?? 0;
 
     try {
-      const posts = MongoMgr.getPosts(userId);
+      const posts = await MongoMgr.getPosts(userId);
+      console.log(posts);
       Util.onWebResponse(res, posts);
     } catch (err) {
       Util.onWebResponse(res, err, false);

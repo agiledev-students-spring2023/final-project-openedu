@@ -23,7 +23,7 @@ const StyledCard = styled(Card)({
 
 const StyledPostTitle = styled(Typography)({
   display: "flex",
-  fontWeight: "bold"
+  fontWeight: "bold",
 });
 
 const StyledPostDate = styled(Typography)({
@@ -74,12 +74,13 @@ export default function PostCard(props) {
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <StyledPostTitle variant="h6" align="left">{post.title}</StyledPostTitle>
+              <StyledPostTitle variant="h6" align="left">
+                {post.title}
+              </StyledPostTitle>
               <StyledPostDate variant="caption">
-                {post.date.slice(0, 10)}
+                {post.createTime.slice(0, 10)}
               </StyledPostDate>
             </Box>
-
           </Box>
           <Divider
             color="#D9D9D9"
@@ -123,7 +124,7 @@ export default function PostCard(props) {
             Read
           </Button>
 
-          <Box sx={{ display: "flex", flexDirection: 'space-evenly' }}>
+          <Box sx={{ display: "flex", flexDirection: "space-evenly" }}>
             <StyledLikesContainer>
               <IconButton size="small">
                 <StyledLikeIcon />

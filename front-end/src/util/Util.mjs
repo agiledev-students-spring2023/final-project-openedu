@@ -281,34 +281,18 @@ export function asChildPage(component) {
     </div>;
 }
 
-export function getKey(){
-//serialize localStorage to JSON --> 拿key
-
-}
-
-export function setKey (key, value) {
-//serialize localStorage to JSON  (x) --> add new key-value to x --> de-serialize x to string and replace localStorage content
-
-    //get OBJ from localStorage
-    const authToken = localStorage.getItem('authToken');
-    let serializedAuthToken;
-    if (authToken !== null) {
-        serializedAuthToken = JSON.parse(authToken);
-        console.log(serializedAuthToken);
-    } else {
-        console.log('No value found in localStorage for key "myKey"');
+export async function readLocalValue(key){
+    if(localStorage.getItem(key) === undefined) {
+        Logger.error(`LocalStorage key "${key}" not present!`);
     }
 
-    //add token
-    const userTokenDetails = { userID: 'value1', token: 'value2',createTime: 'value3', isValid: 'value4' };
-    const token = userTokenDetails.token;
-    serializedAuthToken.push(token);
-    console.log(serializedAuthToken);
+    return localStorage.getItem(key);
+}
 
-    //stringfy OBJ
-    const updatedAuthToken = JSON.stringify(serializedAuthToken);
+export async function writeLocalValue(key,value) {
+    if(key === undefined || key === null || key === "")
+        return;
 
-    //set OBJ into localStorage
-    localStorage.setItem('authToken', updatedAuthToken);
+    localStorage.setItem(key,value);
 
 }

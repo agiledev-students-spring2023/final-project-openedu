@@ -31,6 +31,9 @@ export default function EditProfile(props) {
                 setAvatarImg(userInfo["avatar"]);
             })
             .catch((error) => Logger.error(error));
+
+
+
     }, []);
 
   const handleCleanUsername = (e) => {

@@ -31,7 +31,6 @@ export default function RecentlyUsedAvatars() {
     }, []);
 
 
-
   const handleSaveChanges = () => {
     console.log("RecentlyUsedAvatars/handleSaveChanges Mocked");
     navigate(-1);

@@ -28,19 +28,16 @@ function CourseTypeToggleButton({ value, onChange }) {
                 alignItems: "center",
             }}
         >
-            <ToggleButton
-                value="Recent"
-            >
+            <ToggleButton value="Recent">
                 <HistoryIcon sx={{ mr: 0.5 }}/>
                 Recent
             </ToggleButton>
 
-            <ToggleButton
-                value="Suggestion"
-            >
+            <ToggleButton value="Suggestion">
                 <RecommendIcon sx={{ mr: 0.5 }}/>
                 Suggesstion
             </ToggleButton>
+
         </ToggleButtonGroup>
     );
 }
@@ -93,8 +90,6 @@ export function Home(props) {
     const [profile, setProfile] = useState(undefined);
     const [isLoaded, setLoaded] = useState(false);
 
-    console.log(data);
-
     //this is for the toggle button, handle the source of the course slides
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
@@ -105,14 +100,13 @@ export function Home(props) {
         if (alignment === "Recent") {
             navigate("/subjects/recent");
 
-            console.log("recent clicked");
+            //console.log("recent clicked");
 
         } else if (alignment === "Suggestion") {
             navigate("/subjects/suggest");
 
             //Todo: need to fix the link to subject suggestion page
-
-            console.log("suggestion clicked");
+            //console.log("suggestion clicked");
 
         }
     };
@@ -132,7 +126,7 @@ export function Home(props) {
 
             // get course slide data about recent course
 
-            console.log("fetching course information");
+            Logger.info("fetching course information");
             axios
                 .get(
                     Util.getServerAddr() +
@@ -201,7 +195,11 @@ export function Home(props) {
     return (
         <Box>
             <BackgroundImage />
+
+
+
             <Box>
+
                 <Box
                     className="welcome_line"
                     sx={{
@@ -209,11 +207,11 @@ export function Home(props) {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         width: 1,
-                        alignItems: "center",
                         marginTop: "15vh",
                         marginBottom: "10vh",
                     }}
                 >
+
                     <Box
                         sx={{
                             display: "flex",
@@ -224,19 +222,21 @@ export function Home(props) {
                         <Typography
                             variant="h5"
                             sx={{
-                                fontFamily: "Raleway",
                                 display: "flex",
-                                fontSize: "40px",
+                                fontSize: "28px",
                             }}
                         >
-                            Welcome
+                            Welcome,
                         </Typography>
+
+
                         <Typography
                             variant="h3"
                             sx={{
                                 fontWeight: "900",
                                 display: "flex",
-                                fontSize: "35px",
+                                fontSize: "36px",
+                                align: 'left'
                             }}
                         >
                             {(profile ?? {})["name"] ?? "UserName"}
@@ -245,7 +245,8 @@ export function Home(props) {
 
                     {/*profile edit button*/}
                     <Button
-                        onClick={() => {
+                        onClick={async () => {
+                            Util.invokeCallback("setNewPage", 2).then(_ => true);
                             navigate("/profile/edit");
                         }}
                     >
@@ -257,9 +258,12 @@ export function Home(props) {
                             }}
                         />
                     </Button>
+
                 </Box>
             </Box>
 
+
+            {/*Tabs*/}
             <Box
                 className="tabs"
                 sx={{

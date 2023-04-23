@@ -71,11 +71,11 @@ export function onWebResponse(res, content, isGood, statusCode) {
   return res;
 }
 export function onWebMissingParam(req, res) {
-  Logger.info(
-    `Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`
-  );
+  // Logger.info(
+  //   `Request ${req.path} with params ${req.query.toLocaleString()} is invalid!`
+  // );
 
-    Logger.info(`Request ${req.path} with params ${(req.query??req.body).toLocaleString()} is invalid!`);
+    Logger.info(`Request ${req.path} with params ${JSON.stringify( req.method === "POST" ? req.body : req.query)} is invalid!`);
 
     return onWebResponse(res, {msg : "missing_param"}, false, 422); //HTTP 422: Unprocessable Entity
 }
@@ -84,10 +84,6 @@ export function isPerfectArray(...arr) {
   return (
     arr.filter((entry) => entry === undefined || entry === null).length === 0
   );
-}
-
-export function isValidPostRequest(obj, ...keys) {
-  return isPerfectArray(keys.map((e) => obj[e]));
 }
 
 export function cloneObject(obj, ...excludeProps) {
@@ -112,7 +108,7 @@ export function trimMongoDocument(document, ...excludeProps) {
 }
 
 
-export function isValidGetRequest(queryObject, ...requiredParams) {
+export function isValidWebRequest(queryObject, ...requiredParams) {
   if (queryObject === null) return false;
 
   for (const param of requiredParams) {

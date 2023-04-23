@@ -12,7 +12,7 @@ import { BackButton } from "../../containers/BackButton/BackButton";
 
 export function SubjectDetail() {
   const [subject, setSubject] = useState(null);
-  const [courses, setCourses] = useState([])
+  const [courses, setCourses] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
   const { subjectId } = useParams();

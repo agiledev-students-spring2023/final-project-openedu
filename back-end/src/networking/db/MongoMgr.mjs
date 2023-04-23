@@ -11,7 +11,6 @@ import {trimMongoDocument} from "../../util/Util.mjs";
 const modelMap = new Map();
 
 export const registerModels = () => {
-
     const modelList = {
         "courses": Models.Course,
         "subjects": Models.Subject,

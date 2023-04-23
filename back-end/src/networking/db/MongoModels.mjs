@@ -1,19 +1,24 @@
 import * as Mongo from "mongoose";
 export const Course = Mongo.Schema({
-    courseId: Number,
+    courseId: { type: Number, required: true, min: 1 },
     instructors: [String],
-    name: String,
-    description: String,
+    name: { type: String, required: true, maxlength: 255 },
+    instructor1: { type: String, maxlength: 255 },
+    instructor2: { type: String, maxlength: 255 },
+    instructor3: { type: String, maxlength: 255 },
+    description: { type: String, maxlength: 1024 },
     university: String,
-    difficulty: {type: Number, min: 0, max: 5},
+    difficulty: { type: Number, min: 0, max: 5 },
     language: String,
     url: String,
     imageUrl: String,
     prerequisites: [String],
     //completionRate: {type: Number, min: 0, max: 100},
     courseHours: Number,
-    subjectId: Number
+    subjectId: { type: Number, required: true, min: 1 }
 });
+
+
 
 export const User = Mongo.Schema({
     userId: Number,
@@ -32,9 +37,10 @@ export const Token = Mongo.Schema({
 });
 
 export const Subject = Mongo.Schema({
-    subjectId: Number,
-    name: String,
-    description: String,
+    subjectId: { type: Number, required: true, min: 1 },
+    name: { type: String, required: true, maxlength: 255 },
+    description: { type: String, required: true, maxlength: 1024 },
+    wikiUrl: { type: String, maxlength: 255 },
     imageUrl: String,
     //completionRate: {type: Number, min: 0, max: 100},
 });
@@ -51,3 +57,6 @@ export const Counter = new Mongo.Schema({
     key: String,
     count: Number
 });
+
+
+

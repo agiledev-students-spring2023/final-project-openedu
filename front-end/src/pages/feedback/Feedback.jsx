@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
+//feedback page
 export default function Suggestion() {
   const navigate = useNavigate();
   const [composeMode, setComposeMode] = useState(false);
@@ -38,7 +38,8 @@ export default function Suggestion() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  
+  //feedback form
   return (
     <Box>
       <Box sx={{

@@ -47,7 +47,7 @@ export default function PlayScreen() {
   const [isLoaded, setLoaded] = useState(false);
   const [isInit, setIsInit] = useState(true);
   const [vid, setVid] = useState(true);
-  const [videoId, setVideoId] = useState('CWglkNBUmD4')
+  const [videoId, setVideoId] = useState('CWglkNBUmD4');
   const [index, setIndex] = useState(0);
   const { courseId } = useParams();
 
@@ -66,8 +66,8 @@ export default function PlayScreen() {
     }).then(res => {
       // localStorage.setItem("course", JSON.stringify(res.data.course));
       const lecturesArr = res.data.content.map((lecture) => {
-        return lecture.snippet
-      })
+        return lecture.snippet;
+      });
       setLectures(lecturesArr);
     });
   }, []);

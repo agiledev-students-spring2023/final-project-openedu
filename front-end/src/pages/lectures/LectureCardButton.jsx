@@ -7,7 +7,7 @@ export default function ClassCardButtonGrid(props) {
         title: "Casting in C++",
         thumbnails: { maxres: { url: "https://i.ytimg.com/vi/1E_kBSka_ec/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDeCwHu9bvvBldHxXZbzNEkMxfCVQ" } },
         courseId: "12", lecNum: "12"
-    }
+    };
 
     const { title, thumbnails, resourceId, setVideoId, setIndex,index } =
         props.title ? props : fakeLecture;

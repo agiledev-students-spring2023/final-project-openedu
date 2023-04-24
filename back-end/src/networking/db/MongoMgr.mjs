@@ -179,3 +179,28 @@ export async function createPost(userId, title, content, overview) {
 
     return trimMongoDocument(doc);
 }
+
+export async function getFeeds(userId) {
+  return await getModel("feedback")
+    .find({ userId: userId })
+    .sort({ createTime: -1 });
+}
+
+export async function getOneFeed(userId, feedId) {
+    return await getModel("feedback").findOne({userId: userId, feedId: feedId});
+}
+
+export async function createFeed(userId, title, content, overview) {
+  const doc = new getModel("feedback")({
+    feedId: await AtomicCounter.getIncrementCount("feed_id"),
+    userId: userId,
+    title: title,
+    content: content,
+    overview: overview,
+    createTime: FmtTime.getCurrentTimeString(),
+  });
+
+    doc.save();
+
+    return trimMongoDocument(doc);
+}

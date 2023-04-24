@@ -74,4 +74,7 @@ export const Feedback = Mongo.Schema({
     content: String,
     overview: String,
     createTime: String,
+
+    //in feedback, there is no likes 
+    //or other reactions to content
 });

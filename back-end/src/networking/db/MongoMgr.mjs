@@ -180,6 +180,10 @@ export async function createPost(userId, title, content, overview) {
     return trimMongoDocument(doc);
 }
 
+
+//use feedID
+//for every feedback
+//there is a feedID
 export async function getFeeds(userId) {
   return await getModel("feedback")
     .find({ userId: userId })

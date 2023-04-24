@@ -66,3 +66,12 @@ export const Post = Mongo.Schema({
     likes: Number,
     createTime: String,
 });
+
+export const Feedback = Mongo.Schema({
+    feedId: Number,
+    userId: Number,
+    title: String,
+    content: String,
+    overview: String,
+    createTime: String,
+});

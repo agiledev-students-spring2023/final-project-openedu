@@ -19,6 +19,7 @@ export const registerModels = () => {
     tokens: Models.Token,
     counters: Models.Counter,
     posts: Models.Post,
+    feedbacks: Models.Feedback,
   };
 
   for (const collection in modelList) {
@@ -178,6 +179,27 @@ export async function createPost(userId, title, content, overview) {
     likes: 0,
     createTime: FmtTime.getCurrentTimeString(),
   });
+}
+
+  export async function getFeed(userId) {
+    return await getModel("feedback")
+      .find({ userId: userId })
+      .sort({ createTime: -1 });
+  }
+  
+  export async function getOneFeed(userId, postId) {
+    return await getFeed("posts").findOne({ userId: userId, postId: postId });
+  }
+  
+  export async function createFeed(userId, title, content, overview) {
+    const doc = new getFeed("posts")({
+      postId: await AtomicCounter.getIncrementCount("post_id"),
+      userId: userId,
+      title: title,
+      content: content,
+      overview: overview,
+      createTime: FmtTime.getCurrentTimeString(),
+    });
 
   doc.save();
 

@@ -132,6 +132,7 @@ function courseApis() {
             const ret = trimMongoDocument(await MongoMgr.getModel("courses").findOne({
                 courseId: req.query["courseId"]
             }));
+
             const courseImage = await ThirdParty.GetPlayListPic(ret["youtubeUrl"]);
             ret.imageUrl = courseImage[0];
             if (ret === null)

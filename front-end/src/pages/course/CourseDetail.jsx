@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Card, Paper, Typography, Button, Divider, Rating } from "@mui/material";
+import {Box, Card, Paper, Typography, Button, Divider, Rating, CardMedia} from "@mui/material";
 import { Favorite, PlayArrowRounded } from "@mui/icons-material";
 import { CommentCard } from "./CommentCard";
 import * as Constants from "../../util/Constants.mjs";
@@ -15,25 +15,21 @@ import Loading from "../../containers/Loading/Loading";
 const Main = (props) => {
   const navigate = useNavigate();
   const { course } = props;
-  const [imageUrl, setImageUrl] = useState(null);
   return (
     <Box>
       <Box
         className="prompt"
         sx={{
         }}>
-        <Paper
-          variant='outlined'
-          sx={{
-            width: 1,
-            height: '200px',
-            backgroundColor: '#F5F5F5',
-            borderRadius: '20px',
-            barder: '1px solid #E0E0E0',
-            backgroundImage: `url(${course.imageUrl})`,
-          }}
-        >
-        </Paper>
+          <CardMedia
+              sx={{
+                  borderRadius: Constants.UI_HORIZ_OFFSET,
+              }}
+              component="img"
+              height="200"
+              image={course.imageUrl ?? "Course Image"}
+              alt={course.name}
+          />
 
         <Box className="prompt-texts"
           sx={{
@@ -191,7 +187,7 @@ export const CourseDetail = () => {
     <>
       <BackButton />
       {isLoaded ? (<>
-        <Main course={course} />
+        <Main course={course}/>
       </>) : <Loading />}
     </>
   );

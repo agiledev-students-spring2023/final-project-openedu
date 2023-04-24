@@ -3,6 +3,7 @@ import {Box, TextField, Button} from "@mui/material";
 import {Add, Remove} from "@mui/icons-material";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
+import * as Logger from "../../util/Logger.mjs";
 
 export default function ComposePost(props) {
     const {setComposeMode, setRefresh} = props;
@@ -13,9 +14,16 @@ export default function ComposePost(props) {
         console.log("submit");
         event.preventDefault();
         axios
-            .post(Util.getServerAddr() + "/post", {token: "12345", title, content})
-            .then((response) => console.log(response))
+            .post(Util.getServerAddr() + "/post/add", {
+
+                token: Util.readLocalValue("token") ?? 12345,
+                title: title,
+                content : content
+            })
+            .then((response) => Logger.info(response))
             .catch((error) => console.error(error));
+
+
         setTitle("");
         setContent("");
         setRefresh(true);

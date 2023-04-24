@@ -35,7 +35,6 @@ export default function UserProfile() {
                 params: { token: Util.readLocalValue("token")??12345, width: "200", height: "200",mock : "false"},
             })
             .then((response) => {
-
                 setUserInfo(response.data["content"]);
             })
             .catch((error) => Logger.error(error));
@@ -94,7 +93,7 @@ export default function UserProfile() {
             >
                 <StyledAvater
                     size="72px"
-                    alt="Hooao"
+                    alt="avatar_img"
                     src={imageUrl}
                     sx={{
                         display: "flex",
@@ -125,6 +124,24 @@ export default function UserProfile() {
                     <Create sx={{ marginRight: "10px" }} />
                     Edit Profile{" "}
                 </Button>
+
+                {/*Feedback Button*/}
+                {/*<Button*/}
+                {/*  variant="contained"*/}
+                {/*  sx={{*/}
+                {/*    width: "100%",*/}
+                {/*      display: !composeMode ? 'flex' : 'none',*/}
+                {/*    marginTop: "1vh",*/}
+                {/*      backgroundColor: "#80808025"*/}
+                {/*  }}*/}
+                {/*  onClick={() => {*/}
+                {/*    navigate("/profile/feedback");*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  <FeedIcon sx={{ marginRight: "10px" }} />*/}
+                {/*  Feedback{" "}*/}
+                {/*</Button>*/}
+
             </Box>
 
             <PostSection

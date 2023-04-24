@@ -1,7 +1,7 @@
 // noinspection ExceptionCaughtLocallyJS
 
 import * as Util from "../util/Util.mjs";
-import { trimMongoDocument } from "../util/Util.mjs";
+import {cloneObject, trimMongoDocument} from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
@@ -275,21 +275,26 @@ export async function initRestApis() {
 
     courseApis();
 
-    restful.post("/post", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token", "title", "content")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        const userId = req.body["userId"] ?? 0;
-        const title = req.body["title"] ?? "(no title)";
-        const content = req.body["content"] ?? "(no content)";
-
-        const overview = content.length > 50 ? content.substring(0, 50) : content;
-
+    restful.post("/post/add", async (req, res) => {
         try {
-            const post = await MongoMgr.createPost(userId, title, content, overview);
-            Util.onWebResponse(res, post);
+
+            const user = await MongoMgr.getValidUser(req.body["token"]);
+
+            //Validate token
+            if (user === undefined) {
+                throw new Error("token_invalid");
+            }
+
+            const params = cloneObject(req.body,"token");
+
+            Logger.info("UserId: " + user.userId);
+
+            //params["userId"] = user.userId;
+            const content = params["content"]??"";
+            params["overview"] = content.length > 50 ? content.substring(0,50) + "..." : content;
+
+            Util.onWebResponse(res, trimMongoDocument(await MongoMgr.createPost(user.userId, params)));
+
         } catch (err) {
             Logger.error(err);
             Util.onWebResponse(res, err.message, false);
@@ -306,13 +311,14 @@ export async function initRestApis() {
 
         try {
 
+            const user = await MongoMgr.getValidUser(req.query["token"]);
             //Validate token
-            if (!await MongoMgr.isTokenValid(req.query["token"])) {
+            if (user === undefined) {
                 throw new Error("token_invalid");
             }
 
             //TODO: Make the userId variant as soon as possible
-            const posts = (await MongoMgr.getPosts(0)).map(entry => trimMongoDocument(entry));
+            const posts = (await MongoMgr.getPosts(user.userId)).map(entry => trimMongoDocument(entry));
 
             //Logger.info(JSON.stringify(posts));
             Util.onWebResponse(res, posts);
@@ -323,22 +329,55 @@ export async function initRestApis() {
         }
     });
 
+    restful.get("/post/detail", async (req, res) => {
+        if (!Util.isValidWebRequest(req, "token","postId")) {
+            Util.onWebMissingParam(req, res);
+            return;
+        }
 
-    restful.post("/feedback", async (req, res) => {
+        try {
+
+            const user = await MongoMgr.getValidUser(req.query["token"]);
+            //Validate token
+            if (user === undefined) {
+                throw new Error("token_invalid");
+            }
+
+            //TODO: Make the userId variant as soon as possible
+            const post = await MongoMgr.getOnePost(req.query["postId"]);
+
+            //Logger.info(JSON.stringify(posts));
+            Util.onWebResponse(res, post);
+        } catch (err) {
+
+            Logger.error(err);
+            Util.onWebResponse(res, err.message, false);
+        }
+    });
+
+
+    restful.post("/feedback/add", async (req, res) => {
         if (!Util.isValidWebRequest(req, "token", "title", "content")) {
             Util.onWebMissingParam(req, res);
             return;
         }
 
-        const userId = req.body["userId"] ?? 0;
-        const title = req.body["title"] ?? "(no title)";
-        const content = req.body["content"] ?? "(no content)";
-
-        const overview = content.length > 50 ? content.substring(0, 50) : content;
-
         try {
-            const post = await MongoMgr.createFeed(userId, title, content, overview);
-            Util.onWebResponse(res, post);
+
+            const user = await MongoMgr.getValidUser(req.body["token"]);
+
+            //Validate token
+            if (user === null) {
+                throw new Error("token_invalid");
+            }
+
+            const params = cloneObject(req.body,"token");
+
+            const content = params["content"]??"";
+            params["overview"] = content.length > 50 ? content.substring(0,50) + "..." : content;
+
+            Util.onWebResponse(res, await MongoMgr.createFeed(user.userId, params));
+
         } catch (err) {
             Logger.error(err);
             Util.onWebResponse(res, err.message, false);
@@ -359,7 +398,7 @@ export async function initRestApis() {
             }
 
             //TODO: Make the userId variant as soon as possible
-            let feedback = await MongoMgr.getPosts(0);
+            let feedback = await MongoMgr.getFeeds(0);
 
             feedback = feedback.map(entry => trimMongoDocument(entry));
 

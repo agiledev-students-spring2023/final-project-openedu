@@ -18,7 +18,7 @@ export const registerModels = () => {
         comments: Models.Comment,
         counters: Models.Counter,
         posts: Models.Post,
-        feedback: Models.Feedback,
+        feedbacks: Models.Feedback,
     };
 
     for (const collection in modelList) {
@@ -179,52 +179,41 @@ export async function getPosts(userId) {
 
 }
 
-export async function getOnePost(userId, postId) {
+export async function getOnePost(postId) {
+
     return trimMongoDocument(
-        await getModel("posts").findOne({
-            userId: userId, postId: postId
-        })
+        await getModel("posts").findOne({"postId": postId})
     );
 }
 
-export async function createPost(userId, title, content, overview) {
+export async function createPost(userId, params) {
 
-    const doc = new getModel("posts")({
-        postId: await AtomicCounter.getIncrementCount("post_id"),
-        userId: userId,
-        title: title,
-        content: content,
-        overview: overview,
-        likes: 0,
-        createTime: FmtTime.getCurrentTimeString(),
-    });
+    params["postId"] = await AtomicCounter.getIncrementCount("post_id");
+    params["userId"] = userId;
+    params["createTime"] = FmtTime.getCurrentTimeString();
 
-    await doc.save();
+    Logger.info(JSON.stringify(params));
 
-    return trimMongoDocument(doc);
+    return await (new getModel("posts")(params)).save();
 }
 
 export async function getFeeds(userId) {
-    return await getModel("feedback")
+    return await getModel("feedbacks")
         .find({userId: userId})
         .sort({createTime: -1});
 }
 
 export async function getOneFeed(userId, feedId) {
-    return await getModel("feedback").findOne({userId: userId, feedId: feedId});
+    return await getModel("feedbacks").findOne({userId: userId, feedId: feedId});
 }
 
-export async function createFeed(userId, title, content, overview) {
-    const doc = new getModel("feedback")({
-        feedId: await AtomicCounter.getIncrementCount("feed_id"),
-        userId: userId,
-        title: title,
-        content: content,
-        overview: overview,
-        createTime: FmtTime.getCurrentTimeString(),
-    });
+export async function createFeed(userId,params) {
 
-    await doc.save();
+    params["feedId"] = await AtomicCounter.getIncrementCount("feed_id");
+    params["userId"] = userId;
+    params["createTime"] = FmtTime.getCurrentTimeString();
 
-    return trimMongoDocument(doc);
+    Logger.info(JSON.stringify(params));
+
+    return await (new getModel("feedbacks")(params)).save();
 }

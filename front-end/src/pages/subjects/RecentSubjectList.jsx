@@ -9,7 +9,7 @@ import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
 
 export function RecentSubjectList() {
-  const url = Util.getServerAddr() + "/subject/previous?token=1234";
+  const url = Util.getServerAddr() + "/subject/recent";
   //const url = Mockaroo.mockDataApi("subjects"); //Add API URL
 
   const [data, setData] = useState([]);
@@ -18,7 +18,12 @@ export function RecentSubjectList() {
   useEffect(() => {
     console.log("fetching subject information");
     axios
-      .get(url)
+      .get(url,{
+          params: {
+              token: Util.readLocalValue("token") ?? 12345,
+              mock: "false"
+          }
+      })
       .then((response) => {
         Logger.info(
           `SubjectList's axios got the following data: \n ${response.data}`

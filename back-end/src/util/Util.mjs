@@ -107,6 +107,9 @@ export function trimMongoDocument(document, ...excludeProps) {
     );
 }
 
+export function isMockApi(queryObject) {
+    return ((queryObject??{})["mock"]??"true") === "true";
+}
 
 export function isValidWebRequest(queryObject, ...requiredParams) {
   if (queryObject === null) return false;

@@ -13,6 +13,8 @@ import * as Util from "../../util/Util.mjs";
 import Loading from "../../containers/Loading/Loading.jsx";
 
 function FoldableButtonList(props) {
+
+
   const { lectures, setVideoId, setIndex } = props;
 
 
@@ -58,12 +60,17 @@ export default function PlayScreen() {
   }
     , [lectures]);
 
+
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: Util.getServerAddr() +
-        `/course/play?token=1234&courseId=${courseId ?? 0}`,
-    }).then(res => {
+
+      axios.get(Util.getServerAddr() + "/course/play",
+        {
+            params: {
+                //token: Util.readLocalValue("token") ?? 12345,
+                courseId: courseId,
+                mock: "false"
+            }
+        }).then(res => {
       // localStorage.setItem("course", JSON.stringify(res.data.course));
       const lecturesArr = res.data.content.map((lecture) => {
         return lecture.snippet;

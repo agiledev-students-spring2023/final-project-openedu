@@ -9,17 +9,19 @@ import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
 
 export function SubjectList() {
-  const url = Util.getServerAddr() + "/subject/list?token=1234";
+  const url = Util.getServerAddr() + "/subject/list";
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
-  const subjectId = useParams();
-
   useEffect(() => {
     console.log("fetching subject information");
     axios
-      .get(url)
+      .get(url,{
+          params : {
+              mock: "false"
+          }
+      })
       .then((response) => {
         Logger.info(
           `SubjectList's axios got the following data: \n ${response.data}`

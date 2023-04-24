@@ -19,7 +19,7 @@ export default function UserProfile() {
   useEffect(() => {
     axios
       .get(Util.getServerAddr() + "/background-image", {
-        params: { token: "1234", width: "200", height: "200" },
+        params: { token: Util.readLocalValue("token") ?? 12345, width: "200", height: "200" },
       })
       .then((response) => {
         setImageUrl(response.data["content"]);
@@ -106,21 +106,21 @@ export default function UserProfile() {
           Edit Profile{" "}
         </Button>
 
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            display: "flex",
-            marginTop: "1vh",
-            color: "text.secondary",
-          }}
-          onClick={() => {
-            navigate("/profile/feedback");
-          }}
-        >
-          <FeedIcon sx={{ marginRight: "10px" }} />
-          Feedback{" "}
-        </Button>
+        {/*<Button*/}
+        {/*  variant="contained"*/}
+        {/*  sx={{*/}
+        {/*    width: "100%",*/}
+        {/*    display: "flex",*/}
+        {/*    marginTop: "1vh",*/}
+        {/*    color: "text.secondary",*/}
+        {/*  }}*/}
+        {/*  onClick={() => {*/}
+        {/*    navigate("/profile/feedback");*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <FeedIcon sx={{ marginRight: "10px" }} />*/}
+        {/*  Feedback{" "}*/}
+        {/*</Button>*/}
       </Box>
 
       <PostSection
@@ -147,26 +147,28 @@ function PostSection({ composeMode, refresh, setRefresh }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (refresh || posts === null || posts.length === 0) {
-      axios
-        .get(Util.getServerAddr() + `/post/list?token=123`)
-        .then((response) => {
-          if (Array.isArray(response.data["content"])) {
-            setPosts(response.data["content"]);
-          } else {
-            console.error(
-              "Response data is not an array:",
-              response.data["content"]
-            );
-            console.error(
-              "Response data is of type",
-              typeof response.data["content"]
-            );
+    axios
+      .get(Util.getServerAddr() + `/post/list`,{
+          params: {
+              token: Util.readLocalValue("token") ?? 12345,
+              mock: "false"
           }
-        })
-        .catch((error) => console.error(error));
-      setRefresh(false);
-    }
+      })
+      .then((response) => {
+        if (Array.isArray(response.data["content"])) {
+          setPosts(response.data["content"]);
+        } else {
+          console.error(
+            "Response data is not an array:",
+            response.data["content"]
+          );
+          console.error(
+            "Response data is of type",
+            typeof response.data["content"]
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   return (

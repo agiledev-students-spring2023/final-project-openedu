@@ -98,7 +98,8 @@ const Main = (props) => {
 const InfoSec = (props) => {
   const { instructor1, instructor2, instructor3,
     description, courseHours, prerequisites, difficulty, language } = props.course;
-  return (
+  console.log(props.course);
+    return (
     <Box>
       <Box sx={{
         marginTop: '2vh',
@@ -125,7 +126,7 @@ const InfoSec = (props) => {
         <Typography sx={{}}>
           Prerequisites:
         </Typography >
-        <Typography sx={{ marginLeft: '15%',textAlign:'left' }}>{prerequisites}</Typography>
+        <Typography sx={{ marginLeft: '15%' }}>{prerequisites}</Typography>
 
         <Typography sx={{}}>
           Languages:
@@ -138,12 +139,11 @@ const InfoSec = (props) => {
         <Typography sx={{ marginLeft: '15%' }}>{courseHours}</Typography>
       </Box>
       <Box sx={{ marginTop: '20px' }}>
-        <Typography sx={{ fontWeight: 'bold', float: 'left', clear: 'both', fontSize: '20px', textAlign:'left' }}>Introduction:</Typography>
+        <Typography sx={{ fontWeight: 'bold', float: 'left', clear: 'both', fontSize: '20px' }}>Introduction:</Typography>
         <Typography sx={{
           maxHeight: { lg: '120px', sm: '100px', xs: '50px' },
           overflow: 'scroll',
-          clear: 'both',
-          textAlign:'left'
+          clear: 'both'
         }}>
           {description}
         </Typography>
@@ -160,68 +160,25 @@ export const CourseDetail = () => {
   const [comments, setComments] = useState(undefined);
   const [course, setCourse] = useState({});
   const [isLoaded, setLoaded] = useState(false);
-  const baseURL = Util.getServerAddr();
-  const { courseId } = useParams(0);
-
-  Logger.verbose(CourseDetail.name + " Loaded!");
-  Logger.verbose("URL: " + baseURL + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
+  const { courseId } = useParams();
 
   useEffect(() => {
-    axios
-      .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
-      .then((response) => {
 
-        Logger.info(
-          `CourseDetail's axios got the following data: \n ${response.data["content"]}`
-        );
+      axios.get(
+        Util.getServerAddr() + "/course/detail",
+        {
+            params: {
+                courseId : courseId,
+                mock: "false"
+            }
+        }
+    ).then(res => {
 
-        setCourse(response.data["content"]);
-        console.log(response.data["content"]);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        Logger.error("error fetching subject information");
-        Logger.error(err);
-
-        //const backupData =
-        setCourse([
-          {
-            courseId: 3,
-            name: "backup_course",
-            description: "backupDescription",
-          },
-        ]);
-
-        setLoaded(true);
-        //setData((backupData??[])[0])
-      });
-
-    // setComments([
-    //   {
-    //     userId: 0,
-    //     userName: "abc",
-    //     msg: "haha",
-    //   },
-    //   {
-    //     userId: 1,
-    //     userName: "abcd",
-    //     msg: "hahahahaha",
-    //   },
-    // ]);
-
+      // localStorage.setItem("course", JSON.stringify(res.data.course));
+      setCourse(res.data.content);
+      setLoaded(true);
+    });
   }, []);
-
-  // useEffect(() => {
-  //   axios({
-  //     method: 'GET',
-  //     url: Util.getServerAddr() +
-  //       `/course/detail?token=1234&courseId=${courseId ?? 0}`,
-  //   }).then(res => {
-  //     // localStorage.setItem("course", JSON.stringify(res.data.course));
-  //     setCourse(res.data.content);
-  //     setLoaded(true);
-  //   });
-  // }, []);
 
 
 

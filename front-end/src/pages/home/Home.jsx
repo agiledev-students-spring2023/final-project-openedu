@@ -115,9 +115,17 @@ export function Home(props) {
     useEffect(() => {
 
         axios.get(Util.getServerAddr() +
-            `/profile/info?token=1234`).then((response) => {
+            `/profile/info`,
+            {
+                params: {
+                    token: Util.readLocalValue("token") ?? 12345,
+                    mock: "false"
+                }
+            }
+            )
+            .then((response) => {
 
-                Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
+                // Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
                 setProfile(response.data["content"]);
             });
 
@@ -126,11 +134,20 @@ export function Home(props) {
 
             // get course slide data about recent course
 
+            Logger.info("Token: " + Util.readLocalValue("token"));
+
             Logger.info("fetching course information");
             axios
                 .get(
                     Util.getServerAddr() +
-                    `/subject/previous?token=1234`
+                    `/subject/recent`,
+                    {
+                        params: {
+
+                            token: Util.readLocalValue("token") ?? 12345,
+                            mock: "false"
+                        }
+                    }
                 )
                 .then((response) => {
                     Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
@@ -163,7 +180,13 @@ export function Home(props) {
             axios
                 .get(
                     Util.getServerAddr() +
-                    `/subject/recommend?token=1234`
+                    "/subject/recommend",
+                    {
+                        params: {
+                            token: Util.readLocalValue("token") ?? 12345,
+                            mock: "false"
+                        }
+                    }
                 )
                 .then((response) => {
                     Logger.info(
@@ -239,7 +262,7 @@ export function Home(props) {
                                 align: 'left'
                             }}
                         >
-                            {(profile ?? {})["name"] ?? "UserName"}
+                            {(profile ?? {})["name"] ?? "Earthling!"}
                         </Typography>
                     </Box>
 

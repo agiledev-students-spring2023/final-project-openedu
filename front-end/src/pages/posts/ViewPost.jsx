@@ -22,7 +22,12 @@ export function ViewPost() {
       return;
     }
     axios
-      .get(Util.getServerAddr() + `/post?token=1234&postId=${postId}`)
+      .get(Util.getServerAddr() + `/post`, {
+        params : {
+          token: Util.readLocalValue("token") ?? 12345,
+          mock: "false"
+        }
+      })
       .then(({ data }) => {
         setPostTitle(data?.content?.title ?? "backup_post");
         setPostContent(data?.content?.content ?? "backup_post_info");

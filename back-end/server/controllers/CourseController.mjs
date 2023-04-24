@@ -1,6 +1,6 @@
 import axios from "axios";
 import CourseModel from "../models/CourseModel.mjs";
-import { YTBPlayListAPI } from "../util/ThridPartyAPIs.mjs";
+import { YTBPlayListAPI } from "../util/ThirdPartyAPIs.mjs";
 
 const getYTBThumbnail = (id) => {
   return axios({

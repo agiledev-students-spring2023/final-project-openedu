@@ -281,7 +281,7 @@ export function asChildPage(component) {
     </div>;
 }
 
-export async function readLocalValue(key){
+export function readLocalValue(key){
     if(localStorage.getItem(key) === undefined) {
         Logger.error(`LocalStorage key "${key}" not present!`);
     }

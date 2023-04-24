@@ -16,7 +16,12 @@ export default function RecentlyUsedAvatars() {
 
     useEffect(() => {
         axios
-            .get(Util.getServerAddr() + `/profile/info?token=123`)
+            .get(Util.getServerAddr() + `/profile/info`, {
+                params: {
+                    token: Util.readLocalValue("token") ?? 12345,
+                    mock: "false"
+                }
+            })
             .then((response) => {
                 const userInfo = response.data["content"];
                 setAvatars(userInfo["avatar"]);

@@ -39,6 +39,10 @@ export function courses() {
   return courseList;
 }
 
+export function course() {
+    return courses()[Util.randInt() % courses().length];
+}
+
 export function subjects() {
   let cnt = 0;
 
@@ -74,6 +78,10 @@ export function subjects() {
   return subjectList;
 }
 
+export function subject() {
+    return subjects()[Util.randInt() % subjects().length];
+}
+
 export function posts() {
   postList ??= [...Array(100).keys()].map((index) => ({
     postId: index,
@@ -85,6 +93,17 @@ export function posts() {
   }));
 
   return postList;
+}
+
+export function user() {
+    return {
+        userId: Util.randInt() % 10000,
+        email: "foobar@nyu.edu",
+        name: faker.name.fullName(),
+        motto: faker.lorem.words(5),
+        avatar: imageUrl(),
+        isBanned: false
+    };
 }
 
 export function recentCourses() {
@@ -118,6 +137,7 @@ export function suggestSubjects() {
 }
 
 export function feedback() {
+
   feedbackList ??= [...Array(100).keys()].map((index) => ({
     feedbackId: index,
     title: faker.random.words(5),

@@ -17,23 +17,30 @@ export function SubjectDetail() {
 
   const { subjectId } = useParams();
   const theme = useTheme();
-  const url =
-    Util.getServerAddr() +
-    `/subject/detail?subjectId=${subjectId ?? 0}&token=1234`;
+  const url = Util.getServerAddr() + "/subject/detail";
 
   Logger.verbose("URL: " + url);
 
   useEffect(() => {
     Logger.info("fetching course information");
-    axios(url)
+    axios(url, {
+      params: {
+        subjectId: subjectId,
+        mock: "false"
+      }
+    })
       .then((response) => {
+
+        Logger.info(JSON.stringify(response.data["content"]));
+
         setCourses(response.data["content"].courses);
-        setSubject(response.data["content"].subject);
+        setSubject(response.data["content"]);
         setLoaded(true);
+
       })
       .catch((err) => {
-        console.log("error fetching subject information");
-        console.log(err);
+        Logger.error("error fetching subject information");
+        Logger.error(err);
 
         setSubject([
           {
@@ -65,7 +72,7 @@ export function SubjectDetail() {
           {/*Course Image*/}
           <CardMedia
             alt="course_image"
-            image={subject.imageUrl}
+            image={subject.imageUrl ?? ""}
             sx={{
               height: 300,
               borderRadius: Constants.UI_CORNER_RADIUS,

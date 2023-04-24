@@ -8,7 +8,7 @@ import PostCard from "../../containers/PostCard/PostCard";
 import ComposePost from "../posts/ComposePost";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
-import FeedIcon from '@mui/icons-material/Feed';
+import FeedIcon from "@mui/icons-material/Feed";
 import * as Logger from "../../util/Logger.mjs";
 
 export default function UserProfile() {
@@ -166,28 +166,30 @@ export default function UserProfile() {
 }
 
 function PostSection({ composeMode }) {
-  //when composeMode is true this section is not rendered 
+  //when composeMode is true this section is not rendered
   if (composeMode) return <div></div>;
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(Util.getServerAddr() + `/post/list?token=123`)
-      .then((response) => {
-        if (Array.isArray(response.data["content"])) {
-          setPosts(response.data["content"]);
-        } else {
-          console.error(
-            "Response data is not an array:",
-            response.data["content"]
-          );
-          console.error(
-            "Response data is of type",
-            typeof response.data["content"]
-          );
-        }
-      })
-      .catch((error) => console.error(error));
+    if (posts === null || posts.length === 0) {
+      axios
+        .get(Util.getServerAddr() + `/post/list?token=123`)
+        .then((response) => {
+          if (Array.isArray(response.data["content"])) {
+            setPosts(response.data["content"]);
+          } else {
+            console.error(
+              "Response data is not an array:",
+              response.data["content"]
+            );
+            console.error(
+              "Response data is of type",
+              typeof response.data["content"]
+            );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   }, []);
 
   return (

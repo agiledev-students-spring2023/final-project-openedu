@@ -293,7 +293,7 @@ export async function initRestApis() {
     });
 
     
-    
+
     restful.get("/post/list", async (req, res) => {
         if (!Util.isValidWebRequest(req.query, "token")) {
             Util.onWebMissingParam(req, res);
@@ -350,13 +350,9 @@ export async function initRestApis() {
         }
 
         try {
-
-            //Validate token
             if(!await MongoMgr.isTokenValid(req.query["token"])){
                 throw new Error("token_invalid");
             }
-
-            //TODO: Make the userId variant as soon as possible
             let feedback = await MongoMgr.getPosts(0);
 
             feedback = feedback.map(entry => trimMongoDocument(entry));
@@ -369,24 +365,6 @@ export async function initRestApis() {
             Util.onWebResponse(res, err.message, false);
 
         }
-
-        // const nPosts = Util.randInt() % 20;
-        // const posts = MockData.posts();
-
-        // const ret = [];
-
-        // const postSet = new Set();
-
-        // for (let i = 0; i < nPosts; ++i) {
-        //   let ind = Util.randInt() % posts.length;
-        //   while (postSet.has(ind)) {
-        //     ind = Util.randInt() % posts.length;
-        //   }
-        //   postSet.add(ind);
-        //   ret.push(posts[ind]);
-        // }
-
-        // Util.onWebResponse(res, ret);
     });
 
     //this api currently responses with an image url

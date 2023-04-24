@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { Add, Logout, Create, Remove } from "@mui/icons-material";
+import { Add, Logout, Create } from "@mui/icons-material";
 import StyledAvater from "../../containers/StyledAvatar";
 
 import { useNavigate } from "react-router-dom";
@@ -8,13 +8,14 @@ import PostCard from "../../containers/PostCard/PostCard";
 import ComposePost from "../posts/ComposePost";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
-import FeedIcon from '@mui/icons-material/Feed';
+import FeedIcon from "@mui/icons-material/Feed";
 import * as Logger from "../../util/Logger.mjs";
 
 export default function UserProfile() {
   const navigate = useNavigate();
   const [composeMode, setComposeMode] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
+  const [refresh, setRefresh] = useState(true);
   useEffect(() => {
     axios
       .get(Util.getServerAddr() + "/background-image", {
@@ -105,24 +106,28 @@ export default function UserProfile() {
           Edit Profile{" "}
         </Button>
 
-        <Button
-          variant="contained"
-          sx={{
-            width: "100%",
-            display: "flex",
-            marginTop: "1vh",
-            color: "text.secondary",
-          }}
-          onClick={() => {
-            navigate("/profile/feedback");
-          }}
-        >
-          <FeedIcon sx={{ marginRight: "10px" }} />
-          Feedback{" "}
-        </Button>
+        {/*<Button*/}
+        {/*  variant="contained"*/}
+        {/*  sx={{*/}
+        {/*    width: "100%",*/}
+        {/*    display: "flex",*/}
+        {/*    marginTop: "1vh",*/}
+        {/*    color: "text.secondary",*/}
+        {/*  }}*/}
+        {/*  onClick={() => {*/}
+        {/*    navigate("/profile/feedback");*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <FeedIcon sx={{ marginRight: "10px" }} />*/}
+        {/*  Feedback{" "}*/}
+        {/*</Button>*/}
       </Box>
 
-      <PostSection composeMode={composeMode} />
+      <PostSection
+        composeMode={composeMode}
+        refresh={refresh}
+        setRefresh={setRefresh}
+      />
 
       <Box
         sx={{
@@ -130,43 +135,14 @@ export default function UserProfile() {
           display: composeMode ? "block" : "none",
         }}
       >
-        <ComposePost />
-
-        <Button
-          variant="contained"
-          sx={{
-            width: "35%",
-            marginTop: "2vh",
-          }}
-          onClick={() => {
-            setComposeMode(0);
-          }}
-        >
-          <Add />
-          Submit{" "}
-        </Button>
-        <Button
-          variant="contained"
-          color="error"
-          sx={{
-            width: "35%",
-            marginTop: "2vh",
-            marginLeft: "2%",
-          }}
-          onClick={() => {
-            setComposeMode(0);
-          }}
-        >
-          <Remove />
-          Discard{" "}
-        </Button>
+        <ComposePost setComposeMode={setComposeMode} setRefresh={setRefresh} />
       </Box>
     </Box>
   );
 }
 
-function PostSection({ composeMode }) {
-  //when composeMode is true this section is not rendered 
+function PostSection({ composeMode, refresh, setRefresh }) {
+  //when composeMode is true this section is not rendered
   if (composeMode) return <div></div>;
   const [posts, setPosts] = useState([]);
 

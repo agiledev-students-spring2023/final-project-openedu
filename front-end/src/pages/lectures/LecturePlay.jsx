@@ -1,57 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
-  Box, Paper, Typography, Button,
+  Box, Typography, Button,
   Collapse, List, ListItem,
   ButtonGroup
 } from '@mui/material';
-import { Favorite, PlayArrowRounded } from '@mui/icons-material';
-import LectureCard from './LectureCardButton.jsx';
-import { BackButton } from "../../containers/BackButton/BackButton";
 import axios from "axios";
+import { useUpdateEffect } from "react-use";
+import { BackButton } from "../../containers/BackButton/BackButton";
+import LectureCardButton from "./LectureCardButton";
 import * as Util from "../../util/Util.mjs";
 import Loading from "../../containers/Loading/Loading.jsx";
-function FoldableButtonList() {
-  const [open, setOpen] = useState(false);
-  const buttons = [
-    { label: "Button 1" },
-    { label: "Button 2" },
-    { label: "Button 3" },
-    { label: "Button 4" },
-    { label: "Button 5" },
-    { label: "Button 3" },
-    { label: "Button 4" },
-    { label: "Button 5" },
-  ];
 
-  const handleToggle = () => {
-    setOpen(!open);
-  };
+function FoldableButtonList(props) {
+  const { lectures, setVideoId, setIndex } = props;
+
 
   return (
     <Box >
-      <Button onClick={handleToggle} sx={{ mb: 1 }}>
-        {open ? "Hide" : "Show more"}
-      </Button>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List
-          sx={{
-            width: "100%",
-            position: "relative",
-            overflow: "auto",
-            maxHeight: 300,
-            "& ul": { padding: 0 },
-          }}
-          subheader={<li />}
-        >
-          {/* 
-          DB needed here!
-          {buttons.map((button, index) => (
-            <ListItem disablePadding key={index}>
-              <LectureCard />
-            </ListItem>
-          ))} */}
-        </List>
-      </Collapse>
+      <List
+        sx={{
+          width: "100%",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 300,
+          "& ul": { padding: 0 },
+        }}
+        subheader={<li />}
+      >
+
+        {lectures.map((lecture, index) => (
+          <ListItem disablePadding key={index}>
+            <LectureCardButton {...lecture} index={index} setVideoId={setVideoId} setIndex={setIndex} />
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 }
@@ -59,107 +42,22 @@ function FoldableButtonList() {
 
 
 
-const VideoInfo = (props) => {
-  const { course } = props;
-  return (
-    <Box className="info">
-      <Box
-        className="info-texts"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          marginTop: "3vh",
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{
-            display: "flex",
-          }}
-        >
-          {course.name}
-        </Typography>
-        <Typography
-          variant="h11"
-          sx={{
-            display: "flex",
-          }}
-        >
-        </Typography>
-      </Box>
-    </Box>
-  );
-};
-
-const VideoFrame = (props) => {
-  let { videoId } = props;
-  videoId = videoId ?? "CWglkNBUmD4";
-  return (
-    <Box>
-      <Box
-        className="player"
-        sx={{
-          position: "relative",
-          width: "100%",
-          height: "20vh",
-          pb: "56.25%",
-        }}
-      >
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title="Video"
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          style={{ position: "absolute", top: 0, left: 0 }}
-        />
-      </Box>
-
-      <Box className="info"></Box>
-    </Box>
-  );
-};
-
-const Sections = () => {
-  const [vid, setVid] = useState(true);
-
-  return (
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      <ButtonGroup variant='plain' size='large'
-        sx={{
-          marginTop: "3vh",
-          display: "flex",
-        }}
-      >
-        <Button
-          onClick={() => {
-            setVid(true);
-          }}
-        >
-          Videos
-        </Button>
-        <Button
-          onClick={() => {
-            setVid(false);
-          }}
-        >
-          Comments
-        </Button>
-      </ButtonGroup>
-      {vid ? <FoldableButtonList sx={{ display: 'flex' }} /> : <Box />}
-    </Box>
-  );
-};
-
 export default function PlayScreen() {
-  const [course, setCourse] = useState({});
-  const [courseId, setCourseId] = useState(0);
+  const [lectures, setLectures] = useState(null);
   const [isLoaded, setLoaded] = useState(false);
+  const [isInit, setIsInit] = useState(true);
+  const [vid, setVid] = useState(true);
+  const [videoId, setVideoId] = useState('CWglkNBUmD4');
+  const [index, setIndex] = useState(0);
+  const { courseId } = useParams();
+
+
+  useUpdateEffect(() => {
+    setLoaded(true);
+    setVideoId(lectures[0].resourceId.videoId);
+  }
+    , [lectures]);
+
   useEffect(() => {
     axios.get(Util.getServerAddr() + "/course/detail",
         {
@@ -170,11 +68,16 @@ export default function PlayScreen() {
             }
         }).then(res => {
       // localStorage.setItem("course", JSON.stringify(res.data.course));
-      setCourse(res.data.content);
-      setLoaded(true);
-      console.log(course);
+      const lecturesArr = res.data.content.map((lecture) => {
+        return lecture.snippet;
+      });
+      setLectures(lecturesArr);
     });
   }, []);
+
+
+
+
   return (
     <>
       {!isLoaded ? <Loading /> :
@@ -185,9 +88,92 @@ export default function PlayScreen() {
             marginTop: '2vh'
           }}>
 
-            <VideoFrame videoId={course.videoId} />
-            <VideoInfo course={course} />
-            <Sections course={course} />
+            <Box className="videoFrame">
+              <Box
+                className="player"
+                sx={{
+                  position: "relative",
+                  width: "100%",
+                  height: "20vh",
+                  pb: "56.25%",
+                }}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title="Video"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  style={{ position: "absolute", top: 0, left: 0 }}
+                />
+              </Box>
+
+              <Box className="info"></Box>
+            </Box>
+
+            <Box className="videoInfo">
+              <Box
+                className="info-texts"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginTop: "3vh",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    display: "flex",
+                    textAlign: "left",
+                  }}
+                >
+                  {lectures[index].title}
+                </Typography>
+                <Typography
+                  variant="h11"
+                  sx={{
+                    display: "flex",
+                  }}
+                >
+                </Typography>
+              </Box>
+            </Box>
+
+
+            <Box className="section"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}>
+              <ButtonGroup variant='plain' size='large'
+                sx={{
+                  marginTop: "3vh",
+                  display: "flex",
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setVid(true);
+                  }}
+                >
+                  Videos
+                </Button>
+                <Button
+                  onClick={() => {
+                    setVid(false);
+                  }}
+                >
+                  Comments
+                </Button>
+              </ButtonGroup>
+              {vid ? <FoldableButtonList
+                lectures={lectures}
+                setVideoId={setVideoId}
+                setIndex={setIndex}
+                sx={{ display: 'flex' }} /> : <Box />}
+            </Box>
           </Box>
         </>)}
     </>

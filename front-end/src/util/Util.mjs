@@ -1,6 +1,6 @@
 import { colors, createTheme } from '@mui/material';
 import { Outlet } from "react-router-dom";
-import React from 'react';
+import React,{useEffect, useRef} from 'react';
 // import * as dotenv from "dotenv";
 import * as Logger from "./Logger.mjs";
 
@@ -294,5 +294,17 @@ export async function writeLocalValue(key,value) {
         return;
 
     localStorage.setItem(key,value);
-
 }
+
+
+export function useUpdateEffect(effect, dependencies) {
+  const isInitialMount = useRef(true);
+
+  useEffect(() => {
+    if (!isInitialMount.current) {
+      effect();
+    }
+    isInitialMount.current = false;
+  }, dependencies);
+}
+

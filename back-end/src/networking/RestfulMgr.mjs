@@ -249,7 +249,7 @@ export async function initRestApis() {
   courseApis();
 
     restful.post("/post", async (req, res) => {
-        if (!Util.isValidPostRequest(req.body, "token", "title", "content")) {
+        if (!Util.isValidWebRequest(req.body, "token", "title", "content")) {
             Util.onWebMissingParam(req, res);
             return;
         }
@@ -275,11 +275,19 @@ export async function initRestApis() {
             return;
         }
 
-        const userId = req.query["userId"] ?? 0;
-
         try {
-            const posts = await MongoMgr.getPosts(userId);
-            console.log(posts);
+
+            //Validate token
+            if(!await MongoMgr.isTokenValid(req.query["token"])){
+                throw new Error("token_invalid");
+            }
+
+            //TODO: Make the userId variant as soon as possible
+            let posts = await MongoMgr.getPosts(0);
+
+            posts = posts.map(entry => trimMongoDocument(entry));
+
+            Logger.info(posts);
             Util.onWebResponse(res, posts);
         } catch (err) {
 

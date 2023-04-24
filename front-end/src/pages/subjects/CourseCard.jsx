@@ -63,9 +63,9 @@ export function CourseCard({ entry }) {
             component="img"
             height="140"
             image={entry.imageUrl ?? "Course Image"}
-            alt="green iguana"
+            alt={entry.name}
           />
-          <Typography variant="h5" component="div">
+          <Typography variant="h5" component="div" sx={{textAlign:'left'}}>
             {entry.name ?? "Course Name"}
           </Typography>
           <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>

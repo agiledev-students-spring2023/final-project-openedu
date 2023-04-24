@@ -31,7 +31,7 @@ export function ViewPost() {
       .then(({ data }) => {
         setPostTitle(data?.content?.title ?? "backup_post");
         setPostContent(data?.content?.content ?? "backup_post_info");
-        setPostDate(data?.content?.date ?? "backup_post_date");
+        setPostDate(data?.content?.createTime ?? "backup_post_date");
         setIsPostLoaded(true);
       })
       .catch((err) => {

@@ -1,13 +1,13 @@
 // noinspection ExceptionCaughtLocallyJS
 
 import * as Util from "../util/Util.mjs";
-import {trimMongoDocument} from "../util/Util.mjs";
+import { trimMongoDocument } from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
 import { subjects } from "../util/MockData.mjs";
 import { restful } from "./NetworkCore.mjs";
-import {getModel} from "./db/MongoMgr.mjs";
+import { getModel } from "./db/MongoMgr.mjs";
 import * as ThirdParty from "../util/ThirdPartyAPIs.mjs";
 
 function courseApis() {
@@ -20,13 +20,13 @@ function courseApis() {
             }
 
             let ret = await MongoMgr.getModel("courses").find({})
-                .sort({'courseId': 1});
+                .sort({ 'courseId': 1 });
 
             ret = ret.map(element => Util.trimMongoDocument(element));
             Util.onWebResponse(res, ret);
 
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -45,13 +45,13 @@ function courseApis() {
                 return;
             }
 
-            if(!await MongoMgr.isTokenValid(req.query["token"])){
+            if (!await MongoMgr.isTokenValid(req.query["token"])) {
                 throw new Error("token_invalid");
             }
 
             //Fetch a list of courses (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("courses").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 3)
                 .limit(20);
 
@@ -59,7 +59,7 @@ function courseApis() {
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -78,13 +78,13 @@ function courseApis() {
                 return;
             }
 
-            if(!await MongoMgr.isTokenValid(req.query["token"])){
+            if (!await MongoMgr.isTokenValid(req.query["token"])) {
                 throw new Error("token_invalid");
             }
 
             //Fetch a random list of courses (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("courses").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 10)
                 .limit(20);
 
@@ -92,7 +92,7 @@ function courseApis() {
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -110,7 +110,7 @@ function courseApis() {
 
             Logger.info(JSON.stringify(course));
 
-            const lectures = await ThirdParty.GetLecturesWithID(course["youtubeUrl"]??"PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi");
+            const lectures = await ThirdParty.GetLecturesWithID(course["youtubeUrl"] ?? "PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi");
             Util.onWebResponse(res, lectures);
 
         } catch (err) {
@@ -132,15 +132,16 @@ function courseApis() {
             }
 
             const ret = trimMongoDocument(await MongoMgr.getModel("courses").findOne({
-                courseId : req.query["courseId"]
+                courseId: req.query["courseId"]
             }));
-
-            if(ret === null)
+            const courseImage = await ThirdParty.GetPlayListPic(ret["youtubeUrl"]);
+            ret.imageUrl = courseImage[0];
+            if (ret === null)
                 throw new Error("invalid_course_id");
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -159,13 +160,13 @@ function courseApis() {
             }
 
             //Validate token
-            if(!await MongoMgr.isTokenValid(req.query["token"])){
+            if (!await MongoMgr.isTokenValid(req.query["token"])) {
                 throw new Error("token_invalid");
             }
 
             //Fetch a list of subjects (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("subjects").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 3)
                 .limit(20);
 
@@ -173,7 +174,7 @@ function courseApis() {
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -192,13 +193,13 @@ function courseApis() {
             }
 
             //Validate token
-            if(!await MongoMgr.isTokenValid(req.query["token"])){
+            if (!await MongoMgr.isTokenValid(req.query["token"])) {
                 throw new Error("token_invalid");
             }
 
             //Fetch a list of subjects (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("subjects").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 3)
                 .limit(20);
 
@@ -206,7 +207,7 @@ function courseApis() {
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -224,7 +225,7 @@ function courseApis() {
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -244,22 +245,26 @@ function courseApis() {
             }
 
             const ret = trimMongoDocument(await MongoMgr.getModel("subjects").findOne({
-                subjectId : req.query["subjectId"]
+                subjectId: req.query["subjectId"]
             }));
 
-            if(ret === null)
+            if (ret === null)
                 throw new Error("invalid_subject_id");
 
             let courses = await MongoMgr.getModel("courses").find({
-                subjectId : req.query["subjectId"]
+                subjectId: req.query["subjectId"]
             });
-
+            const vidUrls = courses.map(course => course["youtubeUrl"]);
+            const courseImages = await ThirdParty.GetPlayListPic(vidUrls);
+            courses.forEach((course, index) => {
+                course.imageUrl = courseImages[index];
+            })
             courses = courses.map(element => trimMongoDocument(element));
             ret["courses"] = courses;
 
             Util.onWebResponse(res, ret);
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }
@@ -267,9 +272,9 @@ function courseApis() {
 }
 
 export async function initRestApis() {
-  MockData.init();
+    MockData.init();
 
-  courseApis();
+    courseApis();
 
     restful.post("/post", async (req, res) => {
         if (!Util.isValidWebRequest(req.body, "token", "title", "content")) {
@@ -292,7 +297,7 @@ export async function initRestApis() {
         }
     });
 
-    
+
 
     restful.get("/post/list", async (req, res) => {
         if (!Util.isValidWebRequest(req.query, "token")) {
@@ -303,7 +308,7 @@ export async function initRestApis() {
         try {
 
             //Validate token
-            if(!await MongoMgr.isTokenValid(req.query["token"])){
+            if (!await MongoMgr.isTokenValid(req.query["token"])) {
                 throw new Error("token_invalid");
             }
 
@@ -352,7 +357,7 @@ export async function initRestApis() {
         try {
 
             //Validate token
-            if(!await MongoMgr.isTokenValid(req.query["token"])){
+            if (!await MongoMgr.isTokenValid(req.query["token"])) {
                 throw new Error("token_invalid");
             }
 
@@ -398,13 +403,13 @@ export async function initRestApis() {
             }
             const user = await MongoMgr.getValidUser(req.query["token"]);
 
-            if(user === undefined) {
+            if (user === undefined) {
                 throw new Error("token_invalid");
             }
 
-            Util.onWebResponse(res,trimMongoDocument(user, "pwd"));
+            Util.onWebResponse(res, trimMongoDocument(user, "pwd"));
 
-        } catch(e) {
+        } catch (e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
         }

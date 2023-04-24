@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import {
-    Box, TextField, InputAdornment, Grid, Button, Container,
+    Box, TextField, InputAdornment, Grid, Button,
 } from '@mui/material';
 import StyledAvater from '../../containers/StyledAvatar';
-import { Upload, Event, Save, HighlightOff } from '@mui/icons-material/';
+import { Save, HighlightOff } from '@mui/icons-material/';
 import axios from 'axios';
 import * as Util from "../../util/Util.mjs";
 import * as Logger from "../../util/Logger.mjs";
@@ -21,6 +21,9 @@ export default function EditProfile(props) {
     // Mock!
     // Security needed
     useEffect(() => {
+
+        Util.invokeCallback("setNewPage",2);
+
         axios
             .get(Util.getServerAddr() + `/profile/info`,{
                 params: {

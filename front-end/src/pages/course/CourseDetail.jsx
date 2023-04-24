@@ -15,6 +15,13 @@ import Loading from "../../containers/Loading/Loading";
 const Main = (props) => {
   const navigate = useNavigate();
   const { course } = props;
+
+  useEffect(() => {
+
+    Util.invokeCallback("setNewPage",1);
+
+  },[]);
+
   return (
     <Box>
       <Box

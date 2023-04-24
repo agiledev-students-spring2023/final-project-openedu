@@ -21,6 +21,8 @@ export default function UserProfile() {
 
     useEffect(() => {
 
+        Util.invokeCallback("setNewPage",2);
+
         axios
             .get(Util.getServerAddr() + "/background-image", {
                 params: { width: "200", height: "200" },

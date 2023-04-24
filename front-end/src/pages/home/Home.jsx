@@ -1,4 +1,4 @@
-import { Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import {Backdrop, Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography,} from "@mui/material";
 import { CreateOutlined } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
@@ -114,6 +114,8 @@ export function Home(props) {
 
     useEffect(() => {
 
+        Util.invokeCallback("setNewPage",0);
+
         axios.get(Util.getServerAddr() +
             `/profile/info`,
             {
@@ -216,10 +218,14 @@ export function Home(props) {
     }, [alignment]);
 
     return (
-        <Box>
+        <>
             <BackgroundImage />
 
-
+            <Backdrop open sx={{
+                color: "#fff",
+                "zIndex" : 0,
+                backdropFilter:  "blur(30px)"
+            }}/>
 
             <Box>
 
@@ -230,6 +236,7 @@ export function Home(props) {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         width: 1,
+                        "z-index" : 2000,
                         marginTop: "15vh",
                         marginBottom: "10vh",
                     }}
@@ -240,6 +247,7 @@ export function Home(props) {
                             display: "flex",
                             flexDirection: "column",
                             marginLeft: "5%",
+                            "z-index" : 2000
                         }}
                     >
                         <Typography
@@ -353,6 +361,6 @@ export function Home(props) {
                     </Button>
                 </Box>
             </Box>
-        </Box>
+        </>
     );
 }

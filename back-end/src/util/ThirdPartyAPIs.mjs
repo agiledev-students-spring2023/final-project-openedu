@@ -16,25 +16,23 @@ const GetPlayListPic = async (listIDs) => {
     if (typeof listIDs === "string") listIDs = [listIDs];
     const tbnArr = [];
     const tbnArrResolution = ['maxres', 'standard', 'high', 'medium', 'default'];
-
-    for(const entry in listIDs) {
-        tbnArr.push(await getYTBThumbnail(entry));
-    }
-
+    listIDs.map((ele) => {
+        tbnArr.push(getYTBThumbnail(ele));
+    })
     const values = await Promise.all(tbnArr);
     let index = 0;
     const images = [];
     values.forEach(ele => {
         for (let i = 0; i < tbnArrResolution.length; i++) {
             if (ele.data.items[0].snippet.thumbnails[tbnArrResolution[i]]) {
-                images.push(ele.data.items[0].snippet.thumbnails[tbnArrResolution[i]].url);
+                images.push(ele.data.items[0].snippet.thumbnails[tbnArrResolution[i]].url)
                 index += 1;
                 break;
             }
         }
     });
     return images;
-};
+}
 
 const GetLecturesWithID= async (playlistId) => {
 

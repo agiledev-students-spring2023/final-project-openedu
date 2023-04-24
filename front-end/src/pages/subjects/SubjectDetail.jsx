@@ -32,7 +32,6 @@ export function SubjectDetail() {
       .then((response) => {
 
         Logger.info(JSON.stringify(response.data["content"]));
-
         setCourses(response.data["content"].courses);
         setSubject(response.data["content"]);
         setLoaded(true);

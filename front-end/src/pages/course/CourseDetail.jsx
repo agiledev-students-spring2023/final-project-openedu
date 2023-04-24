@@ -74,7 +74,7 @@ const Main = (props) => {
               width: "45%",
               display: 'flex'
             }}
-            onClick={() => { navigate('/courses/play'); }}>
+            onClick={() => { navigate(`/courses/play/${course.courseId}`); }}>
             <PlayArrowRounded />
             Play </Button>
           <Button
@@ -162,72 +162,14 @@ export const CourseDetail = () => {
   const [isLoaded, setLoaded] = useState(false);
   const { courseId } = useParams();
 
-  // useEffect(() => {
-  //   //TODO: Fetch actual data, use props.courseId
-  //   //
-  //   // setCourseInfo({
-  //   //   courseId: 0,
-  //   //   name: "foo",
-  //   //   detail: "ipsum_lorem",
-  //   //   language: "Java",
-  //   //   difficulty: "Hard",
-  //   //   url: "https://youtube.com",
-  //   // });
-
-  //   axios
-  //     .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
-  //     .then((response) => {
-
-  //       Logger.info(
-  //         `CourseDetail's axios got the following data: \n ${response.data["content"]}`
-  //       );
-
-  //       setCourseInfo(response.data["content"]);
-
-
-
-  //       setLoaded(true);
-  //     })
-  //     .catch((err) => {
-  //       Logger.error("error fetching subject information");
-  //       Logger.error(err);
-
-  //       //const backupData =
-  //       setCourseInfo([
-  //         {
-  //           courseId: 3,
-  //           name: "backup_course",
-  //           description: "backupDescription",
-  //           imageUrl: Mockaroo.mockImageApi(1920, 1080)
-  //         },
-  //       ]);
-
-  //       setLoaded(true);
-  //       //setData((backupData??[])[0])
-  //     });
-
-  //   setComments([
-  //     {
-  //       userId: 0,
-  //       userName: "abc",
-  //       msg: "haha",
-  //     },
-  //     {
-  //       userId: 1,
-  //       userName: "abcd",
-  //       msg: "hahahahaha",
-  //     },
-  //   ]);
-
-  // }, []);
-
   useEffect(() => {
 
       axios.get(
         Util.getServerAddr() + "/course/detail",
         {
             params: {
-                courseId : courseId
+                courseId : courseId,
+                mock: "false"
             }
         }
     ).then(res => {

@@ -13,6 +13,8 @@ import * as Util from "../../util/Util.mjs";
 import Loading from "../../containers/Loading/Loading.jsx";
 
 function FoldableButtonList(props) {
+
+
   const { lectures, setVideoId, setIndex } = props;
 
 
@@ -58,11 +60,13 @@ export default function PlayScreen() {
   }
     , [lectures]);
 
+
   useEffect(() => {
-    axios.get(Util.getServerAddr() + "/course/detail",
+
+      axios.get(Util.getServerAddr() + "/course/play",
         {
             params: {
-                token: Util.readLocalValue("token") ?? 12345,
+                //token: Util.readLocalValue("token") ?? 12345,
                 courseId: courseId,
                 mock: "false"
             }

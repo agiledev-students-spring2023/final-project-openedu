@@ -45,7 +45,7 @@ const GetLecturesWithID= async (playlistId) => {
         //TODO: Be sure to use this since you have declared it
         const tbnArrResolution = ['maxres', 'standard', 'high', 'medium', 'default'];
 
-        return (response.data ?? {})["item"];
+        return (response.data ?? {})["items"];
 
     } catch(e) {
         Logger.error(e);

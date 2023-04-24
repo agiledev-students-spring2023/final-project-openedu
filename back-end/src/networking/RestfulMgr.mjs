@@ -7,6 +7,8 @@ import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
 import { subjects } from "../util/MockData.mjs";
 import { restful } from "./NetworkCore.mjs";
+import {getModel} from "./db/MongoMgr.mjs";
+import * as ThirdParty from "../util/ThirdPartyAPIs.mjs";
 
 function courseApis() {
 
@@ -93,6 +95,27 @@ function courseApis() {
         } catch(e) {
             Logger.error(e);
             Util.onWebResponse(res, e.message, false);
+        }
+    });
+
+    restful.get("/course/play", async (req, res) => {
+        if (!Util.isValidWebRequest(req.query, "courseId")) {
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+
+        const courseId = req.query["courseId"] ?? 0;
+        try {
+            const course = await MongoMgr.getModel("courses").findOne({ "courseId": courseId });
+
+            Logger.info(JSON.stringify(course));
+
+            const lectures = await ThirdParty.GetLecturesWithID(course["youtubeUrl"]??"PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi");
+            Util.onWebResponse(res, lectures);
+
+        } catch (err) {
+            Logger.error(err);
+            Util.onWebResponse(res, err, false);
         }
     });
 

@@ -160,7 +160,7 @@ export default function Suggestion() {
     //return the layout
     useEffect(() => {
       axios
-        .get(Util.getServerAddr() + `/post/list`, {
+        .get(Util.getServerAddr() + `/feedback/list`, {
             params: {
                 token: Util.readLocalValue("token") ?? 12345,
                 mock: "false"

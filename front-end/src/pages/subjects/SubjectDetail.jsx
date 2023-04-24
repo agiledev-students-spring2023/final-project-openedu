@@ -22,6 +22,9 @@ export function SubjectDetail() {
   Logger.verbose("URL: " + url);
 
   useEffect(() => {
+
+    Util.invokeCallback("setNewPage",1);
+
     Logger.info("fetching course information");
     axios(url, {
       params: {

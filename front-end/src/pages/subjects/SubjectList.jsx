@@ -15,6 +15,9 @@ export function SubjectList() {
   const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
+
+      Util.invokeCallback("setNewPage",1);
+
     console.log("fetching subject information");
     axios
       .get(url,{

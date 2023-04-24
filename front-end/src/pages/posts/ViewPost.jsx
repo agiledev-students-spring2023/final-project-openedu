@@ -12,34 +12,41 @@ import axios from "axios";
 export function ViewPost() {
   const theme = useTheme();
   const { postId } = useParams();
-  const [postTitle, setPostTitle] = useState("");
-  const [postContent, setPostContent] = useState("");
-  const [postDate, setPostDate] = useState("");
+
+  const [post, setPost] = useState(null);
+  // const [postTitle, setPostTitle] = useState("");
+  // const [postContent, setPostContent] = useState("");
+  // const [postDate, setPostDate] = useState("");
   const [isPostLoaded, setIsPostLoaded] = useState(false);
 
   useEffect(() => {
-    if (!postId) {
-      return;
-    }
+    // if (!postId) {
+    //   return;
+    // }
     axios
-      .get(Util.getServerAddr() + `/post`, {
+      .get(Util.getServerAddr() + `/post/detail`, {
         params : {
           token: Util.readLocalValue("token") ?? 12345,
-          mock: "false"
+          mock: "false",
+          postId: postId
         }
       })
-      .then(({ data }) => {
-        setPostTitle(data?.content?.title ?? "backup_post");
-        setPostContent(data?.content?.content ?? "backup_post_info");
-        setPostDate(data?.content?.createTime ?? "backup_post_date");
+      .then((response) => {
+
+        setPost(response.data["content"]);
+
         setIsPostLoaded(true);
       })
       .catch((err) => {
         Logger.error("error fetching post information");
         Logger.error(err);
-        setPostTitle("backup_post");
-        setPostContent("backup_post_info");
-        setPostDate("backup_post_date");
+
+        setPost({
+          title: "backup_post",
+          content: "backup_post_content",
+          createTime: "backup_post_date"
+        });
+
         setIsPostLoaded(true);
       });
   }, [postId]);
@@ -69,7 +76,7 @@ export function ViewPost() {
       {isPostLoaded ? (
         <Box sx={{ marginLeft: "5%" }}>
           <MDEditor.Markdown
-            source={`## ${postTitle}\n\n${postContent}`}
+            source={`## ${(post??{})["title"]??""}\n\n${(post??{})["content"]??""}`}
             style={{
               width: "94%",
               textAlign: "left",
@@ -80,7 +87,7 @@ export function ViewPost() {
           <Box sx={styles.metadataWrapper}>
             <Typography variant="subtitle1" sx={{ color: "#666" }}>
               {" "}
-              {new Date(postDate).toLocaleDateString("en-US", {
+              {new Date((post??{})["createTime"]??"").toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",

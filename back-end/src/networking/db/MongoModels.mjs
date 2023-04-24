@@ -30,12 +30,6 @@ export const User = Mongo.Schema({
     isBanned: Boolean,
 });
 
-// export const Token = Mongo.Schema({
-//   userId: Number,
-//   token: String,
-//   createTime: String,
-// });
-
 export const Subject = Mongo.Schema({
     subjectId: Number,
     name: String,
@@ -74,7 +68,4 @@ export const Feedback = Mongo.Schema({
     content: String,
     overview: String,
     createTime: String,
-
-    //in feedback, there is no likes 
-    //or other reactions to content
 });

@@ -11,7 +11,6 @@ import {initRestApis} from "./RestfulMgr.mjs";
 export const restful = express();
 
 //TODO: Replace this with the following in production
-//
 // const server = Https.createServer({
 //     key: fs.readFileSync("/path/to/cert/privkey.pem"),
 //     cert: fs.readFileSync("/path/to/cert/fullchain.pem")

@@ -173,7 +173,7 @@ export async function initRestApis() {
   });
 
   restful.post("/post", async (req, res) => {
-    if (!Util.isValidPostRequest(req.body, "token", "title", "content")) {
+    if (!Util.isValidWebRequest(req.body, "token", "title", "content")) {
       Util.onWebMissingParam(req, res);
       return;
     }

@@ -350,9 +350,13 @@ export async function initRestApis() {
         }
 
         try {
+
+            //Validate token
             if(!await MongoMgr.isTokenValid(req.query["token"])){
                 throw new Error("token_invalid");
             }
+
+            //TODO: Make the userId variant as soon as possible
             let feedback = await MongoMgr.getPosts(0);
 
             feedback = feedback.map(entry => trimMongoDocument(entry));

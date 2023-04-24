@@ -29,11 +29,11 @@ export const User = Mongo.Schema({
   isBanned: Boolean,
 });
 
-export const Token = Mongo.Schema({
-  userId: Number,
-  token: String,
-  createTime: String,
-});
+// export const Token = Mongo.Schema({
+//   userId: Number,
+//   token: String,
+//   createTime: String,
+// });
 
 export const Subject = Mongo.Schema({
   subjectId: Number,

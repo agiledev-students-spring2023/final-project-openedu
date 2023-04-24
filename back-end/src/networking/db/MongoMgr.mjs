@@ -16,7 +16,6 @@ export const registerModels = () => {
         subjects: Models.Subject,
         users: Models.User,
         comments: Models.Comment,
-        tokens: Models.Token,
         counters: Models.Counter,
         posts: Models.Post,
     };
@@ -104,27 +103,16 @@ export async function getValidUser(token) {
     if (token === undefined) return undefined;
 
     const User = getModel("users");
-    const Token = getModel("tokens");
-
-    if (User === undefined || Token === undefined) {
-        Logger.error("collections not registered in MongoDB!");
-        return undefined;
-    }
 
     try {
 
         const payload = JWT.verify(token,
             Util.getConfigParam("jwt_secret") ?? 12345,
-            {expiresIn: Util.getConfigParam("jwt_expire_time") ?? 100000}
+            {
+                expiresIn: Util.getConfigParam("jwt_expire_time") ?? 100000,
+                algorithm: Util.getConfigParam("jwt_algo") ?? "HS256"
+            }
         );
-
-        //
-        // const tokenEntry = await Token.findOne({ token: token });
-        //
-        // if (tokenEntry === null) {
-        //   Logger.info(`Token not found: ${token}`);
-        //   return undefined;
-        // }
 
         const user = await User.findOne({userId: payload["userId"]});
 
@@ -147,24 +135,17 @@ export async function grantToken(userId) {
 
     const token = JWT.sign({userId: userId},
         Util.getConfigParam("jwt_secret") ?? 12345,
-        {expiresIn: Util.getConfigParam("jwt_expire_time") ?? 100000}
+        {
+            expiresIn: Util.getConfigParam("jwt_expire_time") ?? 100000,
+            algorithm: Util.getConfigParam("jwt_algo") ?? "HS256"
+        }
     );
 
-    const doc = new getModel("tokens")({
+    return {
         token: token,
         userId: userId,
-        createTime: FmtTime.getCurrentTimeString(),
-    });
-
-    doc.save();
-
-    return trimMongoDocument(doc);
-}
-
-export async function invalidateToken(token) {
-    if (token === undefined || token === "") return;
-
-    await getModel("tokens").deleteMany({token: token});
+        timestamp: FmtTime.getCurrentTimeString()
+    };
 }
 
 export async function isTokenValid(token) {
@@ -181,6 +162,7 @@ export async function getOnePost(userId, postId) {
 }
 
 export async function createPost(userId, title, content, overview) {
+
     const doc = new getModel("posts")({
         postId: await AtomicCounter.getIncrementCount("post_id"),
         userId: userId,

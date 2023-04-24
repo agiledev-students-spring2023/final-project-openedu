@@ -18,7 +18,7 @@ export default function UserProfile() {
   useEffect(() => {
     axios
       .get(Util.getServerAddr() + "/background-image", {
-        params: { token: "1234", width: "200", height: "200" },
+        params: { token: Util.readLocalValue("token") ?? 12345, width: "200", height: "200" },
       })
       .then((response) => {
         setImageUrl(response.data["content"]);
@@ -172,7 +172,12 @@ function PostSection({ composeMode }) {
 
   useEffect(() => {
     axios
-      .get(Util.getServerAddr() + `/post/list?token=123`)
+      .get(Util.getServerAddr() + `/post/list`,{
+          params: {
+              token: Util.readLocalValue("token") ?? 12345,
+              mock: "false"
+          }
+      })
       .then((response) => {
         if (Array.isArray(response.data["content"])) {
           setPosts(response.data["content"]);

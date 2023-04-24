@@ -160,11 +160,7 @@ export const CourseDetail = () => {
   const [comments, setComments] = useState(undefined);
   const [course, setCourse] = useState({});
   const [isLoaded, setLoaded] = useState(false);
-  const baseURL = Util.getServerAddr();
-  const { courseId } = useParams(0);
-
-  Logger.verbose(CourseDetail.name + " Loaded!");
-  Logger.verbose("URL: " + baseURL + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
+  const { courseId } = useParams();
 
   // useEffect(() => {
   //   //TODO: Fetch actual data, use props.courseId
@@ -226,11 +222,16 @@ export const CourseDetail = () => {
   // }, []);
 
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: Util.getServerAddr() +
-        `/course/detail?token=1234&courseId=${courseId ?? 0}`,
-    }).then(res => {
+
+      axios.get(
+        Util.getServerAddr() + "/course/detail",
+        {
+            params: {
+                courseId : courseId
+            }
+        }
+    ).then(res => {
+
       // localStorage.setItem("course", JSON.stringify(res.data.course));
       setCourse(res.data.content);
       setLoaded(true);

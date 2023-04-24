@@ -23,12 +23,17 @@ export default function EditProfile(props) {
     // Security needed
     useEffect(() => {
         axios
-            .get(Util.getServerAddr() + `/profile/info?token=123`)
+            .get(Util.getServerAddr() + `/profile/info`,{
+                params: {
+                    token: Util.readLocalValue("token") ?? 12345,
+                    mock: "false"
+                }
+            })
             .then((response) => {
                 const userInfo = response.data["content"];
-                setName(userInfo["name"]);
-                setDescription(userInfo["motto"]);
-                setAvatarImg(userInfo["avatar"]);
+                setName(userInfo["name"]??"earthling");
+                setDescription(userInfo["motto"]??"To be or not 2[b], that is not the question");
+                setAvatarImg(userInfo["avatar"]??"https://picsum.photos/1024/1024");
             })
             .catch((error) => Logger.error(error));
 

@@ -8,7 +8,7 @@ import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
 
 export function SuggestSubjectList() {
-  const url = Util.getServerAddr() + "/subject/recommend?token=1234";
+  const url = Util.getServerAddr() + "/subject/recommend";
 
   const [data, setData] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
@@ -16,7 +16,12 @@ export function SuggestSubjectList() {
   useEffect(() => {
     console.log("fetching subject information");
     axios
-      .get(url)
+      .get(url, {
+          params: {
+              token: Util.readLocalValue("token") ?? 12345,
+              mock: "false"
+          }
+      })
       .then((response) => {
         Logger.info(
           `SubjectList's axios got the following data: \n ${response.data}`

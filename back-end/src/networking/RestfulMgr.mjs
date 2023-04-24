@@ -1,11 +1,11 @@
+// noinspection ExceptionCaughtLocallyJS
+
 import * as Util from "../util/Util.mjs";
-import {cloneObject, trimMongoDocument} from "../util/Util.mjs";
+import {trimMongoDocument} from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
-import { Mongo } from "./db/MongoMgr.mjs";
 import { subjects } from "../util/MockData.mjs";
-import { faker } from "@faker-js/faker";
 import { restful } from "./NetworkCore.mjs";
 
 function courseApis() {
@@ -50,6 +50,7 @@ function courseApis() {
             //Fetch a list of courses (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("courses").find({})
                 .sort({'courseId': 1})
+                .skip(Util.randInt() % 3)
                 .limit(20);
 
             ret = ret.map(element => Util.trimMongoDocument(element));
@@ -82,7 +83,7 @@ function courseApis() {
             //Fetch a random list of courses (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("courses").find({})
                 .sort({'courseId': 1})
-                .offset(Util.randInt() % 10)
+                .skip(Util.randInt() % 10)
                 .limit(20);
 
             ret = ret.map(element => Util.trimMongoDocument(element));
@@ -142,6 +143,40 @@ function courseApis() {
             //Fetch a list of subjects (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("subjects").find({})
                 .sort({'courseId': 1})
+                .skip(Util.randInt() % 3)
+                .limit(20);
+
+            ret = ret.map(element => Util.trimMongoDocument(element));
+
+            Util.onWebResponse(res, ret);
+
+        } catch(e) {
+            Logger.error(e);
+            Util.onWebResponse(res, e.message, false);
+        }
+    });
+
+    restful.get("/subject/recent", async (req, res) => {
+        if (!Util.isValidWebRequest(req.query, "token")) {
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+
+        try {
+            if (Util.isMockApi(req.query)) {
+                Util.onWebResponse(res, MockData.recentSubjects());
+                return;
+            }
+
+            //Validate token
+            if(!await MongoMgr.isTokenValid(req.query["token"])){
+                throw new Error("token_invalid");
+            }
+
+            //Fetch a list of subjects (still kinda mocky but ok)
+            let ret = await MongoMgr.getModel("subjects").find({})
+                .sort({'courseId': 1})
+                .skip(Util.randInt() % 3)
                 .limit(20);
 
             ret = ret.map(element => Util.trimMongoDocument(element));

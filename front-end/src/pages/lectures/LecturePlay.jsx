@@ -161,11 +161,14 @@ export default function PlayScreen() {
   const [courseId, setCourseId] = useState(0);
   const [isLoaded, setLoaded] = useState(false);
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: Util.getServerAddr() +
-        `/course/detail?token=1234&courseId=${courseId ?? 0}`,
-    }).then(res => {
+    axios.get(Util.getServerAddr() + "/course/detail",
+        {
+            params: {
+                token: Util.readLocalValue("token") ?? 12345,
+                courseId: courseId,
+                mock: "false"
+            }
+        }).then(res => {
       // localStorage.setItem("course", JSON.stringify(res.data.course));
       setCourse(res.data.content);
       setLoaded(true);

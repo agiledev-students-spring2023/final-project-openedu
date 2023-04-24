@@ -99,7 +99,7 @@ export function user() {
     return {
         userId: Util.randInt() % 10000,
         email: "foobar@nyu.edu",
-        name: faker.name,
+        name: faker.name.fullName(),
         motto: faker.lorem.words(5),
         avatar: imageUrl(),
         isBanned: false

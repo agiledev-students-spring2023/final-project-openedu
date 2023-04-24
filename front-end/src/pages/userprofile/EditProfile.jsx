@@ -14,7 +14,6 @@ export default function EditProfile(props) {
     const avatarInputRef = useRef(null);
     const [name, setName] = useState('');
     const [avatarImg, setAvatarImg] = useState('');
-    const [email, setEmail] = useState(''); // Email may required?
     const [selectedAvatar, setSelectedAvatar] = useState(null);
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
@@ -46,20 +45,28 @@ export default function EditProfile(props) {
     setName("");
   };
 
-  const handleSaveChanges = (e) => {
+  const handleSaveChanges = async (e) => {
     e.preventDefault();
-    navigate(-1);
-    //TODO: Enable this in Sprint 2
-    // axios({
-    //     method: "POST",
-    //     url: `${baseURL}/api/user/update_profile`,
-    //     data: {
-    //         name,
-    //         description,
-    //     }
-    // }).then(res => {
-    //     navigate(-1)
-    // })
+
+    try {
+
+        await axios.post(Util.getServerAddr() + "/profile/update",
+            {
+                token: Util.readLocalValue("token") ?? 12345,
+                mock: "false",
+                name: name,
+                motto: description,
+            }
+        );
+
+        navigate(-1);
+
+    } catch(e) {
+        Logger.error("Failed to Edit Profile!");
+        Logger.error(e);
+
+        await Util.invokeCallback("onShowSnackBar", "error", `Operation Failed, reason: ${e.message}`);
+    }
   };
 
   const handleDiscardChanges = (e) => {
@@ -93,76 +100,37 @@ export default function EditProfile(props) {
   };
 
     return (
-        <Container fixed sx={{ marginTop: "10%" }}>
-            <Box>
-                {/* Avatar */}
-                <Box sx={{
-                    width: '95%',
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                }}>
+        <Box fixed sx={{ marginTop: "100px",width: "100%"}}>
 
-                    <StyledAvater src={avatarImg} alt="USER NAME !" size="90px" />
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: "column",
-                        width: "66%",
-                        justifyContent: "space-evenly"
-                    }}>
 
-                        <div>
-                            <input
-                                type="file"
-                                onChange={handleAvatarUpload}
-                                ref={avatarInputRef}
-                                style={{ display: 'none' }}
-                            />
-                            <Button
-                                variant='contained'
-                                sx={{
-                                    display: "flex",
-                                    width: "100%",
-                                }}
-                                onClick={handleSelectAvatar}>
-                                <Upload sx={{ marginRight: "7%" }} />
-                                Upload Avatar </Button>
-                        </div>
+        {/*Avatar*/}
 
-            <Button
-              variant="contained"
-              color="neutral"
-              sx={{
-                display: "flex",
-                width: "100%",
-              }}
-              onClick={() => navigate("/profile/avatars")}
-            >
-              <Event sx={{ marginRight: "5%" }} />
-              Recently Used
-            </Button>
-          </Box>
+        <Box sx={{
+            display: "inline-flex",
+            flexDirection: "row",
+            alignItems: "center"
+            // justifyContent: "space-between"
+        }}>
+            <StyledAvater src={avatarImg} alt="user_avatar" size="90px" />
         </Box>
 
         {/* Info */}
-
         <Box
           sx={{
-            marginTop: "19%",
+            marginTop: "30px",
             width: "100%",
           }}
         >
           <Grid container spacing={3} sx={{ width: "100%" }}>
-            <Grid item sx={{ width: "100%", color: "red" }}>
-              <TextField
-                id="filled-multiline-flexible"
+            <Grid item sx={{ width: "100%" }}>
+
+                <TextField
                 label="Username"
                 value={name}
                 variant="outlined"
                 sx={{
                   width: "100%",
-                  color: "red",
-                  input: { color: "red" },
+                  input: { color: "#fff" },
                 }}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -173,7 +141,7 @@ export default function EditProfile(props) {
                     <InputAdornment position="end">
                       <Button
                         variant="plain"
-                        sx={{ width: "1px", color: "text.secondary" }}
+                        sx={{color: "text.secondary" }}
                         onClick={handleCleanUsername}
                       >
                         <HighlightOff />
@@ -189,13 +157,14 @@ export default function EditProfile(props) {
 
             <Grid item xs={12}>
               <TextField
-                id="outlined-multiline-static"
                 label="Description"
                 multiline
+                variant="outlined"
                 value={description}
                 helperText="Let's have a funny quote!"
                 sx={{
                   width: "100%",
+                    input: { color: "#fff" },
                 }}
                 InputLabelProps={{
                   sx: { color: "#fff" },
@@ -212,8 +181,7 @@ export default function EditProfile(props) {
             spacing={2}
             sx={{
               width: "100%",
-              marginTop: "20%",
-              marginBottom: "50%",
+              marginTop: "30px",
             }}
           >
             <Grid item sx={{ width: "100%" }}>
@@ -222,7 +190,7 @@ export default function EditProfile(props) {
                 sx={{
                   display: "flex",
                   width: "100%",
-
+                  paddingY: "10px",
                   fontSize: "100%",
                 }}
                 onClick={handleSaveChanges}
@@ -239,7 +207,7 @@ export default function EditProfile(props) {
                 sx={{
                   display: "flex",
                   width: "100%",
-
+                    paddingY: "10px",
                   fontSize: "100%",
                 }}
                 onClick={handleDiscardChanges}
@@ -250,7 +218,6 @@ export default function EditProfile(props) {
             </Grid>
           </Grid>
         </Box>
-      </Box>
-    </Container>
+    </Box>
   );
 }

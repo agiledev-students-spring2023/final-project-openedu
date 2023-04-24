@@ -40,27 +40,6 @@ export async function invokeCallback(name, ...args) {
     }
 }
 
-const LIGHT_SCHEME = {
-    primary: {
-
-    },
-    secondary: {
-
-    },
-    teriary: {
-
-    },
-    error: {
-
-    },
-    background: {
-
-    },
-    surface_variant: {
-
-    },
-};
-
 const DARK_SCHEME = {
     primary: {
         main: '#30418b',
@@ -98,40 +77,6 @@ const DARK_SCHEME = {
     },
 };
 
-
-const BACK_UP = {
-    primary: {
-        main: '#4659A9',
-        dark: '#B8C3FF'
-    },
-    secondary: {
-        main: '#4A58A9',
-        dark: '#BBC3FF'
-    },
-    teriary: {
-        main: ''
-    },
-    error: {
-        main: '#BA1A1A',
-        dark: 'FFB4AB'
-    },
-    success: {
-        main: 'rgb(88,229,82)',
-        dark: 'rgb(136,204,134)'
-    },
-    warning: {
-        main: '#974812',
-        dark: '#FFB68F'
-    },
-    neutral: {
-        main: '#303034',
-        contrastText: "#fff"
-    },
-    background: {
-        default: colors.grey[100],
-        paper: colors.common.white
-    },
-};
 export function getTheme() {
     // Reminder: in newer versions of MUI, the color does not seem to be calculated
     return createTheme(
@@ -143,7 +88,7 @@ export function getTheme() {
                         root: {
                             borderRadius: "8px",
                             opacity: '0.8',
-                            color: '#000',
+                            // color: '#fff',
                             '& .MuiInputBase-input': {
                                 color: '#fff',
                             },
@@ -249,7 +194,6 @@ export function getTheme() {
         }
     );
 }
-
 
 //NOTE: React.js env keys shall be defined with the REACT_APP_ prefix, otherwise I cannot read it in
 export function getConfigParam(key) {

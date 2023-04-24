@@ -34,6 +34,7 @@ export default function ComposePost(props) {
               variant="outlined"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
+              sx={{ width: "100%" }}
               required
             />
             <TextField
@@ -45,6 +46,7 @@ export default function ComposePost(props) {
               variant="outlined"
               value={content}
               onChange={(event) => setContent(event.target.value)}
+              sx={{ width: "100%" }}
               required
             />
           </Box>

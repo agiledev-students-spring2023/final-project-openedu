@@ -109,7 +109,7 @@ export async function getValidUser(token) {
         const payload = JWT.verify(token,
             Util.getConfigParam("jwt_secret") ?? 12345,
             {
-                expiresIn: Util.getConfigParam("jwt_expire_time") ?? 100000,
+                expiresIn: Number(Util.getConfigParam("jwt_expire_time")) ?? 100000,
                 algorithm: Util.getConfigParam("jwt_algo") ?? "HS256"
             }
         );
@@ -136,7 +136,7 @@ export async function grantToken(userId) {
     const token = JWT.sign({userId: userId},
         Util.getConfigParam("jwt_secret") ?? 12345,
         {
-            expiresIn: Util.getConfigParam("jwt_expire_time") ?? 100000,
+            expiresIn: Number(Util.getConfigParam("jwt_expire_time")) ?? 100000,
             algorithm: Util.getConfigParam("jwt_algo") ?? "HS256"
         }
     );

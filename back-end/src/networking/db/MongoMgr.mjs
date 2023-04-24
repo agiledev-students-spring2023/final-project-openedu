@@ -11,14 +11,15 @@ import JWT from "jsonwebtoken";
 const modelMap = new Map();
 
 export const registerModels = () => {
-    const modelList = {
-        courses: Models.Course,
-        subjects: Models.Subject,
-        users: Models.User,
-        comments: Models.Comment,
-        counters: Models.Counter,
-        posts: Models.Post,
-    };
+  const modelList = {
+    courses: Models.Course,
+    subjects: Models.Subject,
+    users: Models.User,
+    comments: Models.Comment,
+    tokens: Models.Token,
+    counters: Models.Counter,
+    posts: Models.Post,
+  };
 
     for (const collection in modelList) {
         Mongo.model(collection, modelList[collection]);
@@ -164,16 +165,44 @@ export async function getOnePost(userId, postId) {
 }
 
 export async function createPost(userId, title, content, overview) {
+  const doc = new getModel("posts")({
+    postId: await AtomicCounter.getIncrementCount("post_id"),
+    userId: userId,
+    title: title,
+    content: content,
+    overview: overview,
+    likes: 0,
+    createTime: FmtTime.getCurrentTimeString(),
+  });
 
-    const doc = new getModel("posts")({
-        postId: await AtomicCounter.getIncrementCount("post_id"),
-        userId: userId,
-        title: title,
-        content: content,
-        overview: overview,
-        likes: 0,
-        createTime: FmtTime.getCurrentTimeString(),
-    });
+    doc.save();
+
+    return trimMongoDocument(doc);
+}
+
+
+//use feedID
+//for every feedback
+//there is a feedID
+export async function getFeeds(userId) {
+  return await getModel("feedback")
+    .find({ userId: userId })
+    .sort({ createTime: -1 });
+}
+
+export async function getOneFeed(userId, feedId) {
+    return await getModel("feedback").findOne({userId: userId, feedId: feedId});
+}
+
+export async function createFeed(userId, title, content, overview) {
+  const doc = new getModel("feedback")({
+    feedId: await AtomicCounter.getIncrementCount("feed_id"),
+    userId: userId,
+    title: title,
+    content: content,
+    overview: overview,
+    createTime: FmtTime.getCurrentTimeString(),
+  });
 
     doc.save();
 

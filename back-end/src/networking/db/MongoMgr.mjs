@@ -16,7 +16,6 @@ export const registerModels = () => {
     subjects: Models.Subject,
     users: Models.User,
     comments: Models.Comment,
-    tokens: Models.Token,
     counters: Models.Counter,
     posts: Models.Post,
     feedback: Models.Feedback,

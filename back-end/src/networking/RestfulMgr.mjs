@@ -1,10 +1,9 @@
 // noinspection ExceptionCaughtLocallyJS
 
 import * as Util from "../util/Util.mjs";
-import {trimMongoDocument} from "../util/Util.mjs";
+import { trimMongoDocument } from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
-import {subjects} from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
 import {restful} from "./NetworkCore.mjs";
 import * as ThirdParty from "../util/ThirdPartyAPIs.mjs";
@@ -19,7 +18,7 @@ function courseApis() {
             }
 
             let ret = await MongoMgr.getModel("courses").find({})
-                .sort({'courseId': 1});
+                .sort({ 'courseId': 1 });
 
             ret = ret.map(element => Util.trimMongoDocument(element));
             Util.onWebResponse(res, ret);
@@ -50,7 +49,7 @@ function courseApis() {
 
             //Fetch a list of courses (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("courses").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 3)
                 .limit(20);
 
@@ -83,7 +82,7 @@ function courseApis() {
 
             //Fetch a random list of courses (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("courses").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 10)
                 .limit(20);
 
@@ -133,7 +132,8 @@ function courseApis() {
             const ret = trimMongoDocument(await MongoMgr.getModel("courses").findOne({
                 courseId: req.query["courseId"]
             }));
-
+            const courseImage = await ThirdParty.GetPlayListPic(ret["youtubeUrl"]);
+            ret.imageUrl = courseImage[0];
             if (ret === null)
                 throw new Error("invalid_course_id");
 
@@ -164,7 +164,7 @@ function courseApis() {
 
             //Fetch a list of subjects (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("subjects").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 3)
                 .limit(20);
 
@@ -197,7 +197,7 @@ function courseApis() {
 
             //Fetch a list of subjects (still kinda mocky but ok)
             let ret = await MongoMgr.getModel("subjects").find({})
-                .sort({'courseId': 1})
+                .sort({ 'courseId': 1 })
                 .skip(Util.randInt() % 3)
                 .limit(20);
 
@@ -252,7 +252,11 @@ function courseApis() {
             let courses = await MongoMgr.getModel("courses").find({
                 subjectId: req.query["subjectId"]
             });
-
+            const vidUrls = courses.map(course => course["youtubeUrl"]);
+            const courseImages = await ThirdParty.GetPlayListPic(vidUrls);
+            courses.forEach((course, index) => {
+                course.imageUrl = courseImages[index];
+            });
             courses = courses.map(element => trimMongoDocument(element));
             ret["courses"] = courses;
 
@@ -290,6 +294,7 @@ export async function initRestApis() {
             Util.onWebResponse(res, err.message, false);
         }
     });
+
 
 
     restful.get("/post/list", async (req, res) => {

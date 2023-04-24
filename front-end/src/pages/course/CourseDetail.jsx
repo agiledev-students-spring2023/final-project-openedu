@@ -74,7 +74,7 @@ const Main = (props) => {
               width: "45%",
               display: 'flex'
             }}
-            onClick={() => { navigate('/courses/play'); }}>
+            onClick={() => { navigate(`/courses/play/${course.courseId}`); }}>
             <PlayArrowRounded />
             Play </Button>
           <Button
@@ -98,8 +98,7 @@ const Main = (props) => {
 const InfoSec = (props) => {
   const { instructor1, instructor2, instructor3,
     description, courseHours, prerequisites, difficulty, language } = props.course;
-  console.log(props.course);
-    return (
+  return (
     <Box>
       <Box sx={{
         marginTop: '2vh',
@@ -126,7 +125,7 @@ const InfoSec = (props) => {
         <Typography sx={{}}>
           Prerequisites:
         </Typography >
-        <Typography sx={{ marginLeft: '15%' }}>{prerequisites}</Typography>
+        <Typography sx={{ marginLeft: '15%',textAlign:'left' }}>{prerequisites}</Typography>
 
         <Typography sx={{}}>
           Languages:
@@ -139,11 +138,12 @@ const InfoSec = (props) => {
         <Typography sx={{ marginLeft: '15%' }}>{courseHours}</Typography>
       </Box>
       <Box sx={{ marginTop: '20px' }}>
-        <Typography sx={{ fontWeight: 'bold', float: 'left', clear: 'both', fontSize: '20px' }}>Introduction:</Typography>
+        <Typography sx={{ fontWeight: 'bold', float: 'left', clear: 'both', fontSize: '20px', textAlign:'left' }}>Introduction:</Typography>
         <Typography sx={{
           maxHeight: { lg: '120px', sm: '100px', xs: '50px' },
           overflow: 'scroll',
-          clear: 'both'
+          clear: 'both',
+          textAlign:'left'
         }}>
           {description}
         </Typography>
@@ -166,76 +166,62 @@ export const CourseDetail = () => {
   Logger.verbose(CourseDetail.name + " Loaded!");
   Logger.verbose("URL: " + baseURL + `/course/detail?token=1234&courseId=${courseId ?? 0}`);
 
-  // useEffect(() => {
-  //   //TODO: Fetch actual data, use props.courseId
-  //   //
-  //   // setCourseInfo({
-  //   //   courseId: 0,
-  //   //   name: "foo",
-  //   //   detail: "ipsum_lorem",
-  //   //   language: "Java",
-  //   //   difficulty: "Hard",
-  //   //   url: "https://youtube.com",
-  //   // });
-
-  //   axios
-  //     .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
-  //     .then((response) => {
-
-  //       Logger.info(
-  //         `CourseDetail's axios got the following data: \n ${response.data["content"]}`
-  //       );
-
-  //       setCourseInfo(response.data["content"]);
-
-
-
-  //       setLoaded(true);
-  //     })
-  //     .catch((err) => {
-  //       Logger.error("error fetching subject information");
-  //       Logger.error(err);
-
-  //       //const backupData =
-  //       setCourseInfo([
-  //         {
-  //           courseId: 3,
-  //           name: "backup_course",
-  //           description: "backupDescription",
-  //           imageUrl: Mockaroo.mockImageApi(1920, 1080)
-  //         },
-  //       ]);
-
-  //       setLoaded(true);
-  //       //setData((backupData??[])[0])
-  //     });
-
-  //   setComments([
-  //     {
-  //       userId: 0,
-  //       userName: "abc",
-  //       msg: "haha",
-  //     },
-  //     {
-  //       userId: 1,
-  //       userName: "abcd",
-  //       msg: "hahahahaha",
-  //     },
-  //   ]);
-
-  // }, []);
-
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: Util.getServerAddr() +
-        `/course/detail?token=1234&courseId=${courseId ?? 0}`,
-    }).then(res => {
-      // localStorage.setItem("course", JSON.stringify(res.data.course));
-      setCourse(res.data.content);
-      setLoaded(true);
-    });
+    axios
+      .get(Util.getServerAddr() + `/course/detail?token=1234&courseId=${courseId ?? 0}`)
+      .then((response) => {
+
+        Logger.info(
+          `CourseDetail's axios got the following data: \n ${response.data["content"]}`
+        );
+
+        setCourse(response.data["content"]);
+        console.log(response.data["content"]);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        Logger.error("error fetching subject information");
+        Logger.error(err);
+
+        //const backupData =
+        setCourse([
+          {
+            courseId: 3,
+            name: "backup_course",
+            description: "backupDescription",
+          },
+        ]);
+
+        setLoaded(true);
+        //setData((backupData??[])[0])
+      });
+
+    // setComments([
+    //   {
+    //     userId: 0,
+    //     userName: "abc",
+    //     msg: "haha",
+    //   },
+    //   {
+    //     userId: 1,
+    //     userName: "abcd",
+    //     msg: "hahahahaha",
+    //   },
+    // ]);
+
   }, []);
+
+  // useEffect(() => {
+  //   axios({
+  //     method: 'GET',
+  //     url: Util.getServerAddr() +
+  //       `/course/detail?token=1234&courseId=${courseId ?? 0}`,
+  //   }).then(res => {
+  //     // localStorage.setItem("course", JSON.stringify(res.data.course));
+  //     setCourse(res.data.content);
+  //     setLoaded(true);
+  //   });
+  // }, []);
 
 
 

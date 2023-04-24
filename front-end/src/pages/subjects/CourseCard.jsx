@@ -39,7 +39,6 @@ LinearProgressWithLabel.propTypes = {
 };
 
 export function CourseCard({ entry }) {
-  console.log(entry.imageUrl);
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const routeChange = () => {

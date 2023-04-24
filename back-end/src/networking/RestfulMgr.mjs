@@ -3,7 +3,7 @@ import { cloneObject } from "../util/Util.mjs";
 import * as Logger from "../util/Logger.mjs";
 import * as MockData from "../util/MockData.mjs";
 import * as MongoMgr from "./db/MongoMgr.mjs";
-import { GetPlayListPic } from "../util/ThridPartyAPIs.mjs";
+import { GetPlayListPic, GetLecturesWithID } from "../util/ThridPartyAPIs.mjs";
 import { faker } from "@faker-js/faker";
 import { restful } from "./NetworkCore.mjs";
 
@@ -92,13 +92,37 @@ export async function initRestApis() {
             Util.onWebMissingParam(req, res);
             return;
         }
-
-        const courses = MockData.courses();
         const courseId = req.query["courseId"] ?? 0;
+        try {
+            const course = await Course.findOne({ courseId });
+            const courseImage = await GetPlayListPic(course["youtubeUrl"]);
+            course.imageUrl = courseImage[0];
+            Util.onWebResponse(res, course);
+        } catch (err) {
+            console.error(err);
+            Util.onWebResponse(res, err, false);
+        }
 
-        if (courseId >= courses.length)
-            Util.onWebResponse(res, "invalid_course_id", false);
-        else Util.onWebResponse(res, courses[courseId]);
+
+    });
+
+    restful.get("/course/play", async (req, res) => {
+        if (!Util.isValidWebRequest(req.query, "token", "courseId")) {
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+        const courseId = req.query["courseId"] ?? 0;
+        try {
+            const course = await Course.findOne({ courseId });
+            const lectures = await GetLecturesWithID(course["youtubeUrl"]);
+            Util.onWebResponse(res, lectures);
+        } catch (err) {
+            console.error(err);
+            Util.onWebResponse(res, err, false);
+        }
+
+
+
     });
 
     restful.get("/subject/list", async (req, res) => {
@@ -106,8 +130,15 @@ export async function initRestApis() {
             Util.onWebMissingParam(req, res);
             return;
         }
-        const subjects = await Subject.find()
-        Util.onWebResponse(res, subjects);
+        try {
+            const subjects = await Subject.find()
+            Util.onWebResponse(res, subjects);
+        } catch (err) {
+            console.error(err);
+            Util.onWebResponse(res, err, false);
+        }
+
+
     });
 
     restful.get("/subject/detail", async (req, res) => {
@@ -116,14 +147,19 @@ export async function initRestApis() {
             return;
         }
         const subjectId = req.query["subjectId"] ?? 1;
-        const subject = await Subject.findOne({ subjectId });
-        const courses = await Course.find({ subjectId });
-        const vidUrls = courses.map(course => course["youtubeUrl"]);
-        const courseImages = await GetPlayListPic(vidUrls);
-        courses.forEach((course, index) => {
-            course.imageUrl = courseImages[index];
-        })
-        Util.onWebResponse(res, { subject, courses });
+        try {
+            const subject = await Subject.findOne({ subjectId });
+            const courses = await Course.find({ subjectId });
+            const vidUrls = courses.map(course => course["youtubeUrl"]);
+            const courseImages = await GetPlayListPic(vidUrls);
+            courses.forEach((course, index) => {
+                course.imageUrl = courseImages[index];
+            })
+            Util.onWebResponse(res, { subject, courses });
+        } catch (err) {
+            console.error(err);
+            Util.onWebResponse(res, err, false);
+        }
     });
 
     restful.get("/post", async (req, res) => {

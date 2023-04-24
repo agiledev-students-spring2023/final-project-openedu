@@ -13,6 +13,7 @@ const getYTBThumbnail = (id) => {
 }
 
 const GetPlayListPic = async (listIDs) => {
+    if (typeof listIDs === "string") listIDs = [listIDs];
     const tbnArr = [];
     const tbnArrResolution = ['maxres', 'standard', 'high', 'medium', 'default'];
     listIDs.map((ele) => {
@@ -33,6 +34,20 @@ const GetPlayListPic = async (listIDs) => {
     return images;
 }
 
-export { YTBPlayListAPI, GetPlayListPic };
+const GetLecturesWithID= async (playlistId) => {
+    const response = await axios({
+        method: 'GET',
+        url: `${YTBPlayListAPI(playlistId, 50)}`,
+    })
+    const tbnArrResolution = ['maxres', 'standard', 'high', 'medium', 'default'];
+    
+    if (response.data) {
+        const lectures = response.data.items;
+        return lectures;
+    }
+    else undefined;
+}
+
+export { YTBPlayListAPI, GetPlayListPic,GetLecturesWithID };
 
 

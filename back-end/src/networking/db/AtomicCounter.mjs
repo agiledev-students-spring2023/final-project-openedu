@@ -3,8 +3,6 @@ import * as MongoMgr from "./MongoMgr.mjs";
 const mutexMap = new Map();
 import {Mutex} from "async-mutex";
 
-
-
 function getCounterMutex(key) {
     if (mutexMap.get(key ?? "") !== undefined)
         return mutexMap.get(key ?? "");
@@ -40,9 +38,6 @@ export async function getIncrementCount(key) {
 
         await entry.save();
         mutex.release();
-
-        //Logger.info("New Count: " + 0);
-
 
         return 0;
     }

@@ -170,10 +170,6 @@ export async function initRestApis() {
     } catch (err) {
       Util.onWebResponse(res, err, false);
     }
-
-    // if (postId >= MockData.posts().length)
-    //     Util.onWebResponse(res, "invalid_post_id", false);
-    // else Util.onWebResponse(res, MockData.posts()[postId]);
   });
 
   restful.post("/post", async (req, res) => {
@@ -206,29 +202,10 @@ export async function initRestApis() {
 
     try {
       const posts = await MongoMgr.getPosts(userId);
-      console.log(posts);
       Util.onWebResponse(res, posts);
     } catch (err) {
       Util.onWebResponse(res, err, false);
     }
-
-    // const nPosts = Util.randInt() % 20;
-    // const posts = MockData.posts();
-
-    // const ret = [];
-
-    // const postSet = new Set();
-
-    // for (let i = 0; i < nPosts; ++i) {
-    //   let ind = Util.randInt() % posts.length;
-    //   while (postSet.has(ind)) {
-    //     ind = Util.randInt() % posts.length;
-    //   }
-    //   postSet.add(ind);
-    //   ret.push(posts[ind]);
-    // }
-
-    // Util.onWebResponse(res, ret);
   });
 
   //this api currently responses with an image url

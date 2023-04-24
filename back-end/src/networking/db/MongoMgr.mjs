@@ -159,7 +159,9 @@ export async function isTokenValid(token) {
 }
 
 export async function getPosts(userId) {
-  return await getModel("posts").find({ userId: userId });
+  return await getModel("posts")
+    .find({ userId: userId })
+    .sort({ createTime: -1 });
 }
 
 export async function getOnePost(userId, postId) {

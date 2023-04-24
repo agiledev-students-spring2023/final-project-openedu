@@ -19,6 +19,7 @@ export const registerModels = () => {
     tokens: Models.Token,
     counters: Models.Counter,
     posts: Models.Post,
+    feedback: Models.Feedback,
   };
 
     for (const collection in modelList) {

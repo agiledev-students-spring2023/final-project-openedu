@@ -43,7 +43,7 @@ export function getRoutes() {
 
         <Route path="courses">
           <Route path="detail/:courseId" element={<CourseDetail />} />
-          <Route path="play" element={<LecturePlay />} />
+          <Route path="play/:courseId" element={<LecturePlay />} />
           
         </Route>
 

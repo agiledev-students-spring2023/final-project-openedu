@@ -8,6 +8,7 @@
 *.so
 
 **/.idea
+**/.vscode
 
 # Packages #
 ############

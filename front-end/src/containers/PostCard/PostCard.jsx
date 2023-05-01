@@ -129,7 +129,7 @@ export default function PostCard(props) {
               <IconButton size="small">
                 <StyledLikeIcon />
               </IconButton>
-              <StyledLikesCount>{post.likes}</StyledLikesCount>
+              {/* <StyledLikesCount>{post.likes}</StyledLikesCount> */}
             </StyledLikesContainer>
 
             <Box sx={{ display: "flex", marginLeft: "10px" }}>

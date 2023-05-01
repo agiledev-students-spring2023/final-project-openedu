@@ -7,8 +7,12 @@ import url from "url";
 import cors from "cors";
 import * as MongoMgr from "./db/MongoMgr.mjs";
 import {initRestApis} from "./RestfulMgr.mjs";
+import * as Util from "../util/Util.mjs";
+import * as fs from "fs";
+import * as Https from "https";
 
 export const restful = express();
+export let isHttps = false;
 
 //TODO: Replace this with the following in production
 // const server = Https.createServer({
@@ -19,12 +23,12 @@ export const restful = express();
 /**
  * The root HTTP(S) server instance. I don't really know who needs it outside this file but whatever.
  */
-const server = Http.createServer(restful);
+let server;
 
 /**
  * Socket.IO server instance for the chat server.
  */
-export const socketIoServer = new SocketIo.Server(server);
+export let socketIoServer;
 
 export async function initMiddleware() {
   restful.use(express.urlencoded({ extended: false }));
@@ -40,10 +44,37 @@ export async function initMiddleware() {
   );
 
   const corsOptions = {
-    origin: `http://localhost:${process.env.PORT || 3000}`,
+    origin: (isHttps ? "https://" : "http://") + Util.getConfigParam("FRONT_END_CORS") //`http://localhost:${process.env.PORT || 3000}`,
   };
 
   restful.use(cors(corsOptions));
+}
+
+export async function init() {
+  try {
+
+    const privKey = fs.readFileSync(Util.getConfigParam("privkey_pem_path") ?? ""),
+        fullchainKey = fs.readFileSync(Util.getConfigParam("fullchain_pem_path") ?? "");
+
+    server = Https.createServer({
+      key: privKey,
+      cert: fullchainKey
+    }, restful);
+
+    isHttps = true;
+
+  } catch (e) {
+    Logger.error("Failed to start the server in HTTPS mode, falling back to HTTP mode...");
+    server = Http.createServer(restful);
+
+  } finally {
+    /**
+     * Socket.IO server instance for the chat server.
+     */
+    socketIoServer = new SocketIo.Server(server);
+    Logger.info("SocketIO Instance created!");
+
+  }
 }
 
 /**
@@ -56,6 +87,7 @@ export function bind(port) {
   });
 }
 export async function startServer(port) {
+  await init();
   await initMiddleware();
   await MongoMgr.init();
   await initRestApis();

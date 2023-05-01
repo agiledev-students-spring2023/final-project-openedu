@@ -16,9 +16,12 @@ export function addCallback(name, func) {
 
 export function getConfigParam(key) {
     if (!isEnvReady) {
+        Logger.info("Initializing DOTENV");
         dotenv.config();
         isEnvReady = true;
     }
+
+    // Logger.info("available keys: " + JSON.stringify(process.env))
 
     if (process.env[key.toUpperCase()] === undefined) {
         // noinspection ExceptionCaughtLocallyJS

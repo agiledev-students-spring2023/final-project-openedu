@@ -8,6 +8,7 @@
 *.so
 
 **/.idea
+**/.vscode
 
 # Packages #
 ############
@@ -264,3 +265,5 @@ dist
 
 #vscode
 .vscode
+
+back-end/creds

@@ -98,6 +98,8 @@ const Main = (props) => {
   );
 };
 
+// Todo: Fix alignment issue
+
 const InfoSec = (props) => {
   const { instructor1, instructor2, instructor3,
     description, courseHours, prerequisites, difficulty, language } = props.course;

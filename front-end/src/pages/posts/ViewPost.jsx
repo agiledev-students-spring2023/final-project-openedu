@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import MDEditor from "@uiw/react-md-editor";
 import { Box, Typography, IconButton } from "@mui/material";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
 import Loading from "../../containers/Loading/Loading";
 import * as Util from "../../util/Util.mjs";
@@ -28,6 +28,13 @@ export function ViewPost() {
         },
       })
       .then((response) => {
+
+        if (response.data["status"] !== 0) {
+          Logger.info(response.data["status"]);
+          Util.onAuthError(useNavigate()).then(r => true);
+          return;
+        }
+
         setPost(response.data["content"]);
         setIsSaved(response.data["content"]["isSaved"]);
 

@@ -89,24 +89,12 @@ export function CourseCard({ entry }) {
             }}>
             {isExpanded ? 'Collapse' : 'Read more'}
           </Button>
-          {/*<Typography variant="caption" component="div">*/}
-          {/*  CompletionRate: {entry.completionRate ?? 0}*/}
-          {/*</Typography>*/}
           <Box
             sx={{
               display: "Grid",
+              marginTop: '20px'
             }}
           >
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <LinearProgressWithLabel
-                value={entry.completionRate ?? 0}
-                component="div"
-              />
-            </Box>
             <Button variant="contained" component="div" onClick={routeChange}>
               Continue
             </Button>

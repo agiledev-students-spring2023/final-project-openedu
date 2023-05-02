@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
 
 export default function CourseCardAtHome({ entry }) {
-    const { name, completionRate } = entry.name
+    const { name } = entry.name
         ? entry
-        : { name: "Title", completionRate: 0 };
+        : { name: "Title"};
 
     const cardSize = 106;
 

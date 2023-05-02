@@ -181,6 +181,14 @@ export async function getPosts(userId) {
     .sort({ createTime: -1 });
 }
 
+export async function getAllPosts() {
+
+    return await getModel("posts")
+        .find({})
+        .sort({createTime: -1});
+
+}
+
 export async function getOnePost(postId) {
   return trimMongoDocument(await getModel("posts").findOne({ postId: postId }));
 }

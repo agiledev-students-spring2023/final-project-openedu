@@ -115,27 +115,18 @@ export function SubjectCard(
                     {/*</Typography>*/}
 
 
-                    <Box
-                        sx={{
-                            display: "Grid",
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                width: "100%",
-                            }}
-                        >
-                            <LinearProgressWithLabel
-                                value={entry.completionRate ?? 0}
-                                component="div"
-                            />
-                        </Box>
-                        <Button variant="contained" onClick={routeChange}>
-                            Learn More
-                        </Button>
-                    </Box>
-                </CardContent>
-            </Card>
-        </Grid>
-    );
+          <Box
+              sx={{
+                display: "Grid",
+                marginTop: '20px'
+              }}
+          >
+            <Button variant="contained" onClick={routeChange}>
+              Learn More
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+    </Grid>
+  );
 }

@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import MDEditor from "@uiw/react-md-editor";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
 import Loading from "../../containers/Loading/Loading";
@@ -14,26 +15,21 @@ export function ViewPost() {
   const { postId } = useParams();
 
   const [post, setPost] = useState(null);
-  // const [postTitle, setPostTitle] = useState("");
-  // const [postContent, setPostContent] = useState("");
-  // const [postDate, setPostDate] = useState("");
   const [isPostLoaded, setIsPostLoaded] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    // if (!postId) {
-    //   return;
-    // }
     axios
       .get(Util.getServerAddr() + `/post/detail`, {
-        params : {
+        params: {
           token: Util.readLocalValue("token") ?? 12345,
           mock: "false",
-          postId: postId
-        }
+          postId: postId,
+        },
       })
       .then((response) => {
-
         setPost(response.data["content"]);
+        setIsSaved(response.data["content"]["isSaved"]);
 
         setIsPostLoaded(true);
       })
@@ -44,12 +40,30 @@ export function ViewPost() {
         setPost({
           title: "backup_post",
           content: "backup_post_content",
-          createTime: "backup_post_date"
+          createTime: "backup_post_date",
         });
 
         setIsPostLoaded(true);
       });
   }, [postId]);
+
+  const handleOnSave = () => {
+    axios
+      .post(Util.getServerAddr() + `/post/save`, {
+        token: Util.readLocalValue("token") ?? 12345,
+        mock: "false",
+        postId: postId,
+        isSaved: !isSaved,
+      })
+      .then((response) => {
+        Logger.info(response);
+      })
+      .catch((err) => {
+        Logger.error(err);
+      });
+
+    setIsSaved(!isSaved);
+  };
 
   const styles = {
     markdownWrapper: {
@@ -76,7 +90,9 @@ export function ViewPost() {
       {isPostLoaded ? (
         <Box sx={{ marginLeft: "5%" }}>
           <MDEditor.Markdown
-            source={`## ${(post??{})["title"]??""}\n\n${(post??{})["content"]??""}`}
+            source={`## ${(post ?? {})["title"] ?? ""}\n\n${
+              (post ?? {})["content"] ?? ""
+            }`}
             style={{
               width: "94%",
               textAlign: "left",
@@ -87,16 +103,26 @@ export function ViewPost() {
           <Box sx={styles.metadataWrapper}>
             <Typography variant="subtitle1" sx={{ color: "#666" }}>
               {" "}
-              {new Date((post??{})["createTime"]??"").toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                hour12: true,
-              })}
+              {new Date((post ?? {})["createTime"] ?? "").toLocaleDateString(
+                "en-US",
+                {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                }
+              )}
             </Typography>
           </Box>
+          <IconButton onClick={handleOnSave} aria-label="heart button">
+            {isSaved ? (
+              <Favorite fontSize="large" style={{ color: "#FF4081" }} />
+            ) : (
+              <FavoriteBorder fontSize="large" style={{ color: "#FF4081" }} />
+            )}
+          </IconButton>
         </Box>
       ) : (
         <Loading />

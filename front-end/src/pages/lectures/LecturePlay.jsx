@@ -164,13 +164,7 @@ export default function PlayScreen() {
                 >
                   Videos
                 </Button>
-                <Button
-                  onClick={() => {
-                    setVid(false);
-                  }}
-                >
-                  Comments
-                </Button>
+         
               </ButtonGroup>
               {vid ? <FoldableButtonList
                 lectures={lectures}

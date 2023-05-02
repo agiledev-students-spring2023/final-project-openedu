@@ -16,7 +16,7 @@ export function ViewPost() {
 
   const [post, setPost] = useState(null);
   const [isPostLoaded, setIsPostLoaded] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     axios
@@ -29,6 +29,7 @@ export function ViewPost() {
       })
       .then((response) => {
         setPost(response.data["content"]);
+        setIsSaved(response.data["content"]["isSaved"]);
 
         setIsPostLoaded(true);
       })
@@ -46,8 +47,22 @@ export function ViewPost() {
       });
   }, [postId]);
 
-  const handleOnLike = () => {
-    setLiked(!liked);
+  const handleOnSave = () => {
+    axios
+      .post(Util.getServerAddr() + `/post/save`, {
+        token: Util.readLocalValue("token") ?? 12345,
+        mock: "false",
+        postId: postId,
+        isSaved: !isSaved,
+      })
+      .then((response) => {
+        Logger.info(response);
+      })
+      .catch((err) => {
+        Logger.error(err);
+      });
+
+    setIsSaved(!isSaved);
   };
 
   const styles = {
@@ -101,8 +116,8 @@ export function ViewPost() {
               )}
             </Typography>
           </Box>
-          <IconButton onClick={handleOnLike} aria-label="heart button">
-            {liked ? (
+          <IconButton onClick={handleOnSave} aria-label="heart button">
+            {isSaved ? (
               <Favorite fontSize="large" style={{ color: "#FF4081" }} />
             ) : (
               <FavoriteBorder fontSize="large" style={{ color: "#FF4081" }} />

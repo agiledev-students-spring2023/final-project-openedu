@@ -195,7 +195,7 @@ export function getTheme() {
     );
 }
 
-//NOTE: React.js .env keys shall be defined with the REACT_APP_ prefix, otherwise I cannot read it in
+//NOTE: React.js ..env keys shall be defined with the REACT_APP_ prefix, otherwise I cannot read it in
 export function getConfigParam(key) {
     // if(!isEnvReady) {
     //     //dotenv.config();

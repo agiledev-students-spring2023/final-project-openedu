@@ -10,549 +10,572 @@ import * as ThirdParty from "../util/ThirdPartyAPIs.mjs";
 
 function courseApis() {
 
-    restful.get("/course/list", async (req, res) => {
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.courses());
-                return;
-            }
+  restful.get("/course/list", async (req, res) => {
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.courses());
+        return;
+      }
 
-            let ret = await MongoMgr.getModel("courses").find({})
-                .sort({ 'courseId': 1 });
+      let ret = await MongoMgr.getModel("courses").find({})
+          .sort({ 'courseId': 1 });
 
-            ret = ret.map(element => Util.trimMongoDocument(element));
-            Util.onWebResponse(res, ret);
+      ret = ret.map(element => Util.trimMongoDocument(element));
+      Util.onWebResponse(res, ret);
 
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
 
-    });
+  });
 
-    restful.get("/course/recommend", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+  restful.get("/course/recommend", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.suggestCourses());
-                return;
-            }
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.suggestCourses());
+        return;
+      }
 
-            if (!await MongoMgr.isTokenValid(req.query["token"])) {
-                throw new Error("token_invalid");
-            }
+      if (!await MongoMgr.isTokenValid(req.query["token"])) {
+        throw new Error("token_invalid");
+      }
 
-            //Fetch a list of courses (still kinda mocky but ok)
-            let ret = await MongoMgr.getModel("courses").find({})
-                .sort({ 'courseId': 1 })
-                .skip(Util.randInt() % 3)
-                .limit(20);
+      //Fetch a list of courses (still kinda mocky but ok)
+      let ret = await MongoMgr.getModel("courses").find({})
+          .sort({ 'courseId': 1 })
+          .skip(Util.randInt() % 3)
+          .limit(20);
 
-            ret = ret.map(element => Util.trimMongoDocument(element));
+      ret = ret.map(element => Util.trimMongoDocument(element));
 
-            Util.onWebResponse(res, ret);
+      Util.onWebResponse(res, ret);
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
 
-    restful.get("/course/recent", async (req, res) => {
+  restful.get("/course/recent", async (req, res) => {
 
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.recentCourses());
-                return;
-            }
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.recentCourses());
+        return;
+      }
 
-            if (!await MongoMgr.isTokenValid(req.query["token"])) {
-                throw new Error("token_invalid");
-            }
+      if (!await MongoMgr.isTokenValid(req.query["token"])) {
+        throw new Error("token_invalid");
+      }
 
-            //Fetch a random list of courses (still kinda mocky but ok)
-            let ret = await MongoMgr.getModel("courses").find({})
-                .sort({ 'courseId': 1 })
-                .skip(Util.randInt() % 10)
-                .limit(20);
+      //Fetch a random list of courses (still kinda mocky but ok)
+      let ret = await MongoMgr.getModel("courses").find({})
+          .sort({ 'courseId': 1 })
+          .skip(Util.randInt() % 10)
+          .limit(20);
 
-            ret = ret.map(element => Util.trimMongoDocument(element));
+      ret = ret.map(element => Util.trimMongoDocument(element));
 
-            Util.onWebResponse(res, ret);
+      Util.onWebResponse(res, ret);
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
 
-    restful.get("/course/play", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "courseId")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+  restful.get("/course/play", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "courseId")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        const courseId = req.query["courseId"] ?? 0;
-        try {
-            const course = await MongoMgr.getModel("courses").findOne({"courseId": courseId});
+    const courseId = req.query["courseId"] ?? 0;
+    try {
+      const course = await MongoMgr.getModel("courses").findOne({"courseId": courseId});
 
-            Logger.info(JSON.stringify(course));
+      Logger.info(JSON.stringify(course));
 
-            const lectures = await ThirdParty.GetLecturesWithID(course["youtubeUrl"] ?? "PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi");
-            Util.onWebResponse(res, lectures);
+      const lectures = await ThirdParty.GetLecturesWithID(course["youtubeUrl"] ?? "PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi");
+      Util.onWebResponse(res, lectures);
 
-        } catch (err) {
-            Logger.error(err);
-            Util.onWebResponse(res, err, false);
-        }
-    });
+    } catch (err) {
+      Logger.error(err);
+      Util.onWebResponse(res, err, false);
+    }
+  });
 
-    restful.get("/course/detail", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "courseId")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+  restful.get("/course/detail", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "courseId")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.course());
-                return;
-            }
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.course());
+        return;
+      }
 
-            const ret = trimMongoDocument(await MongoMgr.getModel("courses").findOne({
-                courseId: req.query["courseId"]
-            }));
+      const ret = trimMongoDocument(await MongoMgr.getModel("courses").findOne({
+        courseId: req.query["courseId"]
+      }));
 
-            const courseImage = await ThirdParty.GetPlayListPic(ret["youtubeUrl"]);
-            ret.imageUrl = courseImage[0];
-            if (ret === null)
-                throw new Error("invalid_course_id");
+      const courseImage = await ThirdParty.GetPlayListPic(ret["youtubeUrl"]);
+      ret.imageUrl = courseImage[0];
 
-            Util.onWebResponse(res, ret);
+      if (ret === null)
+        throw new Error("invalid_course_id");
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
+      Util.onWebResponse(res, ret);
 
-    restful.get("/subject/recommend", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
 
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.suggestSubjects());
-                return;
-            }
+  restful.get("/subject/recommend", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-            //Validate token
-            if (!await MongoMgr.isTokenValid(req.query["token"])) {
-                throw new Error("token_invalid");
-            }
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.suggestSubjects());
+        return;
+      }
 
-            //Fetch a list of subjects (still kinda mocky but ok)
-            let ret = await MongoMgr.getModel("subjects").find({})
-                .sort({ 'courseId': 1 })
-                .skip(Util.randInt() % 3)
-                .limit(20);
+      //Validate token
+      if (!await MongoMgr.isTokenValid(req.query["token"])) {
+        throw new Error("token_invalid");
+      }
 
-            ret = ret.map(element => Util.trimMongoDocument(element));
+      //Fetch a list of subjects (still kinda mocky but ok)
+      let ret = await MongoMgr.getModel("subjects").find({})
+          .sort({ 'courseId': 1 })
+          .skip(Util.randInt() % 3)
+          .limit(20);
 
-            Util.onWebResponse(res, ret);
+      ret = ret.map(element => Util.trimMongoDocument(element));
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
+      Util.onWebResponse(res, ret);
 
-    restful.get("/subject/recent", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
 
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.recentSubjects());
-                return;
-            }
+  restful.get("/subject/recent", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-            //Validate token
-            if (!await MongoMgr.isTokenValid(req.query["token"])) {
-                throw new Error("token_invalid");
-            }
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.recentSubjects());
+        return;
+      }
 
-            //Fetch a list of subjects (still kinda mocky but ok)
-            let ret = await MongoMgr.getModel("subjects").find({})
-                .sort({ 'courseId': 1 })
-                .skip(Util.randInt() % 3)
-                .limit(20);
+      //Validate token
+      if (!await MongoMgr.isTokenValid(req.query["token"])) {
+        throw new Error("token_invalid");
+      }
 
-            ret = ret.map(element => Util.trimMongoDocument(element));
+      //Fetch a list of subjects (still kinda mocky but ok)
+      let ret = await MongoMgr.getModel("subjects").find({})
+          .sort({ 'courseId': 1 })
+          .skip(Util.randInt() % 3)
+          .limit(20);
 
-            Util.onWebResponse(res, ret);
+      ret = ret.map(element => Util.trimMongoDocument(element));
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
+      Util.onWebResponse(res, ret);
 
-    restful.get("/subject/list", async (req, res) => {
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.suggestSubjects());
-                return;
-            }
-            //Fetch a list of subjects (still kinda mocky but ok)
-            let ret = await MongoMgr.getModel("subjects").find({});
-            ret = ret.map(element => Util.trimMongoDocument(element));
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
 
-            Util.onWebResponse(res, ret);
+  restful.get("/subject/list", async (req, res) => {
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.suggestSubjects());
+        return;
+      }
+      //Fetch a list of subjects (still kinda mocky but ok)
+      let ret = await MongoMgr.getModel("subjects").find({});
+      ret = ret.map(element => Util.trimMongoDocument(element));
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
+      Util.onWebResponse(res, ret);
 
-    });
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
 
-    restful.get("/subject/detail", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "subjectId")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+  });
 
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.subject());
-                return;
-            }
+  restful.get("/subject/detail", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "subjectId")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-            const ret = trimMongoDocument(await MongoMgr.getModel("subjects").findOne({
-                subjectId: req.query["subjectId"]
-            }));
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.subject());
+        return;
+      }
 
-            if (ret === null)
-                throw new Error("invalid_subject_id");
+      const ret = trimMongoDocument(await MongoMgr.getModel("subjects").findOne({
+        subjectId: req.query["subjectId"]
+      }));
 
-            let courses = await MongoMgr.getModel("courses").find({
-                subjectId: req.query["subjectId"]
-            });
-            const vidUrls = courses.map(course => course["youtubeUrl"]);
-            const courseImages = await ThirdParty.GetPlayListPic(vidUrls);
-            courses.forEach((course, index) => {
-                course.imageUrl = courseImages[index];
-            });
-            courses = courses.map(element => trimMongoDocument(element));
-            ret["courses"] = courses;
+      if (ret === null)
+        throw new Error("invalid_subject_id");
 
-            Util.onWebResponse(res, ret);
+      let courses = await MongoMgr.getModel("courses").find({
+        subjectId: req.query["subjectId"]
+      });
+      const vidUrls = courses.map(course => course["youtubeUrl"]);
+      const courseImages = await ThirdParty.GetPlayListPic(vidUrls);
+      courses.forEach((course, index) => {
+        course.imageUrl = courseImages[index];
+      });
+      courses = courses.map(element => trimMongoDocument(element));
+      ret["courses"] = courses;
 
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
+      Util.onWebResponse(res, ret);
+
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
 }
 
 export async function initRestApis() {
-    MockData.init();
+  MockData.init();
 
-    courseApis();
+  courseApis();
 
-    restful.post("/post/add", async (req, res) => {
-        try {
+  restful.post("/post/add", async (req, res) => {
+    try {
 
-            const user = await MongoMgr.getValidUser(req.body["token"]);
+      const user = await MongoMgr.getValidUser(req.body["token"]);
 
-            //Validate token
-            if (user === undefined) {
-                throw new Error("token_invalid");
-            }
+      //Validate token
+      if (user === undefined) {
+        throw new Error("token_invalid");
+      }
+
+      const params = cloneObject(req.body,"token");
+
+      Logger.info("UserId: " + user.userId);
+
+      //params["userId"] = user.userId;
+      const content = params["content"]??"";
+      params["overview"] = content.length > 50 ? content.substring(0,50) + "..." : content;
 
-            const params = cloneObject(req.body,"token");
+      Util.onWebResponse(res, trimMongoDocument(await MongoMgr.createPost(user.userId, params)));
 
-            Logger.info("UserId: " + user.userId);
+    } catch (err) {
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+    }
+  });
+
 
-            //params["userId"] = user.userId;
-            const content = params["content"]??"";
-            params["overview"] = content.length > 50 ? content.substring(0,50) + "..." : content;
 
-            Util.onWebResponse(res, trimMongoDocument(await MongoMgr.createPost(user.userId, params)));
+  restful.get("/post/list", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        } catch (err) {
-            Logger.error(err);
-            Util.onWebResponse(res, err.message, false);
-        }
-    });
+    try {
 
+      const user = await MongoMgr.getValidUser(req.query["token"]);
+      //Validate token
+      if (user === undefined) {
+        throw new Error("token_invalid");
+      }
 
+      //TODO: Make the userId variant as soon as possible
+      const posts = (await MongoMgr.getPosts(user.userId)).map(entry => trimMongoDocument(entry));
 
-    restful.get("/post/list", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+      //Logger.info(JSON.stringify(posts));
+      Util.onWebResponse(res, posts);
+    } catch (err) {
 
-        try {
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+    }
+  });
 
-            const user = await MongoMgr.getValidUser(req.query["token"]);
-            //Validate token
-            if (user === undefined) {
-                throw new Error("token_invalid");
-            }
+  restful.get("/post/all", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-            //TODO: Make the userId variant as soon as possible
-            const posts = (await MongoMgr.getPosts(user.userId)).map(entry => trimMongoDocument(entry));
+    try {
+      const user = await MongoMgr.getValidUser(req.query["token"]);
+      //Validate token
+      if (user === undefined) {
+        throw new Error("token_invalid");
+      }
 
-            //Logger.info(JSON.stringify(posts));
-            Util.onWebResponse(res, posts);
-        } catch (err) {
+      //TODO: Make the userId variant as soon as possible
+      const posts = (await MongoMgr.getAllPosts()).map(entry => trimMongoDocument(entry));
 
-            Logger.error(err);
-            Util.onWebResponse(res, err.message, false);
-        }
-    });
+      //Logger.info(JSON.stringify(posts));
+      Util.onWebResponse(res, posts);
+    } catch (err) {
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+    }
+  });
 
-    restful.get("/post/all", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+  restful.get("/post/detail", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token","postId")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        try {
-            const user = await MongoMgr.getValidUser(req.query["token"]);
-            //Validate token
-            if (user === undefined) {
-                throw new Error("token_invalid");
-            }
+    try {
 
-            //TODO: Make the userId variant as soon as possible
-            const posts = (await MongoMgr.getAllPosts()).map(entry => trimMongoDocument(entry));
+      const user = await MongoMgr.getValidUser(req.query["token"]);
+      //Validate token
+      if (user === undefined) {
+        throw new Error("token_invalid");
+      }
 
-            //Logger.info(JSON.stringify(posts));
-            Util.onWebResponse(res, posts);
-        } catch (err) {
-            Logger.error(err);
-            Util.onWebResponse(res, err.message, false);
-        }
-    });
+      //TODO: Make the userId variant as soon as possible
+      const post = await MongoMgr.getOnePost(req.query["postId"]);
 
-    restful.get("/post/detail", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token","postId")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+      //Logger.info(JSON.stringify(posts));
+      Util.onWebResponse(res, post);
+    } catch (err) {
 
-        try {
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+    }
+  });
 
-            const user = await MongoMgr.getValidUser(req.query["token"]);
-            //Validate token
-            if (user === undefined) {
-                throw new Error("token_invalid");
-            }
+  restful.post("/post/save", async (req, res) => {
+    try {
+      const user = await MongoMgr.getValidUser(req.body["token"]);
+      //Validate token
+      if (user === undefined) {
+        throw new Error("token_invalid");
+      }
 
-            //TODO: Make the userId variant as soon as possible
-            const post = await MongoMgr.getOnePost(req.query["postId"]);
+      const postId = req.body["postId"];
+      const isSaved = req.body["isSaved"];
 
-            //Logger.info(JSON.stringify(posts));
-            Util.onWebResponse(res, post);
-        } catch (err) {
+      Logger.info("postId: " + postId + "; isSaved: " + isSaved);
 
-            Logger.error(err);
-            Util.onWebResponse(res, err.message, false);
-        }
-    });
+      await MongoMgr.updatePost(postId, { isSaved: isSaved });
 
+      Util.onWebResponse(res, true);
+    } catch (err) {
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+    }
+  });
+
 
-    restful.post("/feedback/add", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token", "title", "content")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
+  restful.post("/feedback/add", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token", "title", "content")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
 
-        try {
-
-            const user = await MongoMgr.getValidUser(req.body["token"]);
-
-            //Validate token
-            if (user === null) {
-                throw new Error("token_invalid");
-            }
-
-            const params = cloneObject(req.body,"token");
-
-            const content = params["content"]??"";
-            params["overview"] = content.length > 50 ? content.substring(0,50) + "..." : content;
-
-            Util.onWebResponse(res, await MongoMgr.createFeed(user.userId, params));
-
-        } catch (err) {
-            Logger.error(err);
-            Util.onWebResponse(res, err.message, false);
-        }
-    });
-
-    restful.get("/feedback/list", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        try {
-
-            //Validate token
-            if (!await MongoMgr.isTokenValid(req.query["token"])) {
-                throw new Error("token_invalid");
-            }
-
-            //TODO: Make the userId variant as soon as possible
-            let feedback = await MongoMgr.getFeeds(0);
-
-            feedback = feedback.map(entry => trimMongoDocument(entry));
-
-            Logger.info(feedback);
-            Util.onWebResponse(res, feedback);
-        } catch (err) {
-
-            Logger.error(err);
-            Util.onWebResponse(res, err.message, false);
-
-        }
-    });
-
-    //this api currently responses with an image url
-    restful.get("/background-image", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "width", "height")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        const image = `https://picsum.photos/${req.query["width"]}/${req.query["height"]}`;
-
-        Util.onWebResponse(res, image);
-    });
-
-    restful.get("/profile/info", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, MockData.user());
-                return;
-            }
-            const user = await MongoMgr.getValidUser(req.query["token"]);
-
-            if (user === undefined) {
-                throw new Error("token_invalid");
-            }
-
-            Util.onWebResponse(res, trimMongoDocument(user, "pwd"));
-
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
-
-    restful.post("/profile/update", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        try {
-            if (Util.isMockApi(req)) {
-                Util.onWebResponse(res, "mock");
-                return;
-            }
-
-            //Do everything in one shot lol
-            Util.onWebResponse(res,
-                trimMongoDocument(
-                    await MongoMgr.updateProfile(
-                        req.body["token"],
-                        req.body
-                    ),
-                    "pwd"
-                )
-            );
-
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
-
-
-    restful.get("/login/info", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "email")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        const entry = await MongoMgr.getUserInfo(req.query["email"]);
-        const isUserValid = entry !== null && entry !== undefined;
-
-        Logger.info("Queried User: " + JSON.stringify(entry));
-
-        Util.onWebResponse(res, isUserValid ? entry : "user_invalid", isUserValid);
-    });
-
-    restful.post("/login/validate", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "email", "pwd")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-
-        try {
-            Logger.info(`Begin user validation of ${req.body["email"]}`);
-
-            const userEntry = await MongoMgr.validateUser(
-                req.body["email"],
-                req.body["pwd"]
-            );
-
-            Logger.info(`Validation Complete`);
-
-            userEntry["token"] = (
-                await MongoMgr.grantToken(userEntry["userId"] ?? 0)
-            )["token"];
-
-            Logger.info(`Token Granted`);
-
-            Util.onWebResponse(res, Util.cloneObject(userEntry, "pwd"));
-        } catch (e) {
-            Logger.error(e);
-            Util.onWebResponse(res, e.message, false);
-        }
-    });
-
-    restful.get("/login/token/validate", async (req, res) => {
-        if (!Util.isValidWebRequest(req, "token")) {
-            Util.onWebMissingParam(req, res);
-            return;
-        }
-        const isValid = await MongoMgr.isTokenValid(req.query["token"]);
-
-        Util.onWebResponse(res, isValid ? "valid" : "invalid", isValid);
-    });
+    try {
+
+      const user = await MongoMgr.getValidUser(req.body["token"]);
+
+      //Validate token
+      if (user === null) {
+        throw new Error("token_invalid");
+      }
+
+      const params = cloneObject(req.body,"token");
+
+      const content = params["content"]??"";
+      params["overview"] = content.length > 50 ? content.substring(0,50) + "..." : content;
+
+      Util.onWebResponse(res, await MongoMgr.createFeed(user.userId, params));
+
+    } catch (err) {
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+    }
+  });
+
+  restful.get("/feedback/list", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    try {
+
+      //Validate token
+      if (!await MongoMgr.isTokenValid(req.query["token"])) {
+        throw new Error("token_invalid");
+      }
+
+      //TODO: Make the userId variant as soon as possible
+      let feedback = await MongoMgr.getFeeds(0);
+
+      feedback = feedback.map(entry => trimMongoDocument(entry));
+
+      Logger.info(feedback);
+      Util.onWebResponse(res, feedback);
+    } catch (err) {
+
+      Logger.error(err);
+      Util.onWebResponse(res, err.message, false);
+
+    }
+  });
+
+  //this api currently responses with an image url
+  restful.get("/background-image", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "width", "height")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    const image = `https://picsum.photos/${req.query["width"]}/${req.query["height"]}`;
+
+    Util.onWebResponse(res, image);
+  });
+
+  restful.get("/profile/info", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, MockData.user());
+        return;
+      }
+      const user = await MongoMgr.getValidUser(req.query["token"]);
+
+      if (user === undefined) {
+        throw new Error("token_invalid");
+      }
+
+      Util.onWebResponse(res, trimMongoDocument(user, "pwd"));
+
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
+
+  restful.post("/profile/update", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    try {
+      if (Util.isMockApi(req)) {
+        Util.onWebResponse(res, "mock");
+        return;
+      }
+
+      //Do everything in one shot lol
+      Util.onWebResponse(res,
+          trimMongoDocument(
+              await MongoMgr.updateProfile(
+                  req.body["token"],
+                  req.body
+              ),
+              "pwd"
+          )
+      );
+
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
+
+
+  restful.get("/login/info", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "email")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    const entry = await MongoMgr.getUserInfo(req.query["email"]);
+    const isUserValid = entry !== null && entry !== undefined;
+
+    Logger.info("Queried User: " + JSON.stringify(entry));
+
+    Util.onWebResponse(res, isUserValid ? entry : "user_invalid", isUserValid);
+  });
+
+  restful.post("/login/validate", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "email", "pwd")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+
+    try {
+      Logger.info(`Begin user validation of ${req.body["email"]}`);
+
+      const userEntry = await MongoMgr.validateUser(
+          req.body["email"],
+          req.body["pwd"]
+      );
+
+      Logger.info(`Validation Complete`);
+
+      userEntry["token"] = (
+          await MongoMgr.grantToken(userEntry["userId"] ?? 0)
+      )["token"];
+
+      Logger.info(`Token Granted`);
+
+      Util.onWebResponse(res, Util.cloneObject(userEntry, "pwd"));
+    } catch (e) {
+      Logger.error(e);
+      Util.onWebResponse(res, e.message, false);
+    }
+  });
+
+  restful.get("/login/token/validate", async (req, res) => {
+    if (!Util.isValidWebRequest(req, "token")) {
+      Util.onWebMissingParam(req, res);
+      return;
+    }
+    const isValid = await MongoMgr.isTokenValid(req.query["token"]);
+
+    Util.onWebResponse(res, isValid ? "valid" : "invalid", isValid);
+  });
 }

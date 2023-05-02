@@ -1,6 +1,6 @@
-import {Backdrop, Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography,} from "@mui/material";
-import {CreateOutlined} from "@mui/icons-material";
-import React, {useEffect, useState} from "react";
+import { Backdrop, Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import { CreateOutlined } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
 import {useNavigate} from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
@@ -11,7 +11,6 @@ import AddIcon from '@mui/icons-material/Add';
 import HistoryIcon from '@mui/icons-material/History';
 import RecommendIcon from '@mui/icons-material/Recommend';
 
-//Todo: add link to each card to courseDetail page.
 
 function CourseTypeToggleButton({value, onChange}) {
     return (
@@ -22,19 +21,18 @@ function CourseTypeToggleButton({value, onChange}) {
             aria-label="Platform"
             align="center"
             sx={{
-                // marginLeft: "5%",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
             }}
         >
             <ToggleButton value="Recent">
-                <HistoryIcon sx={{mr: 0.5}}/>
+                <HistoryIcon sx={{ mr: 0.5 }} />
                 Recent
             </ToggleButton>
 
             <ToggleButton value="Suggestion">
-                <RecommendIcon sx={{mr: 0.5}}/>
+                <RecommendIcon sx={{ mr: 0.5 }} />
                 Suggesstion
             </ToggleButton>
 
@@ -102,15 +100,10 @@ export function Home(props) {
     const handleClick = () => {
         if (alignment === "Recent") {
             navigate("/subjects/recent");
-
-            //console.log("recent clicked");
-
+            console.log("recent clicked");
         } else if (alignment === "Suggestion") {
             navigate("/subjects/suggest");
-
-            //Todo: need to fix the link to subject suggestion page
-            //console.log("suggestion clicked");
-
+            console.log("suggestion clicked");
         }
     };
 
@@ -224,8 +217,6 @@ export function Home(props) {
                 .catch((err) => {
                     Logger.error("error fetching subject information");
                     Logger.error(err);
-
-                    //const backupData =
                     setData([
                         {
                             id: 3,
@@ -234,7 +225,6 @@ export function Home(props) {
                             completionRate: 37,
                         },
                     ]);
-
                     setLoaded(true);
                 });
         }
@@ -242,16 +232,13 @@ export function Home(props) {
 
     return (
         <>
-            <BackgroundImage/>
-
+            <BackgroundImage />
             <Backdrop open sx={{
                 color: "#fff",
                 "zIndex": 0,
-                backdropFilter: "blur(10px)"
-            }}/>
-
+                backdropFilter: "blur(3px)"
+            }} />
             <Box>
-
                 <Box
                     className="welcome_line"
                     sx={{
@@ -264,7 +251,6 @@ export function Home(props) {
                         marginBottom: "10vh",
                     }}
                 >
-
                     <Box
                         sx={{
                             display: "flex",
@@ -282,8 +268,6 @@ export function Home(props) {
                         >
                             Welcome,
                         </Typography>
-
-
                         <Typography
                             variant="h3"
                             sx={{
@@ -296,7 +280,6 @@ export function Home(props) {
                             {(profile ?? {})["name"] ?? "Earthling!"}
                         </Typography>
                     </Box>
-
                     {/*profile edit button*/}
                     <Button
                         onClick={async () => {
@@ -312,11 +295,8 @@ export function Home(props) {
                             }}
                         />
                     </Button>
-
                 </Box>
             </Box>
-
-
             {/*Tabs*/}
             <Box
                 className="tabs"
@@ -364,7 +344,6 @@ export function Home(props) {
                         }}
                     />
                 </Box>
-
                 <Box
                     sx={{
                         display: "flex",
@@ -379,7 +358,7 @@ export function Home(props) {
                         size="medium"
                         value={alignment}
                         onClick={handleClick}
-                        startIcon={<AddIcon/>}
+                        startIcon={<AddIcon />}
                     >
                         Find Out More
                     </Button>

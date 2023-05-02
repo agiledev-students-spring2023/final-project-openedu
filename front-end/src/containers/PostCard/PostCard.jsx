@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Card,
   Divider,
@@ -15,6 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
+import axios from "axios";
+import * as Util from "../../util/Util.mjs";
+import * as Logger from "../../util/Logger.mjs";
 
 //styled the card
 const StyledCard = styled(Card)({
@@ -56,10 +60,29 @@ const StyledLikeIcon = styled(FavoriteBorderIcon)({
 
 export default function PostCard(props) {
   const { postId, post } = props;
+  const [isSaved, setIsSaved] = useState(post["isSaved"]??false);
   const navigate = useNavigate();
 
   const handleReadMore = () => {
     navigate(`/post/view/${postId ?? "0"}`); //TODO: replace with error message if postID is not provided
+  };
+
+  const handleOnSave = () => {
+    axios
+        .post(Util.getServerAddr() + `/post/save`, {
+          token: Util.readLocalValue("token") ?? 12345,
+          mock: "false",
+          postId: postId,
+          isSaved: !isSaved,
+        })
+        .then((response) => {
+          Logger.info(JSON.stringify(response.data));
+        })
+        .catch((err) => {
+          Logger.error(err);
+        });
+
+    setIsSaved(!isSaved);
   };
 
   return (
@@ -104,6 +127,7 @@ export default function PostCard(props) {
         <CardActions
           sx={{
             display: "flex",
+            //align: "space-evenly"
             justifyContent: "space-evenly",
           }}
         >
@@ -121,25 +145,17 @@ export default function PostCard(props) {
               },
             }}
           >
-            Read
+            Expand
           </Button>
 
-          <Box sx={{ display: "flex", flexDirection: "space-evenly" }}>
-            <StyledLikesContainer>
-              <IconButton size="small">
-                <StyledLikeIcon />
-              </IconButton>
-              <StyledLikesCount>{post.likes}</StyledLikesCount>
-            </StyledLikesContainer>
+            <IconButton onClick={handleOnSave} aria-label="heart button">
+                {isSaved ? (
+                    <Favorite fontSize="medium" style={{ color: "#FF4081" }} />
+                ) : (
+                    <FavoriteBorder fontSize="medium" style={{ color: "#FF4081" }} />
+                )}
+            </IconButton>
 
-            <Box sx={{ display: "flex", marginLeft: "10px" }}>
-              <Badge badgeContent={post.comments} color="primary">
-                <IconButton size="small">
-                  <ModeCommentOutlinedIcon color="inherit" fontSize="small" />
-                </IconButton>
-              </Badge>
-            </Box>
-          </Box>
         </CardActions>
       </StyledCard>
     </Grid>

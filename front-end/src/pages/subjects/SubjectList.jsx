@@ -14,15 +14,14 @@ export function SubjectList() {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-
         Util.invokeCallback("setNewPage", 1);
 
         console.log("fetching subject information");
         axios
             .get(url, {
                 params: {
-                    mock: "false"
-                }
+                    mock: "false",
+                },
             })
             .then((response) => {
                 Logger.info(
@@ -54,7 +53,6 @@ export function SubjectList() {
                 ]);
 
                 setLoaded(true);
-                //setData((backupData??[])[0])
             });
     }, []);
 
@@ -62,16 +60,15 @@ export function SubjectList() {
         <Box
             sx={
                 {
-                    //marginX: Constants.UI_HORIZ_OFFSET,
+                    // marginX: Constants.UI_HORIZ_OFFSET,
                 }
             }
         >
             <Typography
                 variant="h4"
                 sx={{
-                    //textAlign: 'left',
                     marginTop: 1,
-                    fontWeight: "semi-bold",
+                    fontWeight: "bold",
                 }}
             >
                 Subjects

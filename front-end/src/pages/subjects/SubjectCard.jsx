@@ -52,15 +52,11 @@ export function SubjectCard(
         setIsExpanded(!isExpanded);
     };
 
-    //Logger.verbose(`Image URL: ${entry.imageUrl}`);
-
     return (
         <Grid
             sx={{
-                // minWidth: 200,
-                // margin: Constants.UI_HORIZ_OFFSET,
                 padding: Constants.UI_CORNER_RADIUS / 4,
-                borderRadius: Constants.UI_CORNER_RADIUS * 2,
+                borderRadius: Constants.UI_CORNER_RADIUS * 8,
                 marginBottom: 2,
             }}
         >
@@ -72,26 +68,34 @@ export function SubjectCard(
                 <CardContent>
                     <CardMedia
                         sx={{
-                            borderRadius: Constants.UI_HORIZ_OFFSET,
+                            borderRadius: Constants.UI_HORIZ_OFFSET / 2,
                         }}
                         id={entry.subjectId ?? 0}
                         component="img"
                         height="140"
                         image={entry.imageUrl ?? "Subject Image"}
-                    //Todo: change to backend
-                    //alt="green iguana"
                     />
-                    <Typography variant="h5" component="div">
+                    <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{
+                            marginTop: "1vh",
+                            fontWeight: "semi-bold",
+                        }}
+                    >
                         {entry.name ?? "Subject Name"}
                     </Typography>
 
-
                     <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
-                        <Typography variant="body" color="text.secondary" align="left"
+                        <Typography
+                            variant="body"
+                            color="text.secondary"
+                            align="left"
                             sx={{
                                 display: "flex",
                                 marginTop: "4px",
-                            }}>
+                            }}
+                        >
                             {entry.description}
                         </Typography>
                     </Collapse>
@@ -100,33 +104,28 @@ export function SubjectCard(
                         onClick={handleExpandClick}
                         size="small"
                         sx={{
-                            position: 'relative',
-                            right: '-35%',
-                            color: 'white',
+                            position: "relative",
+                            right: "-35%",
+                            color: "white",
                             marginTop: "1vh",
                             backgroundColor: theme.palette.neutral.main,
-                        }}>
-                        {isExpanded ? 'Collapse' : 'Read more'}
+                        }}
+                    >
+                        {isExpanded ? "Collapse" : "Read more"}
                     </Button>
 
-
-                    {/*<Typography variant="subtitle" component="div">*/}
-                    {/*  CompletionRate: {entry.completionRate ?? 0}*/}
-                    {/*</Typography>*/}
-
-
-          <Box
-              sx={{
-                display: "Grid",
-                marginTop: '20px'
-              }}
-          >
-            <Button variant="contained" onClick={routeChange}>
-              Learn More
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-    </Grid>
-  );
+                    <Box
+                        sx={{
+                            display: "Grid",
+                            marginTop: '20px'
+                        }}
+                    >
+                        <Button variant="contained" onClick={routeChange}>
+                            Learn More
+                        </Button>
+                    </Box>
+                </CardContent>
+            </Card>
+        </Grid>
+    );
 }

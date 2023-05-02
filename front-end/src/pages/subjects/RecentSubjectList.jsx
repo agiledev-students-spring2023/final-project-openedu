@@ -14,9 +14,7 @@ export function RecentSubjectList() {
 
     const [data, setData] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
-
     useEffect(() => {
-
         Util.invokeCallback("setNewPage", 1);
 
         console.log("fetching subject information");
@@ -24,8 +22,8 @@ export function RecentSubjectList() {
             .get(url, {
                 params: {
                     token: Util.readLocalValue("token") ?? 12345,
-                    mock: "false"
-                }
+                    mock: "false",
+                },
             })
             .then((response) => {
 
@@ -67,15 +65,12 @@ export function RecentSubjectList() {
             <Typography
                 variant="h4"
                 sx={{
-                    //textAlign: 'left',
                     marginTop: 1,
-                    fontWeight: "semi-bold",
+                    fontWeight: "bold",
                 }}
             >
                 Recently Viewed
             </Typography>
-            {/*<Typography variant="h6">What would you like to learn today?</Typography>*/}
-
             <Box
                 sx={{
                     marginBottom: 3,

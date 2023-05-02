@@ -15,7 +15,6 @@ export function SuggestSubjectList() {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-
         Util.invokeCallback("setNewPage", 1);
 
         console.log("fetching subject information");
@@ -23,8 +22,8 @@ export function SuggestSubjectList() {
             .get(url, {
                 params: {
                     token: Util.readLocalValue("token") ?? 12345,
-                    mock: "false"
-                }
+                    mock: "false",
+                },
             })
             .then((response) => {
                 Logger.info(
@@ -68,9 +67,8 @@ export function SuggestSubjectList() {
             <Typography
                 variant="h4"
                 sx={{
-                    //textAlign: 'left',
                     marginTop: 1,
-                    fontWeight: "semi-bold",
+                    fontWeight: "bold",
                 }}
             >
                 You May Like

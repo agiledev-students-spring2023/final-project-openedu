@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import { CourseCard } from "./CourseCard.jsx";
 import axios from "axios";
 import ClassIcon from "@mui/icons-material/Class";
-import { Typography, CardMedia, Box, Button, Collapse, useTheme } from "@mui/material";
+import {
+    Typography,
+    CardMedia,
+    Box,
+    Button,
+    Collapse,
+    useTheme,
+} from "@mui/material";
 import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 import * as Constants from "../../util/Constants.mjs";
 import * as Util from "../../util/Util.mjs";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
 
 export function SubjectDetail() {
@@ -22,29 +29,28 @@ export function SubjectDetail() {
     Logger.verbose("URL: " + url);
 
     useEffect(() => {
-
         Util.invokeCallback("setNewPage", 1);
 
         Logger.info("fetching course information");
         axios(url, {
             params: {
                 subjectId: subjectId,
-                mock: "false"
-            }
+                mock: "false",
+            },
         })
             .then((response) => {
 
-        //Logger.info(JSON.stringify(response.data["content"]));
+                //Logger.info(JSON.stringify(response.data["content"]));
 
-        if (response.data["status"] !== 0) {
-          Logger.info(response.data["status"]);
-          Util.onAuthError(useNavigate()).then(r => true);
-          return;
-        }
+                if (response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(useNavigate()).then(r => true);
+                    return;
+                }
 
-        setCourses(response.data["content"].courses);
-        setSubject(response.data["content"]);
-        setLoaded(true);
+                setCourses(response.data["content"].courses);
+                setSubject(response.data["content"]);
+                setLoaded(true);
 
             })
             .catch((err) => {
@@ -61,12 +67,9 @@ export function SubjectDetail() {
                     },
                 ]);
                 setLoaded(true);
-
             });
     }, []);
     const [isExpanded, setIsExpanded] = useState(false);
-
-
 
     return (
         <>
@@ -84,7 +87,7 @@ export function SubjectDetail() {
                         image={subject.imageUrl ?? ""}
                         sx={{
                             height: 300,
-                            borderRadius: Constants.UI_CORNER_RADIUS,
+                            borderRadius: Constants.UI_CORNER_RADIUS * 4,
                         }}
                     />
                     <Box
@@ -95,22 +98,23 @@ export function SubjectDetail() {
                         <Typography
                             variant="h5"
                             sx={{
-                                // margin: Constants.UI_HORIZ_OFFSET,
                                 textAlign: "left",
                                 fontWeight: "bold",
-                                // fontFamily: 'Roboto',
                                 letterSpacing: 2,
-                                //color: "text.primary",
                             }}
                         >
                             {subject.name}
                         </Typography>
                         <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
-                            <Typography variant="body" color="text.secondary" align="left"
+                            <Typography
+                                variant="body"
+                                color="text.secondary"
+                                align="left"
                                 sx={{
                                     display: "flex",
                                     marginTop: "4px",
-                                }}>
+                                }}
+                            >
                                 {subject.description}
                             </Typography>
                         </Collapse>
@@ -119,24 +123,23 @@ export function SubjectDetail() {
                             onClick={() => setIsExpanded(!isExpanded)}
                             size="small"
                             sx={{
-                                position: 'relative',
-                                right: '-35%',
-                                color: 'white',
+                                position: "relative",
+                                right: "-35%",
+                                color: "white",
                                 marginTop: "1vh",
-                            }}>
-                            {isExpanded ? 'Collapse' : 'Read more'}
+                            }}
+                        >
+                            {isExpanded ? "Collapse" : "Read more"}
                         </Button>
-
                     </Box>
 
                     {courses.map((entry, index) => (
                         <CourseCard key={index} entry={entry} />
                     ))}
-                </Box >
+                </Box>
             ) : (
                 <></>
-            )
-            }
+            )}
         </>
     );
 }

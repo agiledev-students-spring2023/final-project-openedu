@@ -8,8 +8,6 @@ export default function CourseCardAtHome({ entry }) {
 
     const cardSize = 106;
 
-
-
     return (
         <>
             <Paper

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Button,
@@ -65,21 +65,21 @@ export function CourseCard({ entry }) {
             image={entry.imageUrl ?? "Course Image"}
             alt={entry.name}
           />
-          <Typography variant="h5" component="div" sx={{textAlign:'left'}}>
+          <Typography variant="h5" component="div" sx={{ textAlign: 'left' }}>
             {entry.name ?? "Course Name"}
           </Typography>
           <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
             <Typography variant="body" color="text.secondary" align="left"
-            sx={{
-              display: "flex",
-              marginTop: "4px",
-            }}>
+              sx={{
+                display: "flex",
+                marginTop: "4px",
+              }}>
               {entry.description}
             </Typography>
           </Collapse>
           <Button
-              variant="outlined"
-              onClick={() => setIsExpanded(!isExpanded)}
+            variant="outlined"
+            onClick={() => setIsExpanded(!isExpanded)}
             size="small"
             sx={{
               position: 'relative',

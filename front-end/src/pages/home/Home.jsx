@@ -1,4 +1,4 @@
-import {Backdrop, Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography,} from "@mui/material";
+import { Backdrop, Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
 import { CreateOutlined } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
@@ -27,12 +27,12 @@ function CourseTypeToggleButton({ value, onChange }) {
             }}
         >
             <ToggleButton value="Recent">
-                <HistoryIcon sx={{ mr: 0.5 }}/>
+                <HistoryIcon sx={{ mr: 0.5 }} />
                 Recent
             </ToggleButton>
 
             <ToggleButton value="Suggestion">
-                <RecommendIcon sx={{ mr: 0.5 }}/>
+                <RecommendIcon sx={{ mr: 0.5 }} />
                 Suggesstion
             </ToggleButton>
 
@@ -107,7 +107,7 @@ export function Home(props) {
 
     useEffect(() => {
 
-        Util.invokeCallback("setNewPage",0);
+        Util.invokeCallback("setNewPage", 0);
 
         axios.get(Util.getServerAddr() +
             `/profile/info`,
@@ -117,7 +117,7 @@ export function Home(props) {
                     mock: "false"
                 }
             }
-            )
+        )
             .then((response) => {
 
                 // Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
@@ -194,8 +194,6 @@ export function Home(props) {
                 .catch((err) => {
                     Logger.error("error fetching subject information");
                     Logger.error(err);
-
-                    //const backupData =
                     setData([
                         {
                             id: 3,
@@ -204,7 +202,6 @@ export function Home(props) {
                             completionRate: 37,
                         },
                     ]);
-
                     setLoaded(true);
                 });
         }
@@ -213,15 +210,12 @@ export function Home(props) {
     return (
         <>
             <BackgroundImage />
-
             <Backdrop open sx={{
                 color: "#fff",
-                "zIndex" : 0,
-                backdropFilter:  "blur(30px)"
-            }}/>
-
+                "zIndex": 0,
+                backdropFilter: "blur(3px)"
+            }} />
             <Box>
-
                 <Box
                     className="welcome_line"
                     sx={{
@@ -229,18 +223,17 @@ export function Home(props) {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         width: 1,
-                        "z-index" : 2000,
+                        "z-index": 2000,
                         marginTop: "15vh",
                         marginBottom: "10vh",
                     }}
                 >
-
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             marginLeft: "5%",
-                            "z-index" : 2000
+                            "z-index": 2000
                         }}
                     >
                         <Typography
@@ -252,8 +245,6 @@ export function Home(props) {
                         >
                             Welcome,
                         </Typography>
-
-
                         <Typography
                             variant="h3"
                             sx={{
@@ -266,7 +257,6 @@ export function Home(props) {
                             {(profile ?? {})["name"] ?? "Earthling!"}
                         </Typography>
                     </Box>
-
                     {/*profile edit button*/}
                     <Button
                         onClick={async () => {
@@ -282,11 +272,8 @@ export function Home(props) {
                             }}
                         />
                     </Button>
-
                 </Box>
             </Box>
-
-
             {/*Tabs*/}
             <Box
                 className="tabs"
@@ -330,11 +317,10 @@ export function Home(props) {
                         data={data}
                         className="courseCards"
                         sx={{
-                        marginTop: "5vh",
+                            marginTop: "5vh",
                         }}
                     />
                 </Box>
-
                 <Box
                     sx={{
                         display: "flex",
@@ -348,7 +334,7 @@ export function Home(props) {
                         size="medium"
                         value={alignment}
                         onClick={handleClick}
-                        startIcon={<AddIcon/>}
+                        startIcon={<AddIcon />}
                     >
                         Find Out More
                     </Button>

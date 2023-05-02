@@ -117,18 +117,9 @@ export function SubjectCard(
                     <Box
                         sx={{
                             display: "Grid",
+                            marginTop: '20px'
                         }}
                     >
-                        <Box
-                            sx={{
-                                width: "100%",
-                            }}
-                        >
-                            <LinearProgressWithLabel
-                                value={entry.completionRate ?? 0}
-                                component="div"
-                            />
-                        </Box>
                         <Button variant="contained" onClick={routeChange}>
                             Learn More
                         </Button>

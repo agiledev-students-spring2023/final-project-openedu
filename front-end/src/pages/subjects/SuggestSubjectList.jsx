@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { SubjectCard } from "./SubjectCard";
+import React, {useEffect, useState} from "react";
+import {SubjectCard} from "./SubjectCard";
 import axios from "axios";
-import { Box, Typography } from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import * as Constants from "../../util/Constants.mjs";
-import { TypeAnimation } from "react-type-animation";
+import {TypeAnimation} from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
+import {useNavigate} from "react-router-dom";
 
 export function SuggestSubjectList() {
     const url = Util.getServerAddr() + "/subject/recommend";
@@ -28,8 +29,14 @@ export function SuggestSubjectList() {
                 Logger.info(
                     `SubjectList's axios got the following data: \n ${response.data}`
                 );
+
+                if (response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(useNavigate()).then(r => true);
+                    return;
+                }
+
                 setData(response.data["content"]);
-                console.log(response.data);
                 setLoaded(true);
             })
             .catch((err) => {
@@ -89,14 +96,14 @@ export function SuggestSubjectList() {
                     wrapper="span"
                     cursor={true}
                     repeat={1}
-                    sx={{ fontSize: "1em", display: "inline-block" }}
+                    sx={{fontSize: "1em", display: "inline-block"}}
                 />
             </Box>
 
             {isLoaded ? (
-                data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry} />)
+                data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry}/>)
             ) : (
-                <div />
+                <div/>
             )}
         </Box>
     );

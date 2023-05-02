@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { SubjectCard } from "./SubjectCard";
+import React, {useEffect, useState} from "react";
+import {SubjectCard} from "./SubjectCard";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
-import { TypeAnimation } from "react-type-animation";
+import {useNavigate} from "react-router-dom";
+import {Box, Typography} from "@mui/material";
+import {TypeAnimation} from "react-type-animation";
 import * as Constants from "../../util/Constants.mjs";
 import * as Logger from "../../util/Logger.mjs";
 import * as Util from "../../util/Util.mjs";
@@ -26,9 +26,16 @@ export function RecentSubjectList() {
                 },
             })
             .then((response) => {
-                Logger.info(
-                    `SubjectList's axios got the following data: \n ${response.data}`
-                );
+
+
+                Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
+
+                if (response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(useNavigate()).then(r => true);
+                    return;
+                }
+
                 setData(response.data["content"]);
                 console.log(response.data);
                 setLoaded(true);
@@ -85,14 +92,14 @@ export function RecentSubjectList() {
                     wrapper="span"
                     cursor={true}
                     repeat={1}
-                    sx={{ fontSize: "1em", display: "inline-block" }}
+                    sx={{fontSize: "1em", display: "inline-block"}}
                 />
             </Box>
 
             {isLoaded ? (
-                data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry} />)
+                data.map((entry) => <SubjectCard key={entry.subjectId} entry={entry}/>)
             ) : (
-                <div />
+                <div/>
             )}
         </Box>
     );

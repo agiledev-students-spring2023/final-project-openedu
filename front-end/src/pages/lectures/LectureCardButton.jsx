@@ -1,15 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, ButtonBase, Grid, Typography, CardMedia, CardContent, Box } from '@mui/material';
+import {useNavigate} from 'react-router-dom';
+import {Box, ButtonBase, Card, CardContent, CardMedia, Typography} from '@mui/material';
 
 export default function ClassCardButtonGrid(props) {
     const fakeLecture = {
         title: "Casting in C++",
-        thumbnails: { maxres: { url: "https://i.ytimg.com/vi/1E_kBSka_ec/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDeCwHu9bvvBldHxXZbzNEkMxfCVQ" } },
+        thumbnails: {maxres: {url: "https://i.ytimg.com/vi/1E_kBSka_ec/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDeCwHu9bvvBldHxXZbzNEkMxfCVQ"}},
         courseId: "12", lecNum: "12"
     };
 
-    const { title, thumbnails, resourceId, setVideoId, setIndex,index } =
+    const {title, thumbnails, resourceId, setVideoId, setIndex, index} =
         props.title ? props : fakeLecture;
     const navigate = useNavigate();
 
@@ -17,17 +17,19 @@ export default function ClassCardButtonGrid(props) {
     const tbnArrResolution = ['maxres', 'standard', 'high', 'medium', 'default'];
     let thumbnailUrl = '';
     for (let i = 0; i < tbnArrResolution.length; i++) {
-        if (thumbnails[tbnArrResolution[i]]) { thumbnailUrl = thumbnails[tbnArrResolution[i]].url; }
+        if (thumbnails[tbnArrResolution[i]]) {
+            thumbnailUrl = thumbnails[tbnArrResolution[i]].url;
+        }
         break;
     }
 
     return (
-        <Box sx={{ width: 1 }}>
-            <ButtonBase sx={{ width: '100%', marginBottom: '0.5vh' }}
-                onClick={() => {
-                    setVideoId(resourceId.videoId);
-                    setIndex(index);
-                }}>
+        <Box sx={{width: 1}}>
+            <ButtonBase sx={{width: '100%', marginBottom: '0.5vh'}}
+                        onClick={() => {
+                            setVideoId(resourceId.videoId);
+                            setIndex(index);
+                        }}>
                 <Card sx={{
                     display: 'flex',
                     width: '100%',
@@ -56,7 +58,7 @@ export default function ClassCardButtonGrid(props) {
                             display: 'flex',
                             flexDirection: 'column',
                         }}>
-                            <Typography variant="h7" sx={{ display: 'flex', fontSize: '15px', textAlign: 'left' }}>
+                            <Typography variant="h7" sx={{display: 'flex', fontSize: '15px', textAlign: 'left'}}>
                                 {title}
                             </Typography>
                         </CardContent>

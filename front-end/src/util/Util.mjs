@@ -241,14 +241,10 @@ export async function writeLocalValue(key,value) {
 }
 
 
-export function useUpdateEffect(effect, dependencies) {
-  const isInitialMount = useRef(true);
+export async function onAuthError(nav) {
 
-  useEffect(() => {
-    if (!isInitialMount.current) {
-      effect();
-    }
-    isInitialMount.current = false;
-  }, dependencies);
+    await invokeCallback("onShowSnackBar","error","Due to security concerns, you have been logged out!");
+
+    nav("/landing/greeting");
+
 }
-

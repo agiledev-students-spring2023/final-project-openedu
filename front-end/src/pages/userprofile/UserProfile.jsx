@@ -169,27 +169,39 @@ function PostSection({ composeMode, refresh, setRefresh }) {
     if (composeMode) return <div></div>;
     const [posts, setPosts] = useState([]);
 
+    const nav = useNavigate();
+
     useEffect(() => {
         axios
-            .get(Util.getServerAddr() + `/post/list`,{
+            .get(Util.getServerAddr() + `/post/all`,{
                 params: {
                     token: Util.readLocalValue("token") ?? 12345,
                     mock: "false"
                 }
             })
             .then((response) => {
-                if (Array.isArray(response.data["content"])) {
-                    setPosts(response.data["content"]);
-                } else {
-                    Logger.error(
-                        "Response data is not an array:",
-                        response.data["content"]
-                    );
-                    Logger.error(
-                        "Response data is of type",
-                        typeof response.data["content"]
-                    );
+
+                if(response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(nav).then(r => true);
+                    return;
                 }
+
+                setPosts(response.data["content"]);
+
+                // if (Array.isArray(response.data["content"])) {
+                //     setPosts(response.data["content"]);
+                // } else {
+                //     Logger.error(
+                //         "Response data is not an array:",
+                //         response.data["content"]
+                //     );
+                //     Logger.error(
+                //         "Response data is of type",
+                //         typeof response.data["content"]
+                //     );
+                // }
+
             })
             .catch((error) => console.error(error));
     }, []);

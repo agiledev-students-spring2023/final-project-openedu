@@ -14,7 +14,7 @@ import { TypeAnimation } from "react-type-animation";
 import * as Logger from "../../util/Logger.mjs";
 import * as Constants from "../../util/Constants.mjs";
 import * as Util from "../../util/Util.mjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
 
 export function SubjectDetail() {
@@ -39,10 +39,19 @@ export function SubjectDetail() {
             },
         })
             .then((response) => {
-                Logger.info(JSON.stringify(response.data["content"]));
+
+                //Logger.info(JSON.stringify(response.data["content"]));
+
+                if (response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(useNavigate()).then(r => true);
+                    return;
+                }
+
                 setCourses(response.data["content"].courses);
                 setSubject(response.data["content"]);
                 setLoaded(true);
+
             })
             .catch((err) => {
                 Logger.error("error fetching subject information");

@@ -115,4 +115,68 @@ export function CourseCard({ entry }) {
             </Card>
         </Grid>
     );
+    const navigate = useNavigate();
+    const [isExpanded, setIsExpanded] = useState(false);
+    const routeChange = () => {
+        navigate(`/courses/detail/${entry.courseId}`);
+    };
+    return (
+        <Grid
+            sx={{
+                // minWidth: 200,
+                // margin: Constants.UI_HORIZ_OFFSET,
+                paddingY: Constants.UI_CORNER_RADIUS / 4,
+                borderRadius: Constants.UI_CORNER_RADIUS * 2,
+                marginBottom: 2,
+            }}
+        >
+            <Card>
+                <CardContent>
+                    <CardMedia
+                        sx={{
+                            borderRadius: Constants.UI_HORIZ_OFFSET,
+                        }}
+                        component="img"
+                        height="140"
+                        image={entry.imageUrl ?? "Course Image"}
+                        alt={entry.name}
+                    />
+                    <Typography variant="h5" component="div" sx={{ textAlign: 'left' }}>
+                        {entry.name ?? "Course Name"}
+                    </Typography>
+                    <Collapse in={isExpanded} timeout="auto" collapsedSize={70}>
+                        <Typography variant="body" color="text.secondary" align="left"
+                            sx={{
+                                display: "flex",
+                                marginTop: "4px",
+                            }}>
+                            {entry.description}
+                        </Typography>
+                    </Collapse>
+                    <Button
+                        variant="outlined"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        size="small"
+                        sx={{
+                            position: 'relative',
+                            right: '-35%',
+                            color: 'white',
+                            marginTop: "1vh",
+                        }}>
+                        {isExpanded ? 'Collapse' : 'Read more'}
+                    </Button>
+                    <Box
+                        sx={{
+                            display: "Grid",
+                            marginTop: '20px'
+                        }}
+                    >
+                        <Button variant="contained" component="div" onClick={routeChange}>
+                            Continue
+                        </Button>
+                    </Box>
+                </CardContent>
+            </Card>
+        </Grid>
+    );
 }

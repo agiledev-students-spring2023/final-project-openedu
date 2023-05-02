@@ -49,7 +49,6 @@ export function Landing() {
                              marginTop: '2%'
                          }} />
 
-
                 <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400,marginTop:'10px'}}>The</Typography>
                 <Typography variant="h3" sx={{ display: 'flex', fontWeight: 800 }}>All-in-one</Typography>
                 <Typography variant="h5" sx={{ display: 'flex', fontWeight: 400 }}>Computer Science </Typography>

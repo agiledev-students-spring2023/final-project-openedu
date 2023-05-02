@@ -10,7 +10,7 @@ export default function BackgroundImage() {
     const { width, height } = window.screen;
     axios
       .get(Util.getServerAddr() + "/background-image", {
-        params: { token: "1234", width: width, height: height },
+        params: { width: width, height: height},
       })
       .then((response) => {
         setImageUrl(response.data["content"]);

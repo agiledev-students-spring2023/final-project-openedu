@@ -21,7 +21,7 @@ export function getConfigParam(key) {
         isEnvReady = true;
     }
 
-    // Logger.info("available keys: " + JSON.stringify(process.env))
+    // Logger.info("available keys: " + JSON.stringify(process..env))
 
     if (process.env[key.toUpperCase()] === undefined) {
         // noinspection ExceptionCaughtLocallyJS

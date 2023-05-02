@@ -11,7 +11,6 @@ import AddIcon from '@mui/icons-material/Add';
 import HistoryIcon from '@mui/icons-material/History';
 import RecommendIcon from '@mui/icons-material/Recommend';
 
-//Todo: add link to each card to courseDetail page.
 
 function CourseTypeToggleButton({ value, onChange }) {
     return (
@@ -22,7 +21,6 @@ function CourseTypeToggleButton({ value, onChange }) {
             aria-label="Platform"
             align="center"
             sx={{
-                // marginLeft: "5%",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -99,15 +97,10 @@ export function Home(props) {
     const handleClick = () => {
         if (alignment === "Recent") {
             navigate("/subjects/recent");
-
-            //console.log("recent clicked");
-
+            console.log("recent clicked");
         } else if (alignment === "Suggestion") {
             navigate("/subjects/suggest");
-
-            //Todo: need to fix the link to subject suggestion page
-            //console.log("suggestion clicked");
-
+            console.log("suggestion clicked");
         }
     };
 

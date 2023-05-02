@@ -20,7 +20,11 @@ const Main = (props) => {
     }, []);
 
     return (
-        <Box>
+        <Box
+            sx={{
+                marginX: Constants.UI_HORIZ_OFFSET
+            }}
+        >
             <Box
                 className="prompt"
                 sx={{}}>
@@ -70,25 +74,26 @@ const Main = (props) => {
                     <Button
                         variant='contained'
                         sx={{
-                            width: "45%",
-                            display: 'flex'
+                            width: "100%",
+                            display: 'flex',
+                            paddingY: "10px"
                         }}
                         onClick={() => {
                             navigate(`/courses/play/${course.courseId}`);
                         }}>
                         <PlayArrowRounded/>
                         Play </Button>
-                    <Button
-                        variant='contained'
-                        color="error"
-                        sx={{
-                            width: "45%",
-                            display: 'flex',
-                        }}
-                        onClick={() => {
-                        }}>
-                        <Favorite/>
-                        Favorite </Button>
+                    {/*<Button*/}
+                    {/*    variant='contained'*/}
+                    {/*    color="error"*/}
+                    {/*    sx={{*/}
+                    {/*        width: "45%",*/}
+                    {/*        display: 'flex',*/}
+                    {/*    }}*/}
+                    {/*    onClick={() => {*/}
+                    {/*    }}>*/}
+                    {/*    <Favorite/>*/}
+                    {/*    Favorite </Button>*/}
 
                 </Box>
             </Box>

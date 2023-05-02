@@ -329,6 +329,30 @@ export async function initRestApis() {
         }
     });
 
+    restful.get("/post/all", async (req, res) => {
+        if (!Util.isValidWebRequest(req, "token")) {
+            Util.onWebMissingParam(req, res);
+            return;
+        }
+
+        try {
+            const user = await MongoMgr.getValidUser(req.query["token"]);
+            //Validate token
+            if (user === undefined) {
+                throw new Error("token_invalid");
+            }
+
+            //TODO: Make the userId variant as soon as possible
+            const posts = (await MongoMgr.getAllPosts()).map(entry => trimMongoDocument(entry));
+
+            //Logger.info(JSON.stringify(posts));
+            Util.onWebResponse(res, posts);
+        } catch (err) {
+            Logger.error(err);
+            Util.onWebResponse(res, err.message, false);
+        }
+    });
+
     restful.get("/post/detail", async (req, res) => {
         if (!Util.isValidWebRequest(req, "token","postId")) {
             Util.onWebMissingParam(req, res);

@@ -4,6 +4,7 @@ import {Add, Remove} from "@mui/icons-material";
 import axios from "axios";
 import * as Util from "../../util/Util.mjs";
 import * as Logger from "../../util/Logger.mjs";
+import {useNavigate} from "react-router-dom";
 
 export default function ComposePost(props) {
     const {setComposeMode, setRefresh} = props;
@@ -20,7 +21,16 @@ export default function ComposePost(props) {
                 title: title,
                 content : content
             })
-            .then((response) => Logger.info(response))
+            .then((response) => {
+
+                if (response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(useNavigate()).then(r => true);
+                    return;
+                }
+
+                Logger.info(response);
+            })
             .catch((error) => console.error(error));
 
 

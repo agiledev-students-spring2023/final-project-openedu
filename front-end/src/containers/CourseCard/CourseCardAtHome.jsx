@@ -51,8 +51,9 @@ export default function CourseCardAtHome({ entry }) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              marginTop: "10%",
-              marginLeft: "5%",
+              marginTop: "10px",
+              alignItems: "left",
+              marginX: "5px",
                 gridColumn: '1 / 1',
                 gridRow: '1 / 1',
                 zIndex:1000,
@@ -60,13 +61,17 @@ export default function CourseCardAtHome({ entry }) {
         >
         
             <Typography
-                  variant="h6"
+                  //variant="h6"
+                  alignLeft
                   sx={{
                     display: "flex",
                     fontSize: "15px",
                     fontWeight: "bold",
+                    width: "100%",
                     textTransform: "capitalize",
                     color: "white",
+                    // align: "left",
+                    paragraph: "true"
                   }}
             >
               {name}

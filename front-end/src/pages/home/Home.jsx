@@ -1,8 +1,8 @@
 import {Backdrop, Box, Button, Grid, ToggleButton, ToggleButtonGroup, Typography,} from "@mui/material";
-import { CreateOutlined } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import {CreateOutlined} from "@mui/icons-material";
+import React, {useEffect, useState} from "react";
 import BackgroundImage from "../../containers/BackgroundImage";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import CourseCard from "../../containers/CourseCard/CourseCardAtHome";
 import * as Util from "../../util/Util.mjs";
 import axios from "axios";
@@ -13,7 +13,7 @@ import RecommendIcon from '@mui/icons-material/Recommend';
 
 //Todo: add link to each card to courseDetail page.
 
-function CourseTypeToggleButton({ value, onChange }) {
+function CourseTypeToggleButton({value, onChange}) {
     return (
         <ToggleButtonGroup
             value={value}
@@ -29,12 +29,12 @@ function CourseTypeToggleButton({ value, onChange }) {
             }}
         >
             <ToggleButton value="Recent">
-                <HistoryIcon sx={{ mr: 0.5 }}/>
+                <HistoryIcon sx={{mr: 0.5}}/>
                 Recent
             </ToggleButton>
 
             <ToggleButton value="Suggestion">
-                <RecommendIcon sx={{ mr: 0.5 }}/>
+                <RecommendIcon sx={{mr: 0.5}}/>
                 Suggesstion
             </ToggleButton>
 
@@ -43,7 +43,7 @@ function CourseTypeToggleButton({ value, onChange }) {
 }
 
 
-const CourseSlide = ({ data }) => {
+const CourseSlide = ({data}) => {
     const navigate = useNavigate();
     const handleCardClick = (entry) => {
 
@@ -60,20 +60,23 @@ const CourseSlide = ({ data }) => {
         <Box
             sx={{
                 marginTop: "5%",
-                marginLeft: "2.3vh",
+                marginX: "2.3vh",
                 display: "flex",
                 justifyContent: "center",
-                marginRight: "2.3vh",
+                // marginRight: "2.3vh",
             }}
         >
             <Grid
                 container
-                spacing={{ xs: 2, md: 3 }}
-                columns={{ xs: 6, sm: 8, md: 12 }}
+                spacing={{xs: 2, md: 3}}
+                columns={{xs: 6, sm: 8, md: 12}}
+                sx={{
+                    alignItems: "center"
+                }}
             >
                 {data.slice(0, 6).map((entry, index) => (
                     <Grid item xs={2} sm={4} md={4} key={index} onClick={() => handleCardClick(entry)}>
-                        <CourseCard key={index} entry={entry} />
+                        <CourseCard key={index} entry={entry}/>
                     </Grid>
                 ))}
             </Grid>
@@ -114,7 +117,7 @@ export function Home(props) {
 
     useEffect(() => {
 
-        Util.invokeCallback("setNewPage",0);
+        Util.invokeCallback("setNewPage", 0);
 
         axios.get(Util.getServerAddr() +
             `/profile/info`,
@@ -124,8 +127,14 @@ export function Home(props) {
                     mock: "false"
                 }
             }
-            )
+        )
             .then((response) => {
+
+                if (response.data["status"] !== 0) {
+                    Logger.info(response.data["status"]);
+                    Util.onAuthError(navigate).then(r => true);
+                    return;
+                }
 
                 // Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
                 setProfile(response.data["content"]);
@@ -152,6 +161,13 @@ export function Home(props) {
                     }
                 )
                 .then((response) => {
+
+                    if (response.data["status"] !== 0) {
+                        Logger.info(response.data["status"]);
+                        Util.onAuthError(navigate).then(r => true);
+                        return;
+                    }
+
                     Logger.info(`SubjectList's axios got the following data: \n ${response.data}`);
                     setData(response.data["content"]);
 
@@ -191,6 +207,13 @@ export function Home(props) {
                     }
                 )
                 .then((response) => {
+
+                    if (response.data["status"] !== 0) {
+                        Logger.info(response.data["status"]);
+                        Util.onAuthError(useNavigate()).then(r => true);
+                        return;
+                    }
+
                     Logger.info(
                         `SubjectList's axios got the following data: \n ${response.data}`
                     );
@@ -219,12 +242,12 @@ export function Home(props) {
 
     return (
         <>
-            <BackgroundImage />
+            <BackgroundImage/>
 
             <Backdrop open sx={{
                 color: "#fff",
-                "zIndex" : 0,
-                backdropFilter:  "blur(30px)"
+                "zIndex": 0,
+                backdropFilter: "blur(10px)"
             }}/>
 
             <Box>
@@ -236,7 +259,7 @@ export function Home(props) {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         width: 1,
-                        "z-index" : 2000,
+                        "z-index": 2000,
                         marginTop: "15vh",
                         marginBottom: "10vh",
                     }}
@@ -247,7 +270,7 @@ export function Home(props) {
                             display: "flex",
                             flexDirection: "column",
                             marginLeft: "5%",
-                            "z-index" : 2000
+                            "z-index": 2000
                         }}
                     >
                         <Typography
@@ -325,7 +348,7 @@ export function Home(props) {
                             margin: "auto",
                         }}
                     >
-                        <CourseTypeToggleButton value={alignment} onChange={handleChange} />
+                        <CourseTypeToggleButton value={alignment} onChange={handleChange}/>
                     </Box>
                 </Box>
                 <Box
@@ -337,7 +360,7 @@ export function Home(props) {
                         data={data}
                         className="courseCards"
                         sx={{
-                        marginTop: "5vh",
+                            marginTop: "5vh",
                         }}
                     />
                 </Box>
@@ -347,9 +370,10 @@ export function Home(props) {
                         display: "flex",
                         margin: "auto",
                         marginTop: "1%",
-
                     }}
                 >
+
+
                     <Button
                         variant="contained"
                         size="medium"
@@ -359,6 +383,7 @@ export function Home(props) {
                     >
                         Find Out More
                     </Button>
+
                 </Box>
             </Box>
         </>

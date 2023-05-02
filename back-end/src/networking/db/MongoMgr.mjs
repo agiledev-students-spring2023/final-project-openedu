@@ -179,6 +179,14 @@ export async function getPosts(userId) {
 
 }
 
+export async function getAllPosts() {
+
+    return await getModel("posts")
+        .find({})
+        .sort({createTime: -1});
+
+}
+
 export async function getOnePost(postId) {
 
     return trimMongoDocument(

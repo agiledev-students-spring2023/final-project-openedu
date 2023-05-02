@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import MDEditor from "@uiw/react-md-editor";
 import { Box, Typography, IconButton } from "@mui/material";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BackButton } from "../../containers/BackButton/BackButton";
 import Loading from "../../containers/Loading/Loading";
 import * as Util from "../../util/Util.mjs";
@@ -17,60 +17,6 @@ export function ViewPost() {
   const [post, setPost] = useState(null);
   const [isPostLoaded, setIsPostLoaded] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get(Util.getServerAddr() + `/post/detail`, {
-        params: {
-          token: Util.readLocalValue("token") ?? 12345,
-          mock: "false",
-          postId: postId,
-        },
-      })
-      .then((response) => {
-
-        if (response.data["status"] !== 0) {
-          Logger.info(response.data["status"]);
-          Util.onAuthError(useNavigate()).then(r => true);
-          return;
-        }
-
-        setPost(response.data["content"]);
-        setIsSaved(response.data["content"]["isSaved"]);
-
-        setIsPostLoaded(true);
-      })
-      .catch((err) => {
-        Logger.error("error fetching post information");
-        Logger.error(err);
-
-        setPost({
-          title: "backup_post",
-          content: "backup_post_content",
-          createTime: "backup_post_date",
-        });
-
-        setIsPostLoaded(true);
-      });
-  }, [postId]);
-
-  const handleOnSave = () => {
-    axios
-      .post(Util.getServerAddr() + `/post/save`, {
-        token: Util.readLocalValue("token") ?? 12345,
-        mock: "false",
-        postId: postId,
-        isSaved: !isSaved,
-      })
-      .then((response) => {
-        Logger.info(response);
-      })
-      .catch((err) => {
-        Logger.error(err);
-      });
-
-    setIsSaved(!isSaved);
-  };
 
   const styles = {
     markdownWrapper: {
@@ -91,15 +37,71 @@ export function ViewPost() {
     },
   };
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(
+          Util.getServerAddr() + `/post/detail`,
+          {
+            params: {
+              token: Util.readLocalValue("token") ?? 12345,
+              mock: "false",
+              postId: postId,
+            },
+          }
+        );
+
+        if (response.data["status"] !== 0) {
+          Logger.info(response.data["status"]);
+          await Util.onAuthError(useNavigate());
+          return;
+        }
+
+        setPost(response.data["content"]);
+        setIsSaved(response.data["content"]["isSaved"]);
+      } catch (err) {
+        Logger.error("error fetching post information");
+        Logger.error(err);
+        setPost({
+          title: "backup_post",
+          content: "backup_post_content",
+          createTime: "backup_post_date",
+        });
+      } finally {
+        setIsPostLoaded(true);
+      }
+    };
+
+    fetchPost();
+  }, [postId]);
+
+  const handleOnSave = () => {
+    axios
+      .post(Util.getServerAddr() + `/post/save`, {
+        token: Util.readLocalValue("token") ?? 12345,
+        mock: "false",
+        postId: postId,
+        isSaved: !isSaved,
+      })
+      .then((response) => {
+        Logger.info(response);
+      })
+      .catch((err) => {
+        Logger.error(err);
+      });
+
+    setIsSaved(!isSaved);
+  };
+
+  const { title = "", content = "", createTime = "" } = post ?? {};
+
   return (
     <Box>
       <BackButton />
       {isPostLoaded ? (
         <Box sx={{ marginLeft: "5%" }}>
           <MDEditor.Markdown
-            source={`## ${(post ?? {})["title"] ?? ""}\n\n${
-              (post ?? {})["content"] ?? ""
-            }`}
+            source={`## ${title}\n\n${content}`}
             style={{
               width: "94%",
               textAlign: "left",
@@ -110,17 +112,14 @@ export function ViewPost() {
           <Box sx={styles.metadataWrapper}>
             <Typography variant="subtitle1" sx={{ color: "#666" }}>
               {" "}
-              {new Date((post ?? {})["createTime"] ?? "").toLocaleDateString(
-                "en-US",
-                {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                  hour12: true,
-                }
-              )}
+              {new Date(createTime).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+              })}
             </Typography>
           </Box>
           <IconButton onClick={handleOnSave} aria-label="heart button">

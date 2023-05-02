@@ -103,8 +103,7 @@ export default function EditProfile(props) {
   };
 
     return (
-        <Box fixed sx={{ marginTop: "100px",width: "100%"}}>
-
+        <Box fixed="true" sx={{ marginTop: "100px",width: "100%"}}>
 
         {/*Avatar*/}
 

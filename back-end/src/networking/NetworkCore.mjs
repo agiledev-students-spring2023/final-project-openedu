@@ -1,6 +1,5 @@
 import * as Http from "http";
 import express from "express";
-import * as SocketIo from "socket.io";
 import * as Logger from "../util/Logger.mjs";
 import path from "path";
 import url from "url";
@@ -24,11 +23,6 @@ export let isHttps = false;
  * The root HTTP(S) server instance. I don't really know who needs it outside this file but whatever.
  */
 let server;
-
-/**
- * Socket.IO server instance for the chat server.
- */
-export let socketIoServer;
 
 export async function initMiddleware() {
   restful.use(express.urlencoded({ extended: false }));
@@ -71,7 +65,6 @@ export async function init() {
     /**
      * Socket.IO server instance for the chat server.
      */
-    socketIoServer = new SocketIo.Server(server);
     Logger.info("SocketIO Instance created!");
 
   }

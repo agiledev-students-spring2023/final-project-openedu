@@ -34,7 +34,7 @@ export default function CourseCardAtHome({ entry }) {
                         gridColumn: '1 / 1',
                         gridRow: '1 / 1',
                         backgroundImage: `url(${entry.imageUrl ?? "Course Image"})`,
-                        filter: "blur(2px) brightness(0.5)",
+                        filter: "blur(1px) brightness(0.5)",
                     }}
                 />
                 <Box

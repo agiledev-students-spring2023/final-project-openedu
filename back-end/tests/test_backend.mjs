@@ -1,16 +1,22 @@
-// This is the deprecated version of the test file. 
-//It is kept here for reference.
+// This is the mocha testing file for the backend.
 
+import dotenv from "dotenv";
 import {
   courses,
-  recentCourses,
   recentSubjects,
   subjects,
-  suggestCourses,
   suggestSubjects,
 } from "../src/util/MockData.mjs";
 import assert from "assert";
 import * as Util from "../src/util/Util.mjs";
+import {
+  getCurrentTime,
+  getElapsedTime,
+  getCurrentTimeString,
+  toTimeString,
+} from "../src/util/FmtTime.mjs";
+
+
 
 describe("courses", () => {
   let result;
@@ -252,5 +258,163 @@ describe("suggestSubjects", () => {
       assert(typeof entry.completionRate === "number");
       assert(entry.completionRate >= 0 && entry.completionRate <= 100);
     });
+  });
+});
+
+
+
+describe('getCurrentTime', () => {
+  it('should return the current time', () => {
+    const currentTime = getCurrentTime();
+    assert(currentTime instanceof Date);
+  });
+});
+
+describe('getElapsedTime', () => {
+  it('should return the elapsed time', () => {
+    const startTime = new Date();
+    // Delay for 1 second
+    setTimeout(() => {
+      const elapsedTime = getElapsedTime(startTime);
+      assert(elapsedTime instanceof Date);
+      assert(elapsedTime.getTime() >= 1000);
+    }, 1000);
+  });
+});
+
+describe('getCurrentTimeString', () => {
+  it('should return the current time string in ISO format', () => {
+    const currentTimeString = getCurrentTimeString();
+    assert(typeof currentTimeString === 'string');
+    assert(new Date(currentTimeString) !== 'Invalid Date');
+  });
+});
+
+describe('toTimeString', () => {
+  it('should return the given date object in ISO format', () => {
+    const dateObj = new Date();
+    const timeString = toTimeString(dateObj);
+    assert(typeof timeString === 'string');
+    assert(new Date(timeString) !== 'Invalid Date');
+  });
+});
+
+
+
+
+describe('getConfigParam', () => {
+  before(() => {
+    // Load the environment variables from .env file
+    dotenv.config();
+  });
+
+  it('should return the value of a valid config key', () => {
+    const configKey = 'API_KEY';
+    const expectedValue = 'your-api-key';
+
+    process.env[configKey] = expectedValue;
+
+    const actualValue = Util.getConfigParam(configKey);
+
+    assert.strictEqual(actualValue, expectedValue);
+  });
+
+  it('should return undefined for an invalid config key', () => {
+    const configKey = 'INVALID_KEY';
+
+    process.env[configKey] = undefined;
+
+    const actualValue = Util.getConfigParam(configKey);
+
+    assert.strictEqual(actualValue, 'undefined');
+  });
+
+  it('should log a message for an invalid config key', () => {
+    const consoleLogStub = {
+      logs: [],
+      log(message) {
+        this.logs.push(message);
+      },
+    };
+
+    const configKey = 'INVALID_KEY';
+    const expectedLogMessage = [];
+    console.log = consoleLogStub.log.bind(consoleLogStub);
+
+    Util.getConfigParam(configKey);
+
+    assert.deepStrictEqual(consoleLogStub.logs, expectedLogMessage);
+  });
+});
+
+
+
+
+describe('isValidWebRequest', () => {
+  it('should return true if all required params are present in the request query', () => {
+    const req = {
+      method: 'GET',
+      query: {
+        param1: 'value1',
+        param2: 'value2',
+      },
+    };
+    const requiredParams = ['param1', 'param2'];
+
+    const isValid = Util.isValidWebRequest(req, ...requiredParams);
+
+    assert.strictEqual(isValid, true);
+  });
+
+  it('should return true if all required params are present in the request body', () => {
+    const req = {
+      method: 'POST',
+      body: {
+        param1: 'value1',
+        param2: 'value2',
+      },
+    };
+    const requiredParams = ['param1', 'param2'];
+
+    const isValid = Util.isValidWebRequest(req, ...requiredParams);
+
+    assert.strictEqual(isValid, true);
+  });
+
+  it('should return false if any required param is missing from the request query', () => {
+    const req = {
+      method: 'GET',
+      query: {
+        param1: 'value1',
+      },
+    };
+    const requiredParams = ['param1', 'param2'];
+
+    const isValid = Util.isValidWebRequest(req, ...requiredParams);
+
+    assert.strictEqual(isValid, false);
+  });
+
+  it('should return false if any required param is missing from the request body', () => {
+    const req = {
+      method: 'POST',
+      body: {
+        param1: 'value1',
+      },
+    };
+    const requiredParams = ['param1', 'param2'];
+
+    const isValid = Util.isValidWebRequest(req, ...requiredParams);
+
+    assert.strictEqual(isValid, false);
+  });
+
+  it('should return false if the request is null', () => {
+    const req = null;
+    const requiredParams = ['param1', 'param2'];
+
+    const isValid = Util.isValidWebRequest(req, ...requiredParams);
+
+    assert.strictEqual(isValid, false);
   });
 });

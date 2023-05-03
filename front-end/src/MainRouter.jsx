@@ -20,8 +20,7 @@ import Feedback from "./pages/feedback/Feedback";
  * @constructor
  */
 export const MainRouter = () => {
-  // Currently, there is only one route to a default page:
-  //      Level one routes should be included here
+  // Currently, there is only one route to a default page: Level one routes should be included here
 
   return (
     <div>

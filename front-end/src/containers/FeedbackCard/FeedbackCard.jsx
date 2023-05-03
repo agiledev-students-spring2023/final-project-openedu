@@ -16,7 +16,6 @@ import { styled } from "@mui/material/styles";
 
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 
-//styled the card
 const StyledCard = styled(Card)({
   borderRadius: "15px",
 });

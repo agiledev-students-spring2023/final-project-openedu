@@ -38,6 +38,8 @@
     "nyc": "^15.1.0",
     "prop-types": "^15.8.1",
     "script": "^0.1.4",
+    "scripts": "^0.1.0",
+    "start": "^5.1.0",
     "styled-components": "^5.3.10",
     "web-vitals": "^3.3.1"
   }

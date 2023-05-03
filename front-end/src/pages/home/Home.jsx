@@ -47,7 +47,6 @@ const CourseSlide = ({data}) => {
 
         console.log("card clicked", entry);
 
-        //navigate to subject detail page
         const path = `/subjects/detail/${entry.subjectId}`;
 
         navigate(path);

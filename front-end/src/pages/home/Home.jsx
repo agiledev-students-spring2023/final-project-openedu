@@ -47,7 +47,6 @@ const CourseSlide = ({data}) => {
 
         console.log("card clicked", entry);
 
-        //navigate to subject detail page
         const path = `/subjects/detail/${entry.subjectId}`;
 
         navigate(path);
@@ -96,7 +95,7 @@ export function Home(props) {
         setAlignment(newAlignment);
     };
 
-    //this is for the onClick source of the course slides. It links to the subject detail page
+    //this is for the onClick source of the course slides. It links to the subject detail page.
     const handleClick = () => {
         if (alignment === "Recent") {
             navigate("/subjects/recent");

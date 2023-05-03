@@ -4,7 +4,6 @@
   "description": "The back-end of your project will live in this directory.",
   "main": "index.js",
   "scripts": {
-    "jest-test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
     "mocha-test": "c8 mocha tests/test_backend.mjs --extension=mjs --require=esm"
   },
   "author": "",

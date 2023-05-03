@@ -13,7 +13,7 @@ export default function ClassCardButtonGrid(props) {
         props.title ? props : fakeLecture;
     const navigate = useNavigate();
 
-    // Always use the highest resolution thumbnail
+    //Always use the highest resolution thumbnail
     const tbnArrResolution = ['maxres', 'standard', 'high', 'medium', 'default'];
     let thumbnailUrl = '';
     for (let i = 0; i < tbnArrResolution.length; i++) {

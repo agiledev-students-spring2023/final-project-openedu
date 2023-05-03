@@ -3,7 +3,7 @@ import {Card, CardContent, Divider, Typography} from "@mui/material";
 
 export const CommentCard = props => {
 
-    //TODO: Put useState here
+    //TODO: put useState here
 
     return <Card>
         <CardContent>

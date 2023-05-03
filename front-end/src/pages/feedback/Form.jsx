@@ -50,7 +50,25 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
           />
-          
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Subject"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Subject"
+          type="email"
+          fullWidth
+          variant="standard"
+        />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

@@ -41,7 +41,15 @@ export default function FormDialog() {
             To subscribe to this website, please enter your email address here. We
             will send updates occasionally.
           </DialogContentText>
-          
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Subject"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
           
         </DialogContent>
         <DialogActions>

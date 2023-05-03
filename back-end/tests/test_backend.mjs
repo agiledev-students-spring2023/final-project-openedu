@@ -6,6 +6,8 @@ import {
   recentSubjects,
   subjects,
   suggestSubjects,
+  suggestCourses,
+  recentCourses
 } from "../src/util/MockData.mjs";
 import assert from "assert";
 import * as Util from "../src/util/Util.mjs";
@@ -409,12 +411,87 @@ describe('isValidWebRequest', () => {
     assert.strictEqual(isValid, false);
   });
 
-  it('should return false if the request is null', () => {
+  it('should return false if the request igit ps null', () => {
     const req = null;
     const requiredParams = ['param1', 'param2'];
 
     const isValid = Util.isValidWebRequest(req, ...requiredParams);
 
     assert.strictEqual(isValid, false);
+  });
+});
+
+describe("suggestCourses", () => {
+  let result;
+
+  beforeEach(() => {
+    result = suggestCourses();
+  });
+
+  it("should have a subjectId property for each suggestCourses", () => {
+    result.forEach((suggestCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(suggestCourses, "subjectId"));
+      assert.strictEqual(typeof suggestCourses.subjectId, "number");
+    });
+  });
+
+  it("should have a name property for each suggestCourses", () => {
+    result.forEach((suggestCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(suggestCourses, "name"));
+      assert.strictEqual(typeof suggestCourses.name, "string");
+    });
+  });
+
+  it("should have a description property for each suggestCourses", () => {
+    result.forEach((suggestCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(suggestCourses, "description"));
+      assert.strictEqual(typeof suggestCourses.description, "string");
+    });
+  });
+
+  it("should have a completionRate property for each suggestCourses", () => {
+    result.forEach((suggestCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(suggestCourses, "completionRate"));
+      assert.strictEqual(typeof suggestCourses.completionRate, "number");
+      assert.strictEqual(suggestCourses.completionRate >= 0, true);
+      assert.strictEqual(suggestCourses.completionRate <= 100, true);
+    });
+  });
+});
+
+describe("recentCourses", () => {
+  let result;
+
+  beforeEach(() => {
+    result = recentCourses();
+  });
+
+  it("should have a subjectId property for each recentCourses", () => {
+    result.forEach((recentCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(recentCourses, "subjectId"));
+      assert.strictEqual(typeof recentCourses.subjectId, "number");
+    });
+  });
+
+  it("should have a name property for each recentCourses", () => {
+    result.forEach((recentCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(recentCourses, "name"));
+      assert.strictEqual(typeof recentCourses.name, "string");
+    });
+  });
+
+  it("should have a description property for each recentCourses", () => {
+    result.forEach((recentCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(recentCourses, "description"));
+      assert.strictEqual(typeof recentCourses.description, "string");
+    });
+  });
+
+  it("should have a completionRate property for each recentCourses", () => {
+    result.forEach((recentCourses) => {
+      assert.ok(Object.prototype.hasOwnProperty.call(recentCourses, "completionRate"));
+      assert.strictEqual(typeof recentCourses.completionRate, "number");
+      assert.strictEqual(recentCourses.completionRate >= 0 && recentCourses.completionRate <= 100, true);
+    });
   });
 });

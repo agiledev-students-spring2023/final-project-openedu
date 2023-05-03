@@ -97,16 +97,16 @@ export function CourseCard({ entry }) {
                             display: "Grid",
                         }}
                     >
-                        <Box
-                            sx={{
-                                width: "100%",
-                            }}
-                        >
-                            <LinearProgressWithLabel
-                                value={entry.completionRate ?? 0}
-                                component="div"
-                            />
-                        </Box>
+                        {/*<Box*/}
+                        {/*    sx={{*/}
+                        {/*        width: "100%",*/}
+                        {/*    }}*/}
+                        {/*>*/}
+                        {/*    <LinearProgressWithLabel*/}
+                        {/*        value={entry.completionRate ?? 0}*/}
+                        {/*        component="div"*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
                         <Button variant="contained" component="div" onClick={routeChange}>
                             Continue
                         </Button>

@@ -10,6 +10,8 @@
 
 </div>
 
+> Demo [https://server.lbynet.com:3000](https://server.lbynet.com:3000/)
+
 ## I. Get Started
 
 ### What you need to run this app
@@ -24,18 +26,26 @@
 2. Get into the root directory of this project:
    - Run `cd ./final-project-openedu` ;
    - Run `npm install` to install part of the necessary dependencies in order to run the app.
+
 3. Navigate to and boot up the **backend**: 
    - Run `cd ./back-end` to go to the backend directory;
    - Run `npm install` to install all the necessary dependencies in order to run the server;
-   - Run `node src/main.mjs` to setup the server on port `3001`(by default);
-   - (Optional) Run `npm run test` or `npm run coverage_and_test` to test the backend. 
+   - Make sure that you have the ENV parameters configured as follows:
+  - Run `node src/main.mjs` to setup the server on port `3001`(by default);
+  - (Optional) Run `npm run test` or `npm run coverage_and_test` to test the backend. 
+
+
 4. Navigate to and boot up the **frontend**:
     - Open another terminal;
     - Run `cd ../` to go back to the root directory (only if you are in the backend directory);
     - Run `cd ./front-end` to go to the fontend directory;
     - Run `npm install` to install all the necessary dependencies in order to run the app;
     - Run `npm start` to run the app in the development mode.
+
 5. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+
+> Note: Having the information above is **NOT** sufficient for running the App. Please contact us for .env configurations as they contain sensitive information of our team members.
+
 
 
 ## II. Contributing Members

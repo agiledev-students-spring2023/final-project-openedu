@@ -25,7 +25,10 @@ export default function UserProfile() {
         params: { width: "200", height: "200" },
       })
       .then((response) => {
-        setImageUrl(response.data["content"]);
+
+          if(imageUrl === null) {
+              setImageUrl(response.data["content"]);
+          }
       })
       .catch((error) => Logger.error(error));
 
@@ -39,10 +42,25 @@ export default function UserProfile() {
         },
       })
       .then((response) => {
-        setUserInfo(response.data["content"]);
+
+          if (response.data["status"] !== 0) {
+              Logger.info(response.data["status"]);
+              Util.onAuthError(useNavigate()).then(r => true);
+              return;
+          }
+
+          const user = response.data["content"];
+
+          setUserInfo(user);
+
+          if((user["avatar"]??"") !== "") {
+              setImageUrl(user["avatar"]);
+          }
+
       })
       .catch((error) => Logger.error(error));
   }, []);
+
   return (
     <Box>
       {/*Top Icon section*/}
